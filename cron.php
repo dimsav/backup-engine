@@ -7,43 +7,30 @@ define('DS', DIRECTORY_SEPARATOR);
 define('PATH', dirname(__FILE__));
 define('VENDORS', PATH . DS . 'vendors');
 
-// Enable errors
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', PATH . '/logs/error_log.txt');
-
 require_once(PATH . DS . 'config.php');
 require_once(VENDORS . DS . 'Utilities.php');
 require_once(VENDORS . DS . 'DropboxUploader' . DS . 'DropboxUploader.php');
 require_once(VENDORS . DS . 'UnixZipper.php');
+require_once(VENDORS . DS . 'klogger' . DS . 'klogger.class.php');
 
 Utilities::use_path(BACKUPS);
-
-// Creates the $log object of the klogger class.
-require_once(VENDORS . DS . 'klogger' . DS . 'run.klogger.php');
-
 $error = '';
+
+$log = KLogger::instance(PATH . DS . 'logs', false);
 $log->logInfo('Initiating backup...');
 
 if (isset($projects))
 {
-    foreach ($projects as $project_name => $project)
+    foreach ( $projects as $project_name => $project )
     {
-        // If the name of the project is not defined in the array,
-        if (is_int($project_name))
-        {
-            // set the name as 'project_0'
-            $project_name = 'project_' . $project_name;
-        }
-
-        // The directory for the project's backup
         $project_backup_directory = BACKUPS . DS . $project_name;
 
         // Mysql backup
-        if (array_key_exists('db', $project))
+        if ( isset($project['database']) )
         {
-            $database = $project['db'];
+            $database = $project['database'];
 
+            // Todo: remove the run.backup.mysql.php include
             include(VENDORS . DS . 'MysqlBackup' . DS . 'run.backup.mysql.php');
         }
 

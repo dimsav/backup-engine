@@ -10,7 +10,7 @@ define('BACKUPS', PATH . DS . 'backups');
 $projects = array
 (
     "my-project-name" => array(
-        "db" => array(
+        "database" => array(
             "host"=>"localhost",
             "port"=>"3306",
             "database"=>"database-name",

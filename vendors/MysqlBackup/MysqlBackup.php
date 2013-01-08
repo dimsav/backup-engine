@@ -6,6 +6,7 @@
     Released under GNU Public license
     http://www.phpclasses.org/browse/file/12128.html
     Updated by Dimitrios Savvopoulos
+    https://github.com/dimsav/php-mysql-backup
 */
 
 define('MSB_VERSION', '1.0.1');
