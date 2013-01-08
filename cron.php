@@ -6,14 +6,11 @@ ini_set('display_errors', '1');
 define('DS', DIRECTORY_SEPARATOR);
 define('PATH', dirname(__FILE__));
 define('VENDORS', PATH . DS . 'vendors');
-define('BACKUPS', PATH . DS . 'backups');
 
 // Enable errors
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', PATH . '/logs/error_log.txt');
-
-date_default_timezone_set('Europe/Berlin');
 
 require_once(PATH . DS . 'config.php');
 require_once(VENDORS . DS . 'Utilities.php');
@@ -135,11 +132,6 @@ if (isset($projects))
                 $error .= "\nDropbox settings were not found ";
             }
         }
-    }
-    else
-    {
-        $log->logError('Dropbox upload was not run.');
-        $error .= "\nDropbox upload was not run. ";
     }
 }
 else
