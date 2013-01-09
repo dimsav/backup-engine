@@ -14,5 +14,7 @@ This toolset is ideal to run cronjob backups.
 
 ### Todo's
 
+* write system requirements in the readme file (file permissions)
+* write installation instructions
 * email notification in case of an error
-* possibility to send backups via ftp connection
+* add the option to send backups via ftp connection
