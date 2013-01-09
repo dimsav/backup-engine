@@ -12,6 +12,7 @@ require_once(VENDORS . DS . 'Utilities.php');
 require_once(VENDORS . DS . 'DropboxUploader' . DS . 'DropboxUploader.php');
 require_once(VENDORS . DS . 'UnixZipper.php');
 require_once(VENDORS . DS . 'klogger' . DS . 'klogger.class.php');
+require_once(VENDORS . DS . 'MysqlBackup' . DS . 'MysqlBackup.php');
 
 Utilities::use_path(BACKUPS);
 $error = '';
@@ -30,8 +31,32 @@ if (isset($projects))
         {
             $database = $project['database'];
 
-            // Todo: remove the run.backup.mysql.php include
-            include(VENDORS . DS . 'MysqlBackup' . DS . 'run.backup.mysql.php');
+            if ( isset($database))
+            {
+                $backup_obj = new MySQL_Backup();
+                $backup_obj->server   = $database['host'];
+                $backup_obj->database = $database['database'];
+                $backup_obj->port     = $database['port'];
+                $backup_obj->username = $database['username'];
+                $backup_obj->password = $database['password'];
+                $backup_obj->backup_dir = Utilities::use_path(  $project_backup_directory . DS . 'database') . DS  ;
+                $backup_obj->fname_format = 'Y-m-d_H.i_';
+
+                $output = 'Backup of database ' . $database['database'] . ': ';
+                $backup_result = $backup_obj->Execute(MSB_SAVE);
+                if ($backup_result === false)
+                {
+                    $output .= $backup_obj->error;
+                    $log->logError($output);
+                    $error .= "\n$output";
+                }
+                else
+                {
+                    $upload_to_dropbox[$project_name][] = $backup_result;
+                    $output .= 'created successfully.';
+                    $log->logInfo($output);
+                }
+            }
         }
 
         // Files backup
