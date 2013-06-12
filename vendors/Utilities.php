@@ -18,6 +18,7 @@ class Utilities
 
     public static function extension($filename = '')
     {
-        return end(explode(".", $filename));
+        $filename_parts = explode(".", $filename);
+        return end($filename_parts);
     }
 }
