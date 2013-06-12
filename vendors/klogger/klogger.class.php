@@ -117,6 +117,13 @@ class KLogger
     private static $instances           = array();
 
     /**
+     * If set to true, log messages are echoed.
+     * @var array
+     */
+    public $echo = false;
+
+
+    /**
      * Partially implements the Singleton pattern. Each $logDirectory gets one
      * instance.
      *
@@ -353,6 +360,7 @@ class KLogger
             $status = $this->_getTimeLine($severity);
             $this->writeFreeFormLine("$status $line \n");
         }
+        if ($this->echo) echo "$line \n";
     }
 
     /**
