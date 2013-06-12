@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by: Dimitrios Savvopoulos
- * Date: 4/3/12
+ * Author: Dimitrios Savvopoulos (@dimsav)
  *
  * Compress a file or folder using the unix zip function. Can compress using a password or can exclude some files or folders.
  * Note: Won't work in windows.
@@ -10,7 +9,7 @@
 class UnixZipper
 {
     // Basic Settings
-    var $source; // file or folder
+    var $source; // file or folder to be zipped
     var $source_path; // the path of the folder containing the $source file or folder
     var $source_file; // the name of $source file of folder
 
@@ -24,10 +23,6 @@ class UnixZipper
 
     var $success_message = '';
     var $error_message = '';
-
-    // The command to be run. Only accessible by the class.
-    private  $command = '';
-    private $errors = array();
 
     function __construct($source, $target_dir)
     {
@@ -67,8 +62,7 @@ class UnixZipper
 
         $pass = $this->get_password_syntax();
 
-        //$excludes = $this->_get_excluded_part();
-        $excludes = '';
+        $excludes = $this->_get_excluded_part();
 
         $command = '';
 
@@ -89,11 +83,11 @@ class UnixZipper
 
         if ($result === false)
         {
-            return (false);
+            return false;
         }
         else
         {
-            return ($this->destination_file);
+            return $this->destination_file;
         }
     }
 
@@ -106,7 +100,7 @@ class UnixZipper
         //Add timestamp and extension of zip file to filename (if not set).
 
         // If the end of $this->destination_file is not .zip
-        if (end(explode(".", $this->destination_file)) != 'zip')
+        if ( Utilities::file_extension($this->destination_file) != 'zip')
         {
             $this->destination_file = date($this->destination_timestamp). $this->destination_file . '.zip';
 
@@ -125,21 +119,18 @@ class UnixZipper
         // Add path to destination file
         $this->destination_file = $this->target_dir . $this->destination_file;
 
-        // TODO: if destination filename exists...
-        // count all the files starting with the same name
-        // add _2 where 2 is the number found.
+        // TODO: if destination filename exists and !$overwrite, do not overwrite it
+        // if (!$this->overwrite) ...
+        //      count all the files starting with the same name
+        //      add _2 where 2 is the number found.
     }
 
     private function format_source()
     {
-        if (is_dir($this->source))
+        if (is_dir($this->source) || is_file($this->source))
         {
             $this->source_path = dirname($this->source);
             $this->source_file = basename($this->source);
-        }
-        else
-        {
-            // TODO: if $source is file....
         }
     }
 
@@ -147,42 +138,37 @@ class UnixZipper
     {
         if ($this->password != '')
         {
-            return (' -P ' . $this->password . ' ');
+            return ' -P ' . $this->password . ' ';
         }
         else
         {
-            return ('');
+            return '';
         }
     }
 
     private function _get_excluded_part()
     {
-        $excludes_string = ''; // -x folder/\* -x file.zip
-
-        if (count($this->excludes) == 0)
+        if (!$this->excludes)
         {
-            return ('');
+            return '';
         }
+
+        $excludes_string = ''; // -x folder/\* -x file.zip
 
         foreach ($this->excludes as $exclude)
         {
-            // If it's a folder, make sure it ends with foldername/\*
-            if ( is_dir($exclude))
-            {
+            $exclude = trim($exclude, '/');
 
-                if ( substr($exclude, -1, 1) != '/' )
-                {
-                    $exclude .= '/';
-                }
-                $exclude .= '\*';
+            $exclude = $this->source_file . '/'.$exclude;
 
-                $excludes_string .= ' -x '. $exclude .' ';
-            }
-            else
+            if (is_dir($this->source_path . '/' . $exclude))
             {
-                $excludes_string .= ' -x '. $exclude .' ';
+                $exclude .= '/\*';
             }
+
+            $excludes_string .= ' '. $exclude .' ';
         }
-        return ($excludes_string);
+
+        return $excludes_string ? '-x '.$excludes_string : '';
     }
 }
