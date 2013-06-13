@@ -20,5 +20,6 @@ This script can only be used in Unix systems (Linux, Mac), as we are using the z
 
 ## Instructions
 
-1. Edit config.php to define your projects to be backed up
-2. run cron.php using command line or web server
+1. Copy config.ini.php to config.php
+2. Edit config.php to define your projects to be backed up
+3. run cron.php using the command line or a web server
