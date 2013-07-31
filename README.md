@@ -16,7 +16,9 @@ This script is ideal to run cronjob backups.
 
 ## Requirements
 
-This script can only be used in Unix systems (Linux, Mac), as we are using the zip command of the system.
+1. This script can only be used in Unix systems (Linux/Mac), as we are using the zip command of the system.
+2. The function exec() should be available as we use it to zip our backups.
+3. The cURL extension is required if you want to use the dropbox uploader.
 
 ## Instructions
 
