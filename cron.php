@@ -77,40 +77,19 @@ foreach ( $projects as $projectName => $project )
 // Upload zip files to dropbox
 if ( !empty($config_dropbox) )
 {
-    $dropbox_email = $config_dropbox['email'];
-    $dropbox_password = $config_dropbox['password'];
-    $uploader = new DropboxUploader($dropbox_email, $dropbox_password);
+    $dropbox = new DropboxUploader($config_dropbox['email'], $config_dropbox['password']);
 
-    foreach ($upload_to_dropbox as $projectName => $upload_files)
+    foreach ($upload_to_dropbox as $projectName => $filePaths)
     {
-        if (empty($upload_files) || !is_array($upload_files))
+        if (empty($filePaths) || !is_array($filePaths))
         {
-            logError('$upload_files format is empty or not an array.');
+            logError('$filePaths format is empty or not an array.');
             continue;
         }
 
-        foreach ($upload_files as $upload_file)
-        {
-            if( array_key_exists('path',$config_dropbox) )
-            {
-                $dropbox_destination_folder = $config_dropbox['path'] . '/' . $projectName;
-            }
-            else
-            {
-                $dropbox_destination_folder = $projectName;
-            }
-
-            // Send file to dropbox
-            try {
-                $uploader->upload($upload_file, $dropbox_destination_folder);
-                $log->logInfo('File ' . basename($upload_file) . " was successfully uploaded to dropbox ($projectName).");
-            }
-            catch (Exception $e)
-            {
-                logError('Dropbox: '. $e->getMessage() . " ($projectName)");
-            }
-        }
+        sendFilesToDropbox($filePaths, $projectName);
     }
+    sendFilesToDropbox(getLogFilesPaths(), 'logs');
 }
 
 // Helper functions
@@ -156,14 +135,41 @@ function getZipPassword()
     return isset($config_zip['password']) ? $config_zip['password'] : false;
 }
 
-function getLogFiles()
+function sendFilesToDropbox($filePaths, $projectName)
+{
+    global $dropbox;
+    global $log;
+
+    $dropboxDestinationFolder = getDropboxDestinationFolder($projectName);
+
+    foreach ($filePaths as $filePath)
+    {
+        try {
+            $dropbox->upload($filePath, $dropboxDestinationFolder);
+            $log->logInfo('File ' . basename($filePath) . " was successfully uploaded to dropbox ($projectName).");
+        }
+        catch (Exception $e)
+        {
+            logError('Dropbox: '. $e->getMessage() . " ($projectName)");
+        }
+    }
+}
+
+function getDropboxDestinationFolder($projectName)
+{
+    global $config_dropbox;
+    $dropboxBackupsFolder = isset($config_dropbox['path']) && $config_dropbox['path'] ? $config_dropbox['path'] : 'Backups';
+    return  "$dropboxBackupsFolder/$projectName";
+}
+
+function getLogFilesPaths()
 {
     $logFiles = array();
 
     foreach(scandir(LOGS_PATH) as $file)
     {
         if (Utilities::getFileNameExtension($file) == 'txt')
-            $logFiles[] = $file;
+            $logFiles[] = LOGS_PATH."/$file";
     }
     return $logFiles;
 }
