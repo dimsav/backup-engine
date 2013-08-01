@@ -155,3 +155,15 @@ function getZipPassword()
     global $config_zip;
     return isset($config_zip['password']) ? $config_zip['password'] : false;
 }
+
+function getLogFiles()
+{
+    $logFiles = array();
+
+    foreach(scandir(LOGS_PATH) as $file)
+    {
+        if (Utilities::getFileNameExtension($file) == 'txt')
+            $logFiles[] = $file;
+    }
+    return $logFiles;
+}
