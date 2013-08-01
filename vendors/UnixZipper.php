@@ -1,6 +1,6 @@
 <?php
 /**
- * Author: Dimitrios Savvopoulos (@dimsav)
+ * Author: http://twitter.com/dimsav
  *
  * Compress a file or folder using the unix zip function. Can compress using a password or can exclude some files or folders.
  * Note: Won't work in windows.
@@ -8,167 +8,184 @@
  */
 class UnixZipper
 {
-    // Basic Settings
-    var $source; // file or folder to be zipped
-    var $source_path; // the path of the folder containing the $source file or folder
-    var $source_file; // the name of $source file of folder
+    // Basic parameters
+    private $pathToBeZipped; // can be both file or folder
+    private $pathToBeZippedName;
+    private $pathToBeZippedParentPath;
 
-    var $destination_file = 'file.zip';
-    var $target_dir = '';
-    var $destination_timestamp = 'Y-m-d_H.i_';
+    private $zipFilePath;
+    private $zipFileDirectoryPath;
+    private $zipFileName;
 
-    // Optional Settings
-    var $password = '';
-    var $excludes = array();
+    private $password;
+    private $timestampFormat = 'Y-m-d_H.i';
+    private $excludes = array();
 
-    var $success_message = '';
-    var $error_message = '';
+    private $command = '';
 
-    function __construct($source, $target_dir)
+    // Dependencies
+    private $log;
+    private $utilities;
+
+
+    function __construct(KLogger $log, Utilities $utilities)
     {
-        // Check if inputs are ok. If not, set $error_message the appropriate message.
-        if (is_dir($source) || is_file($source))
-        {
-            $this->source = $source;
-        }
-        else
-        {
-            $this->error_message = '$source is not a directory of file.';
-        }
+        $this->log = $log;
+        $this->utilities = $utilities;
+    }
 
-        if (is_dir($target_dir))
-        {
-            $this->target_dir = $target_dir;
-        }
-        else
-        {
-            $this->error_message = '$target_dir is not a directory.';
-        }
+    public function setPathToBeZipped($path)
+    {
+        $this->pathToBeZipped           = $path;
+        $this->pathToBeZippedParentPath = dirname($this->pathToBeZipped);
+        $this->pathToBeZippedName       = basename($this->pathToBeZipped);
+    }
+
+    public function setZipFileDirectoryPath($directory)
+    {
+        $this->zipFileDirectoryPath = $directory;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function setExcludes(array $excludes)
+    {
+        $this->excludes = $excludes;
+    }
+
+    public function setTimestampFormat($format)
+    {
+        $this->timestampFormat = $format;
+    }
+
+
+    private function cd($path)
+    {
+        $this->command .= "cd $path; ";
     }
 
     public function compress()
     {
-        // If something went wrong with the instantiation of the object, exit.
-        if (strlen($this->error_message) > 0)
+        if ( !$this->isInputValid())
         {
             return false;
         }
 
-        // Formats $destination_file
-        $this->format_target_file();
+        $zipFilePath    = $this->getZipFilePath();
+        $passwordOption = $this->getPasswordOption();
+        $excludesOption = $this->getExcludesOption();
 
-        $this->format_source();
+        $this->cd($this->pathToBeZippedParentPath);
 
+        // -r zips recursively
+        $this->command.=  "zip $passwordOption $excludesOption -r $zipFilePath $this->pathToBeZippedName";
 
-        $pass = $this->get_password_syntax();
-
-        $excludes = $this->_get_excluded_part();
-
-        $command = '';
-
-        // First we must cd to the folder that contains our soon to be backed up data
-        if (strlen($this->source_path) > 0)
-        {
-            $command = 'cd ' . $this->source_path . '; ';
-        }
-
-        // The zip syntax: -r means recursively
-        // zip -r /full/path/of/zipped/file name_of_the_folder_containing_the_data
-        $command.=  'zip '. $pass .' ' . $excludes . ' -r '. $this->destination_file  .' ' . $this->source_file;
-
-        $result = exec($command);
-
-
-        //$result_2 = system('7za a -t7z -mx9 -p'.$pass.' '.$destination.'.7z '.$destination);
-
-        if ($result === false)
-        {
-            return false;
-        }
-        else
-        {
-            return $this->destination_file;
-        }
+        return exec($this->command);
     }
 
-
-    private function format_target_file()
+    private function getPasswordOption()
     {
+        return $this->password != '' ? "-P $this->password " : '';
+    }
 
-        $this->destination_file = basename($this->source);
-
-        //Add timestamp and extension of zip file to filename (if not set).
-
-        // If the end of $this->destination_file is not .zip
-        if ( Utilities::file_extension($this->destination_file) != 'zip')
+    private function isInputValid()
+    {
+        $isInputValid = true;
+        if (!is_dir($this->zipFileDirectoryPath))
         {
-            $this->destination_file = date($this->destination_timestamp). $this->destination_file . '.zip';
-
+            $this->log->logError("$this->zipFileDirectoryPath is not a directory.");
+            $isInputValid = false;
         }
-        else
+        if (!$this->utilities->isValidPath($this->pathToBeZipped))
         {
-            $this->destination_file = date($this->destination_timestamp) . substr($this->destination_file, 0, -4) . '.zip';
+            $this->log->logError("$this->pathToBeZipped is not a directory of file.");
+            $isInputValid = false;
         }
+        return $isInputValid;
+    }
 
+    public function getZipFilePath()
+    {
+        $this->determineZipFilePath();
+        return $this->zipFilePath;
+    }
 
-        if($this->target_dir != '' && substr($this->target_dir, -1, 1) != DIRECTORY_SEPARATOR)
+    private function determineZipFilePath()
+    {
+        $this->determineZipFileName();
+
+        if($this->zipFileDirectoryPath != '' && substr($this->zipFileDirectoryPath, -1, 1) != DIRECTORY_SEPARATOR)
         {
-            $this->target_dir .= DIRECTORY_SEPARATOR;
+            $this->zipFileDirectoryPath .= DIRECTORY_SEPARATOR;
         }
 
         // Add path to destination file
-        $this->destination_file = $this->target_dir . $this->destination_file;
+        $this->zipFilePath = $this->zipFileDirectoryPath . $this->zipFileName;
 
-        // TODO: if destination filename exists and !$overwrite, do not overwrite it
-        // if (!$this->overwrite) ...
-        //      count all the files starting with the same name
-        //      add _2 where 2 is the number found.
     }
 
-    private function format_source()
+    private function determineZipFileName()
     {
-        if (is_dir($this->source) || is_file($this->source))
-        {
-            $this->source_path = dirname($this->source);
-            $this->source_file = basename($this->source);
-        }
+        if ($this->zipFileName) return;
+        $timestamp = date($this->timestampFormat);
+
+        $this->zipFileName = "{$timestamp}_$this->pathToBeZippedName";
+        $this->zipFileName .= $this->fileNameExtensionIsNot($this->zipFileName, 'zip') ? '.zip' : '';
     }
 
-    private function get_password_syntax()
+    private function fileNameExtensionIsNot($fileName, $extension)
     {
-        if ($this->password != '')
-        {
-            return ' -P ' . $this->password . ' ';
-        }
-        else
-        {
-            return '';
-        }
+        return Utilities::getFileNameExtension($fileName) != $extension;
     }
 
-    private function _get_excluded_part()
+    private function getExcludesOption()
     {
-        if (!$this->excludes)
-        {
-            return '';
-        }
+        if (!$this->excludes) return '';
 
-        $excludes_string = ''; // -x folder/\* -x file.zip
+        $excludesOption = ''; // -x folder/\* -x file.zip
 
         foreach ($this->excludes as $exclude)
         {
-            $exclude = trim($exclude, '/');
-
-            $exclude = $this->source_file . '/'.$exclude;
-
-            if (is_dir($this->source_path . '/' . $exclude))
+            if ($this->utilities->isValidPath($exclude) && $this->isPathInsidePathToBeZipped($exclude) )
             {
-                $exclude .= '/\*';
-            }
+                $convertedExclude = $this->getExcludeForZipOption($exclude);
 
-            $excludes_string .= ' '. $exclude .' ';
+                if (is_dir($exclude))
+                {
+                    $convertedExclude .= $this->makeExcludePathRecursive($convertedExclude);
+                }
+
+                $excludesOption .= "-x $convertedExclude ";
+            }
         }
 
-        return $excludes_string ? '-x '.$excludes_string : '';
+        return $excludesOption;
     }
+
+    private function getExcludeForZipOption($path)
+    {
+        $pathDirectory = "$this->pathToBeZippedParentPath/";
+
+        return substr($path, strlen($pathDirectory));
+    }
+
+    private function isPathInsidePathToBeZipped($path)
+    {
+        return strpos($path, "$this->pathToBeZippedParentPath/") === 0;
+    }
+
+    private function makeExcludePathRecursive($excludePath)
+    {
+        return $this->isLastCharacterASlash($excludePath) ? '\*' : '/\*';
+    }
+
+    private function isLastCharacterASlash($string)
+    {
+        return substr($string, -1, 1) == '/';
+    }
+
+
 }

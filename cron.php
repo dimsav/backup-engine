@@ -2,20 +2,21 @@
 
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'start.php');
 
-Utilities::use_path(BACKUPS);
+Utilities::createPathIfNotExisting(BACKUPS);
 
 $log->logInfo('Initiating backup...');
 
 if (empty($projects))
 {
-    $log->logError('$projects variable is not defined. Please make sure the config.php is included.');
+    logError('$projects variable is not defined. Please make sure the config.php is included.');
     die;
 }
 
-foreach ( $projects as $project_name => $project )
+foreach ( $projects as $projectName => $project )
 {
-    $project_backup_directory = BACKUPS . DS . $project_name;
+    $projectBackupPath = BACKUPS . DS . $projectName;
 
+    Utilities::createPathIfNotExisting($projectBackupPath);
 
     // Mysql backup
     if ( isset($project['database']) && $database = $project['database'] )
@@ -26,7 +27,7 @@ foreach ( $projects as $project_name => $project )
         $backup_obj->port     = $database['port'];
         $backup_obj->username = $database['username'];
         $backup_obj->password = $database['password'];
-        $backup_obj->backup_dir = Utilities::use_path(  $project_backup_directory . DS . 'database') . DS  ;
+        $backup_obj->backup_dir = $projectBackupPath . DS  ;
         $backup_obj->fname_format = 'Y-m-d_H.i_';
 
         $output = 'Backup of database ' . $database['database'] . ': ';
@@ -34,50 +35,42 @@ foreach ( $projects as $project_name => $project )
         if ($backup_result === false)
         {
             $output .= $backup_obj->error;
-            $log->logError($output);
+            logError($output);
         }
         else
         {
-            $upload_to_dropbox[$project_name][] = $backup_result;
+            $upload_to_dropbox[$projectName][] = $backup_result;
             $output .= 'created successfully.';
             $log->logInfo($output);
         }
     }
 
-
     // Files backup
-    if ( !empty($project['folders']) )
+    $projectPaths         = getProjectPaths($project);
+    $projectPathsExcludes = getProjectPathsExcludes($project);
+
+    foreach ($projectPaths as $projectPath)
     {
-        foreach ($project['folders'] as $config_folder)
+        $unix_zipper = new UnixZipper($log, new Utilities());
+        $unix_zipper->setPathToBeZipped($projectPath);
+        $unix_zipper->setZipFileDirectoryPath($projectBackupPath);
+        $unix_zipper->setExcludes($projectPathsExcludes);
+
+        if ( getZipPassword() )
         {
-            $folder   = $config_folder['location'];
-            $excludes = empty($config_folder['excludes']) ? array() : $config_folder['excludes'];
+            $unix_zipper->setPassword(getZipPassword());
+        }
 
-            if (!is_dir($folder) && !is_file($folder))
-            {
-                $log->logError('Path ' . $folder . ' is not directory or file.');
-                continue;
-            }
-
-            $target_directory = Utilities::use_path($project_backup_directory . DS . 'files');
-
-            $unix_zipper = new UnixZipper($folder, $target_directory);
-
-            $unix_zipper->password = empty($config_zip['password']) ? '' : $config_zip['password'];
-            $unix_zipper->excludes = $excludes;
-
-            if ( ($compress_result = $unix_zipper->compress()) === false )
-            {
-                $log->logError('Path ' . $folder . ' could not be compressed. Class returned false.');
-            }
-            else
-            {
-                $upload_to_dropbox[$project_name][] = $compress_result;
-            }
+        if ( $unix_zipper->compress() )
+        {
+            $upload_to_dropbox[$projectName][] = $unix_zipper->getZipFilePath();
+        }
+        else
+        {
+            logError("$projectPath could not be compressed. Class returned false.");
         }
     }
 }
-
 
 // Upload zip files to dropbox
 if ( !empty($config_dropbox) )
@@ -86,11 +79,11 @@ if ( !empty($config_dropbox) )
     $dropbox_password = $config_dropbox['password'];
     $uploader = new DropboxUploader($dropbox_email, $dropbox_password);
 
-    foreach ($upload_to_dropbox as $project_name => $upload_files)
+    foreach ($upload_to_dropbox as $projectName => $upload_files)
     {
         if (empty($upload_files) || !is_array($upload_files))
         {
-            $log->logError('$upload_files format is empty or not an array.');
+            logError('$upload_files format is empty or not an array.');
             continue;
         }
 
@@ -98,11 +91,11 @@ if ( !empty($config_dropbox) )
         {
             if( array_key_exists('path',$config_dropbox) )
             {
-                $dropbox_destination_folder = $config_dropbox['path'] . '/' . $project_name;
+                $dropbox_destination_folder = $config_dropbox['path'] . '/' . $projectName;
             }
             else
             {
-                $dropbox_destination_folder = $project_name;
+                $dropbox_destination_folder = $projectName;
             }
 
             // Send file to dropbox
@@ -112,8 +105,51 @@ if ( !empty($config_dropbox) )
             }
             catch (Exception $e)
             {
-                $log->logError('Dropbox: '. $e->getMessage());
+                logError('Dropbox: '. $e->getMessage());
             }
         }
     }
+}
+
+// Helper functions
+
+function getProjectPaths($project){
+    $paths = !isset($project['paths']) ? array() : stringOrArrayToArray($project['paths']);
+    return getValidPathsOnlyAndLog($paths);
+}
+
+function getProjectPathsExcludes($project)
+{
+    $paths = !isset($project['exclude_paths']) ? array() : stringOrArrayToArray($project['exclude_paths']);
+    return getValidPathsOnlyAndLog($paths);
+}
+
+function stringOrArrayToArray($input)
+{
+    return is_array($input) ? $input : array($input);
+}
+
+function getValidPathsOnlyAndLog(&$paths)
+{
+    foreach ($paths as $key => $path)
+    {
+        if (!Utilities::isValidPath($path))
+        {
+            logError("The path $path is not a directory or file.");
+            unset($paths[$key]);
+        }
+    }
+    return $paths;
+}
+
+function logError($message)
+{
+    global $log;
+    $log->logError($message);
+}
+
+function getZipPassword()
+{
+    global $config_zip;
+    return isset($config_zip['password']) ? $config_zip['password'] : false;
 }

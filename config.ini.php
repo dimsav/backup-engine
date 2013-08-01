@@ -23,9 +23,33 @@ $config_dropbox = array(
 // Set the projects you want to backup
 $projects = array
 (
-    "my-first-project-name" => array(
+    "my-project-1" => array(
 
-        // To skip database backup, you can skip this parameter
+        "database" => array(
+            "host"=>"localhost",
+            "port"=>"3306",
+            "database"=>"database-name",
+            "username"=>"database-user",
+            "password"=>"database-pass",
+        ),
+    ),
+
+    "my-project-2" => array(
+
+        // The project's files and folders
+        "paths" => array(
+            "/absolute/project/folder/path",
+            "/absolute/project/file/text.txt",
+        ),
+
+        "exclude_paths" => array(
+            // Absolute paths of directories that will be skipped recursively
+            "/absolute/project/folder/path/cache",
+        )
+    ),
+
+    "my-project-3" => array(
+
         "database" => array(
             "host"=>"localhost",
             "port"=>"3306",
@@ -34,27 +58,9 @@ $projects = array
             "password"=>"database-pass",
         ),
 
-        // The project's files and folders
-        "folders" => array(
-            array(
-                // Location can be the absolute path of a directory or a file.
-                'location' => "/absolute/project-path",
-                // Relative folder or files to the above location
-                // In this example the folders /absolute/project-path/logs and /absolute/project-path/downloads
-                // and the file /absolute/project-path/root/index.php won't be included in the backup.
-                // If "location" is a file, you can just skip the excludes parameter.
-                'excludes' => array('logs', 'downloads', 'root/index.php')
-            ),
-            // Backup for each project as many separated folders as you wish
-            array(
-                'location' => "/absolute/project-path-2",
-                'excludes' => array('pdf')
-            )
-        ),
-    ),
-
-    "my-second-project-name" => array(
-        // ...
+        // Can also be a string
+        "paths" => "/absolute/project/folder/path",
+        "exclude_paths" => "/absolute/project/folder/path/cache",
     ),
 
 );

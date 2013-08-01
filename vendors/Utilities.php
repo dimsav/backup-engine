@@ -3,22 +3,25 @@
 class Utilities
 {
     /*
-     * Use this simple function to make sure that the path you are going to use exists.
+     * Creates directory recursively
      */
-    public static function use_path($path)
+    public static function createPathIfNotExisting($path)
     {
-        // If path provided doesn't exist
         if (!is_dir($path))
         {
-            // Create it recursively
             mkdir($path, 0777, true);
         }
-        return ($path);
     }
 
-    public static function file_extension($filename = '')
+    public static function getFileNameExtension($filename = '')
     {
         $filename_parts = explode(".", $filename);
         return end($filename_parts);
     }
+
+    public static function isValidPath($path)
+    {
+        return is_dir($path) || is_file($path);
+    }
+
 }
