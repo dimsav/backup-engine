@@ -40,7 +40,7 @@ foreach ( $projects as $projectName => $project )
         else
         {
             $upload_to_dropbox[$projectName][] = $backup_result;
-            $output .= 'created successfully.';
+            $output .= "created successfully ($projectName).";
             $log->logInfo($output);
         }
     }
@@ -64,10 +64,12 @@ foreach ( $projects as $projectName => $project )
         if ( $unix_zipper->compress() )
         {
             $upload_to_dropbox[$projectName][] = $unix_zipper->getZipFilePath();
+
+            $log->logInfo("Created file ". $unix_zipper->getZipFileName() . " ($projectName).");
         }
         else
         {
-            logError("$projectPath could not be compressed. Class returned false.");
+            logError("$projectPath could not be compressed. ($projectName).");
         }
     }
 }
@@ -101,11 +103,11 @@ if ( !empty($config_dropbox) )
             // Send file to dropbox
             try {
                 $uploader->upload($upload_file, $dropbox_destination_folder);
-                $log->logInfo('File ' . basename($upload_file) . ' was successfully uploaded to dropbox.');
+                $log->logInfo('File ' . basename($upload_file) . " was successfully uploaded to dropbox ($projectName).");
             }
             catch (Exception $e)
             {
-                logError('Dropbox: '. $e->getMessage());
+                logError('Dropbox: '. $e->getMessage() . " ($projectName)");
             }
         }
     }

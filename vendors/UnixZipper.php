@@ -113,6 +113,11 @@ class UnixZipper
         return $this->zipFilePath;
     }
 
+    public function getZipFileName()
+    {
+        return $this->zipFileName;
+    }
+
     private function determineZipFilePath()
     {
         $this->determineZipFileName();
