@@ -1,16 +1,15 @@
-php-mysql-backup
-================
+# Website backup library (PHP, MySQL, Dropbox)
 
-A php script used to backup your project's files and mysql databases. The backups are archived as zip
-files, and sent to an dropbox account.
+This is a library, written in php, used to backup your project's files and mysql databases. It is written to run from a
+web server as well as from the command line (cronjobs).
 
-This script is ideal to run cronjob backups.
+The backups are saved as zip files in the server and sent to your dropbox account (optional).
 
 ## Features
 
 * Multiple projects can be backed up at once
-* Backup of multiple directories per project
-* Backup of multiple databases per project
+* Custom selection of backup directories per project
+* Custom selection of excluded paths
 * Password protection of backup files (.zip)
 * Detailed logs
 
@@ -22,6 +21,7 @@ This script is ideal to run cronjob backups.
 
 ## Instructions
 
-1. Copy config.ini.php to config.php
-2. Edit config.php to define your projects to be backed up
-3. run cron.php using the command line or a web server
+1. Copy config.ini.php to config.php.
+2. Edit config.php to define your projects to be backed up.
+3. Run cron.php using the command line or a web server.
+4. See the magic happen!
