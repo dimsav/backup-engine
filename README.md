@@ -11,7 +11,7 @@ The backups are saved as zip files in the server and sent to your dropbox accoun
 * Custom selection of backup directories per project
 * Custom selection of excluded paths
 * Password protection of backup files (.zip)
-* Detailed logs
+* Detailed logs are saved to the server and are uploaded to dropbox.
 
 ## Requirements
 
