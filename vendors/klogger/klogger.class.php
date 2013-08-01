@@ -360,7 +360,10 @@ class KLogger
             $status = $this->_getTimeLine($severity);
             $this->writeFreeFormLine("$status $line \n");
         }
-        if ($this->echo) echo "$line \n";
+        if ($this->echo)
+        {
+            echo $this->isRunByBrowser() ? "<pre>$line</pre>" : "$line \n";
+        }
     }
 
     /**
@@ -405,5 +408,10 @@ class KLogger
             default:
                 return "$time - LOG -->";
         }
+    }
+
+    private static function isRunByBrowser()
+    {
+        return !defined('STDIN');
     }
 }
