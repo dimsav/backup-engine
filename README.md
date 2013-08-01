@@ -17,7 +17,8 @@ The backups are saved as zip files in the server and sent to your dropbox accoun
 
 1. This script can only be used in Unix systems (Linux/Mac), as we are using the zip command of the system.
 2. The function exec() should be available as we use it to zip our backups.
-3. The cURL extension is required if you want to use the dropbox uploader.
+3. The user executing the script must be able to write in the backups folder.
+4. The cURL extension is required if you want to use the dropbox uploader.
 
 ## Instructions
 
