@@ -15,7 +15,7 @@
         |--------------------------------------------------|
     */
 
-require_once  PATH .DS . 'MysqlBackup'. DS . 'MysqlBackup.php';
+require_once  dirname(__FILE__) . DS . 'MysqlBackup.php';
 $backup_obj = new MySQL_Backup();
 
 //----------------------- EDIT - REQUIRED SETUP VARIABLES -----------------------
