@@ -150,7 +150,7 @@ function sendFilesToDropbox($filePaths, $projectName)
         }
         catch (Exception $e)
         {
-            logError('Dropbox: '. $e->getMessage() . " ($projectName)");
+            logError('Dropbox: '. $e->getMessage() . " ($projectName) File: $filePath");
         }
     }
 }
