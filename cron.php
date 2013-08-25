@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'start.php');
+require_once(__DIR__.'/start.php');
 
 Utilities::createPathIfNotExisting(BACKUPS);
 
@@ -14,7 +14,7 @@ if (empty($projects))
 
 foreach ( $projects as $projectName => $project )
 {
-    $projectBackupPath = BACKUPS . DS . $projectName;
+    $projectBackupPath = BACKUPS . "/$projectName";
 
     Utilities::createPathIfNotExisting($projectBackupPath);
 
@@ -27,7 +27,7 @@ foreach ( $projects as $projectName => $project )
         $backup_obj->port     = $database['port'];
         $backup_obj->username = $database['username'];
         $backup_obj->password = $database['password'];
-        $backup_obj->backup_dir = $projectBackupPath . DS  ;
+        $backup_obj->backup_dir = "$projectBackupPath/";
         $backup_obj->fname_format = 'Y-m-d_H.i_';
 
         $output = 'Backup of database ' . $database['database'] . ': ';

@@ -15,7 +15,7 @@
         |--------------------------------------------------|
     */
 
-require_once  dirname(__FILE__) . DS . 'MysqlBackup.php';
+require_once  dirname(__FILE__) . '/MysqlBackup.php';
 $backup_obj = new MySQL_Backup();
 
 //----------------------- EDIT - REQUIRED SETUP VARIABLES -----------------------
@@ -44,7 +44,7 @@ $backup_obj->comments = true;
 
 //Directory on the server where the backup file will be placed. Used only if task parameter equals MSB_SAVE. Defaults to empty string.
 //Add directory separator in the end if used. Can be relative or absolute.
-$backup_obj->backup_dir = BACKUP_MYSQL_DIR . DS  ;
+$backup_obj->backup_dir = BACKUP_MYSQL_DIR . '/'  ;
 
 //First part of file name. Can be a website name. Defaults to empty string. If left to empty string, database name is used.
 $backup_obj->fname_prefix = '';

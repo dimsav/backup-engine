@@ -5,11 +5,10 @@ ini_set('display_errors', '1');
 
 set_time_limit ( 0 ); // Disable time limit
 
-define('DS', DIRECTORY_SEPARATOR);
-define('APP_PATH', dirname(__FILE__));
+define('APP_PATH', __DIR__);
 
-define('VENDORS', APP_PATH . DS . 'vendors');
-define('LOGS_PATH', APP_PATH . DS . 'logs');
+define('VENDORS', APP_PATH . '/vendors');
+define('LOGS_PATH', APP_PATH . '/logs');
 
 require_once(APP_PATH . "/config.php");
 require_once(VENDORS  . "/Utilities.php");

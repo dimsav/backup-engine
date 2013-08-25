@@ -4,7 +4,7 @@
 date_default_timezone_set('Europe/Berlin');
 
 // Set your backups folder
-define('BACKUPS', APP_PATH . DS . 'backups');
+define('BACKUPS', APP_PATH . '/backups');
 
 $config_zip = array(
     // Optional password for the zipped files. To skip the password, leave empty string.
