@@ -1,5 +1,5 @@
 .idea
-backups
-logs
-config.php
+/backups
+/logs
 /vendor
+/config
