@@ -1,4 +1,4 @@
-<?php namespace Dimsav\PhpMysqlBackup;
+<?php namespace Dimsav\Backup;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;

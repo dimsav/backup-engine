@@ -1,4 +1,4 @@
-<?php namespace Dimsav\PhpMysqlBackup;
+<?php namespace Dimsav\Backup;
 
 class Project {
 

@@ -1,4 +1,4 @@
-<?php namespace Dimsav\PhpMysqlBackup;
+<?php namespace Dimsav\Backup;
 
 use Illuminate\Config\FileLoader;
 use Illuminate\Filesystem\Filesystem;
