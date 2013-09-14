@@ -14,8 +14,8 @@ class Config {
         if ( ! self::$instance )
         {
             self::validate();
-            $fileLoader = new FileLoader(new Filesystem, __DIR__.'/../../..');
-            self::$instance = new Repository($fileLoader, 'config');
+            $fileLoader = new FileLoader(new Filesystem, __DIR__.'/../../../config');
+            self::$instance = new Repository($fileLoader, 'production');
         }
         return self::$instance->get($key, $default);
     }
