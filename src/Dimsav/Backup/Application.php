@@ -68,5 +68,12 @@ class Application {
             $streamHandler->setFormatter(new LineFormatter("[%datetime%] %level_name%: %message%\n"));
             $this->log->pushHandler($streamHandler);
         }
+
+        if (Config::get('app.debug', true))
+        {
+            $streamHandler = new StreamHandler('php://stderr', Logger::DEBUG);
+            $streamHandler->setFormatter(new LineFormatter("[%datetime%] %level_name%: %message%\n"));
+            $this->log->pushHandler($streamHandler);
+        }
     }
 }
