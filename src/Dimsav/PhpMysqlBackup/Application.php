@@ -1,5 +1,6 @@
 <?php namespace Dimsav\PhpMysqlBackup;
 
+use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -12,6 +13,8 @@ class Application {
     {
         $this->setup();
         if ($this->isLoggingEnabled()) $this->setupLog();
+
+        $this->log->addInfo('Initiating backup.');
 
     }
 
@@ -43,9 +46,10 @@ class Application {
             {
                 mkdir(dirname(Config::get('app.log')), 0777, true);
             }
-            $this->log->pushHandler(new StreamHandler(Config::get('app.log')));
+            $streamHandler = new StreamHandler(Config::get('app.log'));
+            $streamHandler->setFormatter(new LineFormatter("[%datetime%] %level_name%: %message%\n"));
+            $this->log->pushHandler($streamHandler);
         }
-
 
         if (Config::get('app.error_log'))
         {
@@ -53,8 +57,9 @@ class Application {
             {
                 mkdir(dirname(Config::get('app.error_log')), 0777, true);
             }
-            $this->log->pushHandler(new StreamHandler(Config::get('app.error_log'), Logger::NOTICE));
+            $streamHandler = new StreamHandler(Config::get('app.error_log'), Logger::NOTICE);
+            $streamHandler->setFormatter(new LineFormatter("[%datetime%] %level_name%: %message%\n"));
+            $this->log->pushHandler($streamHandler);
         }
-
     }
 }
