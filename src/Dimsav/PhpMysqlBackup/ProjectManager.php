@@ -2,19 +2,19 @@
 
 class ProjectManager {
 
-    private $projects = array();
+    private static $projects = array();
 
     public function getProjects()
     {
-        if ($this->projects) return $this->projects;
+        if (self::$projects) return self::$projects;
 
         $projectNames = array_keys(Config::get('projects.projects'));
 
         foreach ($projectNames as $projectName)
         {
-            $this->projects[] = new Project($projectName);
+            self::$projects[] = new Project($projectName);
         }
 
-        return $this->projects;
+        return self::$projects;
     }
 }
