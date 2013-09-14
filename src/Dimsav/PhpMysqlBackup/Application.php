@@ -1,11 +1,18 @@
 <?php namespace Dimsav\PhpMysqlBackup;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class Application {
+
+    /** @var  Logger */
+    private $log;
 
     public function run()
     {
         $this->setup();
+        if ($this->isLoggingEnabled()) $this->setupLog();
+
     }
 
     private function setup()
@@ -19,5 +26,35 @@ class Application {
         date_default_timezone_set(Config::get('app.timezone', 'Europe/Berlin'));
 
         set_time_limit (Config::get('app.time_limit', 0));
+
+        $this->log = new Logger('backups');
+    }
+
+    private function isLoggingEnabled()
+    {
+        return (Config::get('app.log') || Config::get('app.error_log'));
+    }
+
+    private function setupLog()
+    {
+        if (Config::get('app.log'))
+        {
+            if ( ! is_dir(dirname(Config::get('app.log'))))
+            {
+                mkdir(dirname(Config::get('app.log')), 0777, true);
+            }
+            $this->log->pushHandler(new StreamHandler(Config::get('app.log')));
+        }
+
+
+        if (Config::get('app.error_log'))
+        {
+            if ( ! is_dir(dirname(Config::get('app.error_log'))))
+            {
+                mkdir(dirname(Config::get('app.error_log')), 0777, true);
+            }
+            $this->log->pushHandler(new StreamHandler(Config::get('app.error_log'), Logger::NOTICE));
+        }
+
     }
 }

@@ -26,4 +26,17 @@ return array(
      * exist, the code will create it for you.
      */
     "backups_dir" => __DIR__ .'/../backups',
+
+    /*
+     * Path of the log file. It contains logs of all levels.
+     * To disable it, set it to false.
+     */
+    "log" => __DIR__ .'/../logs/log.txt',
+
+    /*
+     * Path of the error log file.
+     * To disable it, set it to false.
+     */
+    "error_log" => __DIR__ .'/../logs/errors.txt',
+
 );
