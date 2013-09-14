@@ -22,11 +22,10 @@ class Config {
 
     private static function validate()
     {
-        if ( ! is_dir(__DIR__.'/../../../config'))
+        $configDir = __DIR__.'/../../../config';
+        if ( ! is_dir($configDir))
         {
-            throw new \Exception("The configuration directory is missing.".
-                "\nPlease copy the directory config.ini as config ".
-                "and customize the files inside according your preferences.");
+            throw new \Exception("The configuration directory is missing. \n$configDir");
         }
     }
 }
