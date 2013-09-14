@@ -3,8 +3,51 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b3f8d2f0abbeddc87bce766b2be2ef2d",
+    "hash": "2e393b6e64c5cf26ab963e26be40a462",
     "packages": [
+        {
+            "name": "dimsav/unix-zipper",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dimsav/unix-zipper.git",
+                "reference": "37be35f015ab78be5545c0cc409f01741c0647cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dimsav/unix-zipper/zipball/37be35f015ab78be5545c0cc409f01741c0647cf",
+                "reference": "37be35f015ab78be5545c0cc409f01741c0647cf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Dimsav": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dimitrios Savvopoulos",
+                    "email": "ds@dimsav.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple compression package for Unix operating systems. \nUnixZipper is ideal for creating backups of your projects in unix servers.",
+            "homepage": "http://github.com/dimsav/unix-zipper",
+            "keywords": [
+                "compress",
+                "zip",
+                "zipper"
+            ],
+            "time": "2013-09-11 21:54:07"
+        },
         {
             "name": "illuminate/config",
             "version": "v4.0.7",
