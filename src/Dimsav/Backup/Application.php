@@ -14,6 +14,7 @@ class Application {
 
     public function __construct()
     {
+        $this->log = LoggerSingleton::getInstance();
         $this->projectManager = new ProjectManager();
     }
 
@@ -37,8 +38,6 @@ class Application {
         date_default_timezone_set(Config::get('app.timezone', 'Europe/Berlin'));
 
         set_time_limit (Config::get('app.time_limit', 0));
-
-        $this->log = new Logger('backups');
     }
 
     private function isLoggingEnabled()
