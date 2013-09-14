@@ -14,12 +14,16 @@ class Project {
     public function __construct($projectName)
     {
         $this->projectName = $projectName;
+        $this->determine();
+    }
 
+    private function determine()
+    {
         $this->paths      = (array) $this->getValueFromConfig('paths');
         $this->excludes   = (array) $this->getValueFromConfig('excludes');
         $this->password   = $this->getValueFromConfig('password');
 
-        $this->dbName     = Config::get("projects.projects.$projectName.database.name");
+        $this->dbName     = Config::get("projects.projects.$this->projectName.database.name");
 
         if ($this->dbName)
         {
@@ -27,41 +31,6 @@ class Project {
             $this->dbUsername = $this->getValueFromConfig('database.username');
             $this->dbPassword = $this->getValueFromConfig('database.password');
         }
-    }
-
-    public function getPaths()
-    {
-        return $this->paths;
-    }
-
-    public function getExcludes()
-    {
-        return $this->excludes;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getDbName()
-    {
-        return $this->dbName;
-    }
-
-    public function getDbHost()
-    {
-        return $this->dbHost;
-    }
-
-    public function getDbUsername()
-    {
-        return $this->dbUsername;
-    }
-
-    public function getDbPassword()
-    {
-        return $this->dbPassword;
     }
 
     private function getValueFromConfig($parameter)
