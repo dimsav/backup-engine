@@ -8,6 +8,14 @@ class Application {
 
     /** @var  Logger */
     private $log;
+    /** @var  ProjectManager */
+    private $projectManager;
+
+
+    public function __construct()
+    {
+        $this->projectManager = new ProjectManager();
+    }
 
     public function run()
     {
