@@ -16,13 +16,14 @@ class Application {
     {
         $this->log = LoggerSingleton::getInstance();
         $this->projectManager = new ProjectManager();
+
+        $this->setup();
+        $this->setupLog();
+        $this->validate();
     }
 
     public function run()
     {
-        $this->setup();
-        if ($this->isLoggingEnabled()) $this->setupLog();
-
         $this->log->addInfo('Initiating backup.');
 
         $this->projectManager->compressProjectsFiles();
@@ -34,11 +35,6 @@ class Application {
         date_default_timezone_set(Config::get('app.timezone', 'Europe/Berlin'));
 
         set_time_limit (Config::get('app.time_limit', 0));
-    }
-
-    private function isLoggingEnabled()
-    {
-        return (Config::get('app.log') || Config::get('app.error_log'));
     }
 
     private function setupLog()
@@ -70,6 +66,15 @@ class Application {
             $streamHandler = new StreamHandler('php://stderr', Logger::DEBUG);
             $streamHandler->setFormatter(new LineFormatter("[%datetime%] %level_name%: %message%\n"));
             $this->log->pushHandler($streamHandler);
+        }
+    }
+
+    private function validate()
+    {
+        if ( ! count(Config::get('app.projects')))
+        {
+            $this->log->addAlert("You don't have any projects defined. Terminating.");
+            die;
         }
     }
 }
