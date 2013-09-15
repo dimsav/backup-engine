@@ -10,15 +10,19 @@ return array(
      * all the backups will be compressed using this password.
      */
 
-    "default" => array(
-        "database" => array(
-            "host" => "localhost",
-            "port" => "3306",
-            "username" => "db-user",
-            "password" => "db-pass",
+    /*
+        "default" => array(
+
+            "database" => array(
+                "host" => "localhost",
+                "port" => "3306",
+                "username" => "db-user",
+                "password" => "db-pass",
+            ),
+            "password" => "secret"
         ),
-        "password" => "secret"
-    ),
+    */
+
 
     /*
      * Define in this array the projects you wish to backup.
@@ -39,16 +43,20 @@ return array(
          * For this project we are overriding the default
          * password with another one.
          */
-        "project-1" => array(
 
-            "database" => array(
-                "name"    =>"db-name",
-                "username"=>"db-user",
-                "password"=>"db-pass",
+        /*
+            "project-1" => array(
+
+                "database" => array(
+                    "name"    =>"db-name",
+                    "username"=>"db-user",
+                    "password"=>"db-pass",
+                ),
+
+                "password" => "another-secret",
             ),
+        */
 
-            "password" => "another-secret",
-        ),
 
         /*
          * For this project we backup both some files
@@ -66,34 +74,41 @@ return array(
          * contents of these directories will be skipped
          * recursively.
          */
-        "project-2" => array(
 
-            "database" => array(
-                "name"=>"db-name",
-            ),
+        /*
+            "project-2" => array(
 
-            "paths" => array(
-                "/absolute/project/folder/path",
-                "/absolute/project/file/text.txt",
-            ),
+                "database" => array(
+                    "name"=>"db-name",
+                ),
 
-            "excludes" => array(
-                "/absolute/project/folder/path/cache",
-                "/absolute/project/folder/path/logs",
-                "/absolute/project/folder/path/bigfile.tar",
+                "paths" => array(
+                    "/absolute/project/folder/path",
+                    "/absolute/project/file/text.txt",
+                ),
+
+                "excludes" => array(
+                    "/absolute/project/folder/path/cache",
+                    "/absolute/project/folder/path/logs",
+                    "/absolute/project/folder/path/bigfile.tar",
+                ),
             ),
-        ),
+        */
+
 
         /*
          * Here we disable for project-3 the default password,
          * as we don't want any password for this project.
          */
-        "project-3" => array(
-            "paths" => array(
-                "/project/folder",
+
+        /*
+            "project-3" => array(
+                "paths" => array(
+                    "/project/folder",
+                ),
+                "password" => null,
             ),
-            "password" => null,
-        )
+        */
 
     ),
 
