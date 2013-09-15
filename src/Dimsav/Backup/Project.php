@@ -2,6 +2,9 @@
 
 class Project {
 
+    /** @var LoggerSingleton  */
+    private $log;
+
     private $projectName;
     private $paths = array();
     private $excludes = array();
@@ -13,6 +16,7 @@ class Project {
 
     public function __construct($projectName)
     {
+        $this->log = LoggerSingleton::getInstance();
         $this->projectName = $projectName;
         $this->determine();
     }

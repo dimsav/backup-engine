@@ -2,7 +2,15 @@
 
 class ProjectManager {
 
+    /** @var LoggerSingleton  */
+    private $log;
+
     private static $projects = array();
+
+    public function __construct()
+    {
+        $this->log = LoggerSingleton::getInstance();
+    }
 
     public function getProjects()
     {
