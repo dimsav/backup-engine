@@ -39,4 +39,13 @@ return array(
      */
     "error_log" => __DIR__ .'/../logs/errors.txt',
 
+    /*
+     * Timestamp prefix added to every generated backup file.
+     * This string is added to the date() function.
+     *
+     * Do not leave this empty, as the older backup files
+     * will be over-written by the new ones.
+     */
+    "timestamp_prefix" => "Y.m.d.H.i.",
+
 );
