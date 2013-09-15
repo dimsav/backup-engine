@@ -25,4 +25,15 @@ class ProjectManager {
 
         return self::$projects;
     }
+
+    public function compressProjectsFiles()
+    {
+        $this->log->addInfo("Compressing project's files");
+
+        /** @var Project $project */
+        foreach ($this->getProjects() as $project)
+        {
+            $project->compressFiles();
+        }
+    }
 }

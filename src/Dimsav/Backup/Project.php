@@ -1,9 +1,13 @@
 <?php namespace Dimsav\Backup;
 
+use Dimsav\UnixZipper;
+
 class Project {
 
     /** @var LoggerSingleton  */
     private $log;
+    /** @var  \Dimsav\UnixZipper */
+    private $zipper;
 
     private $projectName;
     private $paths = array();
@@ -14,11 +18,40 @@ class Project {
     private $dbUsername;
     private $dbPassword;
 
+    private $generatedFiles = array();
+
     public function __construct($projectName)
     {
         $this->log = LoggerSingleton::getInstance();
+        $this->zipper = new UnixZipper();
         $this->projectName = $projectName;
         $this->determine();
+    }
+
+    public function compressFiles()
+    {
+        $this->log->addInfo("Compressing files of project $this->projectName");
+        foreach ($this->paths as $path)
+        {
+            $this->zipper->add($path);
+        }
+        foreach ($this->excludes as $exclude)
+        {
+            $this->zipper->exclude($exclude);
+        }
+        if ($this->password)
+        {
+            $this->zipper->setPassword($this->password);
+        }
+        $timestamp = date(Config::get('app.timestamp_prefix', "Y.m.d.H.i."));
+        $this->zipper->setDestination(Config::get('app.backups_dir')."/{$timestamp}{$this->projectName}.zip");
+        $this->zipper->compress();
+        $this->addToGeneratedFiles($this->zipper->getFiles());
+    }
+
+    private function addToGeneratedFiles($filesArray)
+    {
+        $this->generatedFiles = array_merge($this->generatedFiles, $filesArray);
     }
 
     private function determine()

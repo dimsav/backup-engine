@@ -25,6 +25,8 @@ class Application {
 
         $this->log->addInfo('Initiating backup.');
 
+        $this->projectManager->compressProjectsFiles();
+
     }
 
     private function setup()
