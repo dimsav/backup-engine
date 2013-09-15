@@ -71,7 +71,7 @@ class Application {
 
     private function validate()
     {
-        if ( ! count(Config::get('app.projects')))
+        if ( ! count(Config::get('projects.projects')))
         {
             $this->log->addAlert("You don't have any projects defined. Terminating.");
             die;
