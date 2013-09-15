@@ -2,19 +2,19 @@
 
 use Monolog\Logger;
 
-class LoggerSingleton {
+class LoggerSingleton extends Logger {
 
     /** @var LoggerSingleton */
     private static $instance;
 
     /**
-     * @return Logger
+     * @return LoggerSingleton
      */
     public static function getInstance()
     {
         if ( ! self::$instance)
         {
-            self::$instance = new Logger('backups');
+            self::$instance = new static('backups');
         }
         return self::$instance;
     }
