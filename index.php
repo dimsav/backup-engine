@@ -1,17 +1,5 @@
 <?php
 
-require_once(__DIR__.'/start.php');
-
-Utilities::createPathIfNotExisting(BACKUPS);
-
-$log->logInfo('Initiating backup...');
-
-if (empty($projects))
-{
-    logError('$projects variable is not defined. Please make sure the config.php is included.');
-    die;
-}
-
 foreach ( $projects as $projectName => $project )
 {
     $projectBackupPath = BACKUPS . "/$projectName";
@@ -48,30 +36,6 @@ foreach ( $projects as $projectName => $project )
     // Files backup
     $projectPaths         = getProjectPaths($project);
     $projectPathsExcludes = getProjectPathsExcludes($project);
-
-    foreach ($projectPaths as $projectPath)
-    {
-        $unix_zipper = new UnixZipper($log, new Utilities());
-        $unix_zipper->setPathToBeZipped($projectPath);
-        $unix_zipper->setZipFileDirectoryPath($projectBackupPath);
-        $unix_zipper->setExcludes($projectPathsExcludes);
-
-        if ( getZipPassword() )
-        {
-            $unix_zipper->setPassword(getZipPassword());
-        }
-
-        if ( $unix_zipper->compress() )
-        {
-            $upload_to_dropbox[$projectName][] = $unix_zipper->getZipFilePath();
-
-            $log->logInfo("Created file ". $unix_zipper->getZipFileName() . " ($projectName).");
-        }
-        else
-        {
-            logError("$projectPath could not be compressed. ($projectName).");
-        }
-    }
 }
 
 // Upload zip files to dropbox
@@ -94,22 +58,6 @@ if ( !empty($config_dropbox) )
 
 // Helper functions
 
-function getProjectPaths($project){
-    $paths = !isset($project['paths']) ? array() : stringOrArrayToArray($project['paths']);
-    return getValidPathsOnlyAndLog($paths);
-}
-
-function getProjectPathsExcludes($project)
-{
-    $paths = !isset($project['exclude_paths']) ? array() : stringOrArrayToArray($project['exclude_paths']);
-    return getValidPathsOnlyAndLog($paths);
-}
-
-function stringOrArrayToArray($input)
-{
-    return is_array($input) ? $input : array($input);
-}
-
 function getValidPathsOnlyAndLog(&$paths)
 {
     foreach ($paths as $key => $path)
@@ -121,18 +69,6 @@ function getValidPathsOnlyAndLog(&$paths)
         }
     }
     return $paths;
-}
-
-function logError($message)
-{
-    global $log;
-    $log->logError($message);
-}
-
-function getZipPassword()
-{
-    global $config_zip;
-    return isset($config_zip['password']) ? $config_zip['password'] : false;
 }
 
 function sendFilesToDropbox($filePaths, $projectName)
@@ -160,16 +96,4 @@ function getDropboxDestinationFolder($projectName)
     global $config_dropbox;
     $dropboxBackupsFolder = isset($config_dropbox['path']) && $config_dropbox['path'] ? $config_dropbox['path'] : 'Backups';
     return  "$dropboxBackupsFolder/$projectName";
-}
-
-function getLogFilesPaths()
-{
-    $logFiles = array();
-
-    foreach(scandir(LOGS_PATH) as $file)
-    {
-        if (Utilities::getFileNameExtension($file) == 'txt')
-            $logFiles[] = LOGS_PATH."/$file";
-    }
-    return $logFiles;
 }
