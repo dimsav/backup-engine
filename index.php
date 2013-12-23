@@ -4,7 +4,7 @@ foreach ( $projects as $projectName => $project )
 {
     $projectBackupPath = BACKUPS . "/$projectName";
 
-    Utilities::createPathIfNotExisting($projectBackupPath);
+    \Dimsav\Utilities\FileUtilities::createPathIfNotExisting($projectBackupPath);
 
     // Mysql backup
     if ( isset($project['database']) && $database = $project['database'] )
@@ -62,7 +62,7 @@ function getValidPathsOnlyAndLog(&$paths)
 {
     foreach ($paths as $key => $path)
     {
-        if (!Utilities::isValidPath($path))
+        if (!\Dimsav\Utilities\FileUtilities::isValidPath($path))
         {
             logError("The path $path is not a directory or file.");
             unset($paths[$key]);
