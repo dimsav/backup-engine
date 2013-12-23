@@ -1,11 +1,11 @@
-<?php
+<?php namespace Dimsav\Utilities;
 
-class Utilities
-{
+class FileUtilities {
+
     /*
      * Creates directory recursively
      */
-    public static function createPathIfNotExisting($path)
+    public function createPathIfNotExisting($path)
     {
         if (!is_dir($path))
         {
@@ -23,5 +23,4 @@ class Utilities
     {
         return is_dir($path) || is_file($path);
     }
-
 }
