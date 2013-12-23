@@ -4,29 +4,24 @@ use Illuminate\Config\FileLoader;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Config\Repository;
 
-
 class Config {
 
-    private static $instance;
+    private $env;
+    private $fileLoader;
+    private $repository;
 
-    public static function get($key, $default = null)
+    public function __construct($env = null)
     {
-        if ( ! self::$instance )
-        {
-            self::validate();
-            $fileLoader = new FileLoader(new Filesystem, __DIR__.'/../../../config');
-            self::$instance = new Repository($fileLoader, 'production');
-        }
-        return self::$instance->get($key, $default);
+        $this->path = __DIR__.'/../../../config';
+        $this->env  = $env ?: 'production';
+
+        $this->fileLoader = new FileLoader(new Filesystem, $this->path);
+        $this->repository = new Repository($this->fileLoader, $this->env);
     }
 
-    private static function validate()
+    public function get($key, $default = null)
     {
-        $configDir = __DIR__.'/../../../config';
-        if ( ! is_dir($configDir))
-        {
-            throw new \Exception("The configuration directory is missing. \n$configDir");
-        }
+        var_dump($key);
+        return $this->repository->get($key, $default);
     }
 }
-
