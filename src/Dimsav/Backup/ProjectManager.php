@@ -4,26 +4,12 @@ class ProjectManager {
 
     /** @var LoggerSingleton  */
     private $log;
+    private $compressor;
 
-    private static $projects = array();
-
-    public function __construct()
+    public function __construct(ProjectCompressor $compressor)
     {
+        $this->compressor = $compressor;
         $this->log = LoggerSingleton::getInstance();
-    }
-
-    public function getProjects()
-    {
-        if (self::$projects) return self::$projects;
-
-        $projectNames = array_keys(Config::get('projects.projects'));
-
-        foreach ($projectNames as $projectName)
-        {
-            self::$projects[] = new Project($projectName);
-        }
-
-        return self::$projects;
     }
 
     public function compressProjectsFiles()
