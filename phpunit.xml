@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="true"
+         bootstrap="tests/bootstrap.php"
+        >
+    <php>
+        <ini name="display_errors" value="on"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="Main Tests Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+
