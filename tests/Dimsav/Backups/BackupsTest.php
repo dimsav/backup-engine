@@ -62,7 +62,7 @@ class BackupsTest extends PHPUnit_Framework_TestCase {
         $repo = new ProjectRepository($this->config);
         $projects = $repo->all();
 
-        $this->assertGreaterThanOrEqual(1, count($projects));
+        $this->assertEquals(count($this->config->get('projects.projects')), count($projects));
         $this->assertInstanceOf('Dimsav\Backup\Project', $projects[0]);
     }
 }

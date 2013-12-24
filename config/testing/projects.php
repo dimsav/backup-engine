@@ -28,6 +28,12 @@ return array(
             ),
             "password" => null,
         ),
+        "project-db-only" => array(
+
+            "database" => array(
+                "name"    =>"testing-db-name",
+            ),
+        ),
 
     ),
 
