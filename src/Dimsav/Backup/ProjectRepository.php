@@ -25,4 +25,20 @@ class ProjectRepository {
         return $projects;
     }
 
+    /**
+     * @return Project[]
+     */
+    public function withPaths()
+    {
+        $projects = array();
+
+        foreach ($this->all() as $project)
+        {
+            if ($project->getPaths())
+                $projects[] = $project;
+        }
+
+        return $projects;
+    }
+
 }

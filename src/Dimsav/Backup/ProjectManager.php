@@ -27,7 +27,7 @@ class ProjectManager {
 
     private function compressProjectsPaths()
     {
-        foreach ($this->repo->all() as $project)
+        foreach ($this->repo->withPaths() as $project)
         {
             $this->log->info("Compressing project " .$project->getName());
             $compressor = new ProjectCompressor($project, new UnixZipper());
