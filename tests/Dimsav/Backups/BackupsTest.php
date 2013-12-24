@@ -28,15 +28,13 @@ class BackupsTest extends PHPUnit_Framework_TestCase {
         $this->assertSame(
             $project->getPaths(),
             array(
-                "/absolute/project/folder/path",
-                "/absolute/project/file/text.txt",
+                realpath(__DIR__."/../../../src"),
             )
         );
         $this->assertSame(
             $project->getExcludes(),
             array(
-                "/absolute/project/folder/path/cache",
-                "/absolute/project/folder/path/logs",
+                realpath(__DIR__."/../../../src/Dimsav/Backup/Config.php"),
             )
         );
         $this->assertSame($project->getDbName(), "testing-db-name");
@@ -64,7 +62,7 @@ class BackupsTest extends PHPUnit_Framework_TestCase {
         $repo = new ProjectRepository($this->config);
         $projects = $repo->all();
 
-        $this->assertGreaterThan(1, count($projects));
+        $this->assertGreaterThanOrEqual(1, count($projects));
         $this->assertInstanceOf('Dimsav\Backup\Project', $projects[0]);
     }
 }

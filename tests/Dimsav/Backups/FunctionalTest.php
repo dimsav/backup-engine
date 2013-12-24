@@ -19,6 +19,13 @@ class FunctionalTest extends PHPUnit_Framework_TestCase {
         $app->run();
 
         $this->assertFileExists(realpath($this->config->get('app.log')));
+
+        $file = $this->config->get('app.backups_dir') . '/'
+            . date($this->config->get('app.timestamp_prefix'))
+            . 'testing-project-1.zip';
+
+        $this->assertFileExists($file);
+        $this->assertGreaterThan(0, filesize($file));
     }
 
 }

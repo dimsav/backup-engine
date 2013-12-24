@@ -1,25 +1,37 @@
 <?php namespace Dimsav\Backup;
 
+use Dimsav\UnixZipper;
+
 class ProjectManager {
 
-    /** @var LoggerSingleton  */
-    private $log;
-    private $compressor;
+    /** @var \Dimsav\Backup\Config $config */
+    private $config;
 
-    public function __construct(ProjectCompressor $compressor)
+    /** @var \Dimsav\Backup\Logger $log */
+    private $log;
+
+    /** @var \Dimsav\Backup\ProjectRepository $repo */
+    private $repo;
+
+    public function __construct(Config $config, Logger $log, ProjectRepository $repo)
     {
-        $this->compressor = $compressor;
-        $this->log = LoggerSingleton::getInstance();
+        $this->config = $config;
+        $this->log    = $log;
+        $this->repo   = $repo;
     }
 
-    public function compressProjectsFiles()
+    public function backup()
     {
-        $this->log->addInfo("Compressing project's files");
+        $this->compressProjectsPaths();
+    }
 
-        /** @var Project $project */
-        foreach ($this->getProjects() as $project)
+    private function compressProjectsPaths()
+    {
+        foreach ($this->repo->all() as $project)
         {
-            $project->compressFiles();
+            $this->log->info("Compressing project " .$project->getName());
+            $compressor = new ProjectCompressor($project, new UnixZipper());
+            $compressor->compress();
         }
     }
 }

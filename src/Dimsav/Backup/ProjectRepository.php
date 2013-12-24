@@ -9,6 +9,9 @@ class ProjectRepository {
         $this->config = $config;
     }
 
+    /**
+     * @return Project[]
+     */
     public function all()
     {
         $projects = array();
