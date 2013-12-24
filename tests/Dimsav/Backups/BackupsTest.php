@@ -5,6 +5,7 @@ use Dimsav\Backup\ProjectRepository;
 
 class BackupsTest extends PHPUnit_Framework_TestCase {
 
+    /** @var \Dimsav\Backup\Config */
     private $config;
 
     public function setUp()
