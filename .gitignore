@@ -4,3 +4,4 @@ composer.lock
 /logs
 /vendor
 /config/production
+/tests/temp

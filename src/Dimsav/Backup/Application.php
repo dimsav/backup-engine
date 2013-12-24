@@ -6,14 +6,16 @@ class Application {
     private $log;
 
 
-    public function __construct()
+    public function __construct(Config $config = null)
     {
-        $this->config = new Config;
+        $this->config = $config ?: new Config;
         $this->log = new Logger($this->config);
     }
 
     public function run()
     {
         $this->log->info('Initiating backup.');
+
+        $this->log->info('End of backup script.');
     }
 }
