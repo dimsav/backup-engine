@@ -7,10 +7,10 @@ class FunctionalTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->config = new \Dimsav\Backup\Config('testing');
-
-        $tempDir = dirname($this->config->get('app.log'));
+        $tempDir = __DIR__.'/../../temp';
         if (is_dir($tempDir)) exec('rm -rf '.realpath($tempDir));
+
+        $this->config = new \Dimsav\Backup\Config('testing');
     }
 
     public function testAppRunsWithLogs()
