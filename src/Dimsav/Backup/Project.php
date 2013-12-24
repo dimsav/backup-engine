@@ -10,6 +10,7 @@ class Project {
     private $password;
 
     private $dbHost;
+    private $dbPort;
     private $dbName;
     private $dbUsername;
     private $dbPassword;
@@ -27,6 +28,7 @@ class Project {
         if ($this->dbName)
         {
             $this->dbHost     = $this->getConfig('database.host');
+            $this->dbPort     = $this->getConfig('database.port');
             $this->dbUsername = $this->getConfig('database.username');
             $this->dbPassword = $this->getConfig('database.password');
         }
@@ -55,6 +57,11 @@ class Project {
     public function getDbHost()
     {
         return $this->dbHost;
+    }
+
+    public function getDbPort()
+    {
+        return $this->dbPort;
     }
 
     public function getDbName()
