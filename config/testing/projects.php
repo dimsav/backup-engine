@@ -58,58 +58,14 @@ return array(
             "password" => null,
         ),
 
+        "testing-project-2" => array(
 
-        /*
-         * For this project we backup both some files
-         * and the database.
-         *
-         * We use the default database settings, so we
-         * define only the database name.
-         *
-         * Under "paths" we put a list of absolute paths
-         * of directories or files.
-         *
-         * Under "excludes" we put a list of absolute paths
-         * of directories or files that should not be
-         * included in the compressed backup files. The
-         * contents of these directories will be skipped
-         * recursively.
-         */
-
-        /*
-            "project-2" => array(
-
-                "database" => array(
-                    "name"=>"db-name",
-                ),
-
-                "paths" => array(
-                    "/absolute/project/folder/path",
-                    "/absolute/project/file/text.txt",
-                ),
-
-                "excludes" => array(
-                    "/absolute/project/folder/path/cache",
-                    "/absolute/project/folder/path/logs",
-                    "/absolute/project/folder/path/bigfile.tar",
-                ),
+            "paths" => array(
+                "/absolute/project/folder/path",
+                "/absolute/project/file/text.txt",
             ),
-        */
-
-
-        /*
-         * Here we disable for project-3 the default password,
-         * as we don't want any password for this project.
-         */
-
-        /*
-            "project-3" => array(
-                "paths" => array(
-                    "/project/folder",
-                ),
-                "password" => null,
-            ),
-        */
+            "password" => null,
+        ),
 
     ),
 

@@ -1,6 +1,7 @@
 <?php
 
 use Dimsav\Backup\Project;
+use Dimsav\Backup\ProjectRepository;
 
 class BackupsTest extends PHPUnit_Framework_TestCase {
 
@@ -55,5 +56,14 @@ class BackupsTest extends PHPUnit_Framework_TestCase {
     {
         $project = new Project($this->config, 'testing-project-1');
         $this->assertSame($project->getPassword(), null);
+    }
+
+    public function testGetAllProjects()
+    {
+        $repo = new ProjectRepository($this->config);
+        $projects = $repo->all();
+
+        $this->assertGreaterThan(1, count($projects));
+        $this->assertInstanceOf('Dimsav\Backup\Project', $projects[0]);
     }
 }

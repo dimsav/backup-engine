@@ -21,7 +21,6 @@ class Config {
 
     public function get($key, $default = null)
     {
-        var_dump($key);
         return $this->repository->get($key, $default);
     }
 }
