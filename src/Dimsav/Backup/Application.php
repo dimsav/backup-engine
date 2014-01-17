@@ -15,10 +15,10 @@ class Application {
 
     public function run()
     {
-        $this->log->info('Initiating backup.');
+        $this->log->info('Initiating...');
 
         $this->manager->backup();
 
-        $this->log->info('End of backup script.');
+        $this->log->info('End of backup.');
     }
 }
