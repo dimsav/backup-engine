@@ -1,7 +1,7 @@
 .idea
-composer.lock
 /backups
 /logs
 /vendor
 /config/production
 /tests/temp
+/bin

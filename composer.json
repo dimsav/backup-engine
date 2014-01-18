@@ -22,7 +22,12 @@
         "monolog/monolog": "1.*",
         "dimsav/unix-zipper": "1.*",
         "jakajancar/dropboxuploader": "1.1.12"
-
+    },
+    "require-dev": {
+        "behat/behat": "2.5.*@stable"
+    },
+    "config": {
+        "bin-dir": "bin/"
     },
     "repositories": [
         {
