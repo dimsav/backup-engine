@@ -29,4 +29,9 @@ class TestConfigHelper {
     {
         return $this->config->get('app.backups_dir')."/{$projectName}";
     }
+
+    public function get($key)
+    {
+        return $this->config->get($key);
+    }
 } 

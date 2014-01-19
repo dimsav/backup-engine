@@ -70,4 +70,12 @@ class FeatureContext extends BehatContext
 
         assertEquals($count, $found);
     }
+
+    /**
+     * @Given /^The log file exists$/
+     */
+    public function theLogFileExists()
+    {
+        assertFileExists(realpath($this->configHelper->get('app.log')));
+    }
 }
