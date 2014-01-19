@@ -8,3 +8,7 @@ Feature: Backups on local system
     Then  I should see a folder named "test-1" in the backups directory
     And   The backup folder of project "test-1" should contain 1 file of type "zip"
     And   The log file exists
+
+  Scenario: Define a base path for projects
+    Given I run the app using the project "test-2"
+    Then  The backup folder of project "test-2" should contain 1 file of type "zip"
