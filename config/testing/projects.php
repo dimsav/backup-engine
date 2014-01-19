@@ -15,7 +15,7 @@ return array(
 
     "projects" => array(
 
-        "testing-project-1" => array(
+        "test-1" => array(
 
             "database" => array(
                 "name"    =>"testing-db-name",
@@ -28,7 +28,7 @@ return array(
             ),
             "password" => null,
         ),
-        "project-db-only" => array(
+        "test-2" => array(
 
             "database" => array(
                 "name"    =>"testing-db-name",

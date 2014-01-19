@@ -24,7 +24,8 @@
         "jakajancar/dropboxuploader": "1.1.12"
     },
     "require-dev": {
-        "behat/behat": "2.5.*@stable"
+        "behat/behat": "2.5.*@stable",
+        "phpunit/phpunit": "3.7.*"
     },
     "config": {
         "bin-dir": "bin/"

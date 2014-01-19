@@ -26,6 +26,11 @@ class Config {
         return $this->repository->get($key, $default);
     }
 
+    public function set($key, $value)
+    {
+        $this->repository->set($key, $value);
+    }
+
     private function setupIni()
     {
         if ($this->get('app.debug', true))

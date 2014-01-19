@@ -22,11 +22,7 @@ class ProjectCompressor {
 
         $this->zipper->setDestination($this->project->getBackupFile('zip'));
         $this->zipper->compress();
-    }
-
-    public function getCompressedFiles()
-    {
-        return $this->zipper->getFiles();
+        $this->project->addToGeneratedFiles($this->zipper->getFiles());
     }
 
     private function addPaths()

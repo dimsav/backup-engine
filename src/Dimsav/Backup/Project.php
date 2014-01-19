@@ -15,6 +15,8 @@ class Project {
     private $dbUsername;
     private $dbPassword;
 
+    private $generatedFiles = array();
+
     public function __construct(Config $config, $projectName)
     {
         $this->config = $config;
@@ -39,7 +41,7 @@ class Project {
         $timestamp = date($this->config->get('app.timestamp_prefix', "Y.m.d.H.i."));
 
         $file = $this->config->get('app.backups_dir');
-        $file.= "/{$timestamp}{$this->name}";
+        $file.= "/{$this->name}/{$timestamp}{$this->name}";
         $file.= $extension ? ".{$extension}" : '';
         return $file;
     }
@@ -87,6 +89,11 @@ class Project {
     public function getDbPassword()
     {
         return $this->dbPassword;
+    }
+
+    public function addToGeneratedFiles(array $files)
+    {
+        $this->generatedFiles = array_merge($this->generatedFiles, $files);
     }
 
     private function getConfig($parameter)
