@@ -15,11 +15,14 @@ class Project {
     private $dbUsername;
     private $dbPassword;
 
+    private $generatedFiles = array();
+
     public function __construct(Config $config, $projectName)
     {
         $this->config = $config;
 
         $this->name     = $projectName;
+        $this->basePath = $this->getConfig('base-path');
         $this->paths    = (array) $this->getConfig('paths');
         $this->excludes = (array) $this->getConfig('excludes');
         $this->password = $this->getConfig('password');
@@ -39,7 +42,7 @@ class Project {
         $timestamp = date($this->config->get('app.timestamp_prefix', "Y.m.d.H.i."));
 
         $file = $this->config->get('app.backups_dir');
-        $file.= "/{$timestamp}{$this->name}";
+        $file.= "/{$this->name}/{$timestamp}{$this->name}";
         $file.= $extension ? ".{$extension}" : '';
         return $file;
     }
@@ -47,6 +50,11 @@ class Project {
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getBasePath()
+    {
+        return $this->basePath;
     }
 
     public function getPaths()
@@ -87,6 +95,11 @@ class Project {
     public function getDbPassword()
     {
         return $this->dbPassword;
+    }
+
+    public function addToGeneratedFiles(array $files)
+    {
+        $this->generatedFiles = array_merge($this->generatedFiles, $files);
     }
 
     private function getConfig($parameter)

@@ -3,7 +3,7 @@
 return array(
 
     "default" => array(
-
+        "base-path" => realpath(__DIR__."/../../"),
         "database" => array(
             "host" => "localhost",
             "port" => "3306",
@@ -15,7 +15,7 @@ return array(
 
     "projects" => array(
 
-        "testing-project-1" => array(
+        "test-1" => array(
 
             "database" => array(
                 "name"    =>"testing-db-name",
@@ -28,11 +28,9 @@ return array(
             ),
             "password" => null,
         ),
-        "project-db-only" => array(
-
-            "database" => array(
-                "name"    =>"testing-db-name",
-            ),
+        "test-2" => array(
+            "base-path" => realpath(__DIR__."/../../src"),
+            "paths" => array('Dimsav'),
         ),
 
     ),

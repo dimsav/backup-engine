@@ -22,33 +22,29 @@ class ProjectCompressor {
 
         $this->zipper->setDestination($this->project->getBackupFile('zip'));
         $this->zipper->compress();
-    }
-
-    public function getCompressedFiles()
-    {
-        return $this->zipper->getFiles();
+        $this->project->addToGeneratedFiles($this->zipper->getFiles());
     }
 
     private function addPaths()
     {
-        foreach ($this->project->getPaths() as $path)
-        {
+        if ($this->project->getBasePath()) {
+            $this->zipper->setAbsolutePathAsBase($this->project->getBasePath());
+        }
+        foreach ($this->project->getPaths() as $path) {
             $this->zipper->add($path);
         }
     }
 
     private function addExcludes()
     {
-        foreach ($this->project->getExcludes() as $exclude)
-        {
+        foreach ($this->project->getExcludes() as $exclude) {
             $this->zipper->exclude($exclude);
         }
     }
 
     private function addPassword()
     {
-        if ($this->project->getPassword())
-        {
+        if ($this->project->getPassword()) {
             $this->zipper->setPassword($this->project->getPassword());
         }
     }
