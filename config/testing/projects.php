@@ -3,7 +3,7 @@
 return array(
 
     "default" => array(
-
+        "base-path" => realpath(__DIR__."/../../"),
         "database" => array(
             "host" => "localhost",
             "port" => "3306",

@@ -65,4 +65,12 @@ class BackupsTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(count($this->config->get('projects.projects')), count($projects));
         $this->assertInstanceOf('Dimsav\Backup\Project', $projects[0]);
     }
+
+    public function testBasePathInProjectOverridesTheDefault()
+    {
+        $project = new Project($this->config, 'test-1');
+        $this->assertEquals(realpath(__DIR__."/../../../"), $project->getBasePath());
+        $project = new Project($this->config, 'test-2');
+        $this->assertEquals(realpath(__DIR__."/../../../src"), $project->getBasePath());
+    }
 }
