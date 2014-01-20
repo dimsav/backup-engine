@@ -17,4 +17,11 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
         $project = new Project($this->config, 'test-3');
         $this->assertSame($project->getDbName(), "test_3");
     }
+
+    public function testDatabaseConnectionExists()
+    {
+        $project = new Project($this->config, 'test-3');
+        mysqli_connect($project->getDbHost(), $project->getDbUsername(), $project->getDbPassword(), $project->getDbName());
+        $this->assertEquals(0, mysqli_connect_errno());
+    }
 }
