@@ -37,18 +37,22 @@ class BackupsTest extends PHPUnit_Framework_TestCase {
                 realpath(__DIR__."/../../../src/Dimsav/Backup/Config.php"),
             )
         );
-        $this->assertSame($project->getDbName(), "testing-db-name");
+    }
 
+    public function testDatabaseDetermination()
+    {
+        $project = new Project($this->config, 'test-3');
+        $this->assertSame($project->getDbName(), "testing-db-name");
     }
 
     public function testProjectDefaults()
     {
-        $project = new Project($this->config, 'test-1');
+        $project = new Project($this->config, 'test-3');
 
         $this->assertSame($project->getDbHost(), "localhost");
         $this->assertSame($project->getDbPort(), "3306");
-        $this->assertSame($project->getDbUsername(), "db-user");
-        $this->assertSame($project->getDbPassword(), "db-pass");
+        $this->assertSame($project->getDbUsername(), "root");
+        $this->assertSame($project->getDbPassword(), "password");
     }
 
     public function testProjectOverridingDefaults()

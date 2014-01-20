@@ -7,8 +7,8 @@ return array(
         "database" => array(
             "host" => "localhost",
             "port" => "3306",
-            "username" => "db-user",
-            "password" => "db-pass",
+            "username" => "root",
+            "password" => "password",
         ),
         "password" => "testing-default-secret"
     ),
@@ -17,9 +17,6 @@ return array(
 
         "test-1" => array(
 
-            "database" => array(
-                "name"    =>"testing-db-name",
-            ),
             "paths" => array(
                 realpath(__DIR__."/../../src"),
             ),
@@ -32,7 +29,11 @@ return array(
             "base-path" => realpath(__DIR__."/../../src"),
             "paths" => array('Dimsav'),
         ),
-
+        "test-3" => array(
+            "database" => array(
+                "name"    =>"test_3",
+            ),
+        )
     ),
 
 );
