@@ -22,6 +22,7 @@ class Project {
         $this->config = $config;
 
         $this->name     = $projectName;
+        $this->basePath = $this->getConfig('base-path');
         $this->paths    = (array) $this->getConfig('paths');
         $this->excludes = (array) $this->getConfig('excludes');
         $this->password = $this->getConfig('password');
@@ -49,6 +50,11 @@ class Project {
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getBasePath()
+    {
+        return $this->basePath;
     }
 
     public function getPaths()

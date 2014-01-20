@@ -31,9 +31,6 @@ return array(
         "test-2" => array(
             "base-path" => realpath(__DIR__."/../../src"),
             "paths" => array('Dimsav'),
-            "database" => array(
-                "name"    =>"testing-db-name",
-            ),
         ),
 
     ),
