@@ -39,12 +39,6 @@ class BackupsTest extends PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testDatabaseDetermination()
-    {
-        $project = new Project($this->config, 'test-3');
-        $this->assertSame($project->getDbName(), "testing-db-name");
-    }
-
     public function testProjectDefaults()
     {
         $project = new Project($this->config, 'test-3');
