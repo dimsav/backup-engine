@@ -1,15 +1,27 @@
 <?php
 
-use Dimsav\Backup\Project;
-
+use Dimsav\Backup\Project,
+    Dimsav\Backup\Config;
+use mysql;
 class DatabaseTest extends PHPUnit_Framework_TestCase {
 
-    /** @var \Dimsav\Backup\Config */
+    /**
+     * @var Config
+     */
     private $config;
-
+    /**
+     * @var mysqli
+     */
+    private $c;
     public function setUp()
     {
-        $this->config = new \Dimsav\Backup\Config('testing');
+        $this->config = new Config('testing');
+        $project = new Project($this->config, 'test-3');
+        $this->c = new mysqli(
+            $project->getDbHost(),
+            $project->getDbUsername(),
+            $project->getDbPassword(),
+            $project->getDbName());
     }
 
     public function testDatabaseDetermination()
@@ -20,8 +32,6 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 
     public function testDatabaseConnectionExists()
     {
-        $project = new Project($this->config, 'test-3');
-        mysqli_connect($project->getDbHost(), $project->getDbUsername(), $project->getDbPassword(), $project->getDbName());
-        $this->assertEquals(0, mysqli_connect_errno());
+        $this->assertEquals(0, $this->c->connect_errno);
     }
 }
