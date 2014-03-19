@@ -19,5 +19,22 @@ class LocationSpec extends ObjectBehavior
         $this->get()->shouldReturn(__DIR__);
     }
 
+    function it_is_initializable_with_base_path()
+    {
+        $this->beConstructedWith('Project', __DIR__.'/../');
+        $this->get()->shouldReturn(realpath(__DIR__));
+
+        $this->beConstructedWith('/Project', __DIR__.'/../');
+        $this->get()->shouldReturn(realpath(__DIR__));
+
+        $this->beConstructedWith('Project/', __DIR__.'/../');
+        $this->get()->shouldReturn(realpath(__DIR__));
+
+        $this->beConstructedWith('/Project/', __DIR__.'/../');
+        $this->get()->shouldReturn(realpath(__DIR__));
+
+        $this->beConstructedWith('Project', __DIR__.'/..');
+        $this->get()->shouldReturn(realpath(__DIR__));
+    }
 
 }

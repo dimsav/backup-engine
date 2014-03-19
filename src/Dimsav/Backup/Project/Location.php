@@ -7,11 +7,18 @@ class Location
 
     protected $path;
 
-    function __construct($path)
+    function __construct($path, $basePath = null)
     {
-        $this->path = realpath($path);
+        $basePath = $basePath ? realpath($basePath) . '/' : '';
+
+        $this->path = realpath($basePath . $path);
     }
 
+    /**
+     * Absolute path
+     *
+     * @return string
+     */
     public function get()
     {
         return $this->path;
