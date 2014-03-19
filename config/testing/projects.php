@@ -36,4 +36,22 @@ return array(
         )
     ),
 
+    "storages" => array(
+
+        "dropbox1" => array(
+            "type" => "dropbox",
+            "username" => "email",
+            "password" => "password",
+            "destination" => "Backups"
+        ),
+
+        "dropbox2" => array(
+            "type" => "dropbox",
+            "username" => "email",
+            "password" => "password",
+            "destination" => "Backups"
+        ),
+
+    )
+
 );
