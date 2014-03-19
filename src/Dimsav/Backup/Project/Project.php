@@ -32,6 +32,7 @@ class Project {
      * @var StorageInterface[]
      */
     private $storages = array();
+    private $password;
 
     public function __construct($name)
     {
@@ -88,4 +89,15 @@ class Project {
     {
         return $this->storages;
     }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
 }

@@ -39,6 +39,12 @@ class ProjectSpec extends ObjectBehavior
         $this->getExcludes()->shouldReturn(array($exclude));
     }
 
+    function it_receives_and_returns_password()
+    {
+        $this->setPassword('pass');
+        $this->getPassword()->shouldReturn('pass');
+    }
+
     function it_receives_and_returns_storages(StorageInterface $storage1, StorageInterface $storage2)
     {
         $storage1->getAlias()->shouldBeCalled()->willReturn('storage1');
