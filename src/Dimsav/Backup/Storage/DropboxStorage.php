@@ -13,10 +13,9 @@ class DropboxStorage extends AbstractStorage implements StorageInterface, Passwo
 
     public function __construct(array $data)
     {
-        $this->alias = isset($data['alias']) ? $data['alias'] : null;
+        parent::__construct($data);
         $this->username = isset($data['username']) ? $data['username'] : null;
         $this->password = isset($data['password']) ? $data['password'] : null;
-        $this->destination = isset($data['destination']) ? $data['destination'] : null;
     }
 
     public function getUsername()
