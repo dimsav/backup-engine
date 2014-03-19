@@ -7,9 +7,9 @@ class Location
 
     protected $path;
 
-    function __construct($path, $basePath = null)
+    function __construct($path, Location $basePath = null)
     {
-        $basePath = $basePath ? realpath($basePath) . '/' : '';
+        $basePath = $basePath ? $basePath->get() . '/' : '';
 
         $this->path = realpath($basePath . $path);
     }
