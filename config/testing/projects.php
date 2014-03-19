@@ -10,7 +10,8 @@ return array(
             "username" => "root",
             "password" => "password",
         ),
-        "password" => "testing-default-secret"
+        "password" => "testing-default-secret",
+        "storages" => "dropbox2"
     ),
 
     "projects" => array(
@@ -24,10 +25,12 @@ return array(
                 realpath(__DIR__."/../../src/Dimsav/Backup/Config.php"),
             ),
             "password" => null,
+            "storages" => 'dropbox1'
         ),
         "test-2" => array(
             "base-path" => realpath(__DIR__."/../../src"),
             "paths" => array('Dimsav'),
+            "storages" => array('dropbox1', 'dropbox2')
         ),
         "test-3" => array(
             "database" => array(

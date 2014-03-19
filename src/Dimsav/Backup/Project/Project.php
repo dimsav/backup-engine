@@ -1,5 +1,6 @@
 <?php namespace Dimsav\Backup\Project;
 
+use Dimsav\Backup\Storage\StorageInterface;
 use Illuminate\Support\Collection;
 
 class Project {
@@ -23,6 +24,14 @@ class Project {
      * @var Location[]
      */
     private $excludes = array();
+
+    /**
+     * Associative array containing the storages used for this project.
+     * The keys represent the storage aliases.
+     *
+     * @var StorageInterface[]
+     */
+    private $storages = array();
 
     public function __construct($name)
     {
@@ -70,4 +79,13 @@ class Project {
         return $this->name;
     }
 
+    public function addStorage(StorageInterface $storage)
+    {
+        $this->storages[$storage->getAlias()] = $storage;
+    }
+
+    public function getStorages()
+    {
+        return $this->storages;
+    }
 }

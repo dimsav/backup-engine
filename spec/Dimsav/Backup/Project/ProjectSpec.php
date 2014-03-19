@@ -4,6 +4,7 @@ namespace spec\Dimsav\Backup\Project;
 
 use Dimsav\Backup\Project\Database;
 use Dimsav\Backup\Project\Location;
+use Dimsav\Backup\Storage\StorageInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -36,6 +37,17 @@ class ProjectSpec extends ObjectBehavior
     {
         $this->addExclude($exclude);
         $this->getExcludes()->shouldReturn(array($exclude));
+    }
+
+    function it_receives_and_returns_storages(StorageInterface $storage1, StorageInterface $storage2)
+    {
+        $storage1->getAlias()->shouldBeCalled()->willReturn('storage1');
+        $storage2->getAlias()->shouldBeCalled()->willReturn('storage2');
+
+        $this->addStorage($storage1);
+        $this->addStorage($storage2);
+        $this->getStorages()->shouldReturn(array('storage1' => $storage1, 'storage2' => $storage2));
+
     }
 
 }

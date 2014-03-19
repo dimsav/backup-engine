@@ -4,6 +4,7 @@ use Dimsav\Backup\Project\Location;
 
 interface StorageInterface {
 
+    public function getAlias();
     public function getType();
     public function getUsername();
     public function getPassword();
