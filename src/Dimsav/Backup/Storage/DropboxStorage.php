@@ -4,7 +4,7 @@ namespace Dimsav\Backup\Storage;
 
 use Dimsav\Backup\Project\Location;
 
-class DropboxStorage implements StorageInterface
+class DropboxStorage implements StorageInterface, PasswordProtectedStorage
 {
     const TYPE = 'dropbox';
 
