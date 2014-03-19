@@ -4,14 +4,12 @@ namespace Dimsav\Backup\Storage;
 
 use Dimsav\Backup\Project\Location;
 
-class DropboxStorage implements StorageInterface, PasswordProtectedStorage
+class DropboxStorage extends AbstractStorage implements StorageInterface, PasswordProtectedStorage
 {
     const TYPE = 'dropbox';
 
-    private $alias;
     private $username;
     private $password;
-    private $destination;
 
     public function __construct(array $data)
     {
@@ -29,21 +27,6 @@ class DropboxStorage implements StorageInterface, PasswordProtectedStorage
     public function getPassword()
     {
         return $this->password;
-    }
-
-    public function getDestination()
-    {
-        return $this->destination;
-    }
-
-    public function getType()
-    {
-        return static::TYPE;
-    }
-
-    public function getAlias()
-    {
-        return $this->alias;
     }
 
     public function store(Location $file)
