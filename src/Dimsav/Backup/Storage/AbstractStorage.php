@@ -16,9 +16,9 @@ abstract class AbstractStorage {
         return $this->destination;
     }
 
-    public function getType()
+    public function getDriver()
     {
-        return static::TYPE;
+        return static::DRIVER;
     }
 
     public function getAlias()
