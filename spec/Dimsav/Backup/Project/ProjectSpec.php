@@ -26,7 +26,13 @@ class ProjectSpec extends ObjectBehavior
         $this->getDatabases()->shouldReturn(array($database));
     }
 
-    function it_receives_and_reeturns_paths(Location $path)
+    function it_receives_and_returns_a_base_path(Location $path)
+    {
+        $this->setBasePath($path);
+        $this->getBasePath()->shouldReturn($path);
+    }
+
+    function it_receives_and_returns_paths(Location $path)
     {
         $this->addPath($path);
         $this->getPaths()->shouldReturn(array($path));
@@ -38,9 +44,4 @@ class ProjectSpec extends ObjectBehavior
         $this->getExcludes()->shouldReturn(array($exclude));
     }
 
-    function it_receives_and_returns_a_base_path(Location $path)
-    {
-        $this->setBasePath($path);
-        $this->getBasePath()->shouldReturn($path);
-    }
 }
