@@ -5,13 +5,17 @@ namespace Dimsav\Backup\Project;
 class Location
 {
 
-    protected $path;
+    private $path;
+
+    /**
+     * @var Location
+     */
+    private $basePath;
 
     function __construct($path, Location $basePath = null)
     {
-        $basePath = $basePath ? $basePath->get() . '/' : '';
-
-        $this->path = realpath($basePath . $path);
+        $this->basePath = $basePath;
+        $this->path = $path;
     }
 
     /**
@@ -21,6 +25,16 @@ class Location
      */
     public function get()
     {
-        return $this->path;
+        $basePath = $this->basePath ? $this->basePath->get() . '/' : '';
+        return realpath($basePath . $this->path);
     }
+
+    /**
+     * @return \Dimsav\Backup\Project\Location
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
+
 }
