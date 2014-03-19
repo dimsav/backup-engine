@@ -24,6 +24,11 @@ class Project {
      */
     private $excludes = array();
 
+    /**
+     * @var Location
+     */
+    private $basePath;
+
     public function __construct($name)
     {
         $this->name = $name;
@@ -70,5 +75,13 @@ class Project {
         return $this->name;
     }
 
+    public function setBasePath(Location $location)
+    {
+        $this->basePath = $location;
+    }
 
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
 }

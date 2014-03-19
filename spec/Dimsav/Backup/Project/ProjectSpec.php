@@ -38,4 +38,9 @@ class ProjectSpec extends ObjectBehavior
         $this->getExcludes()->shouldReturn(array($exclude));
     }
 
+    function it_receives_and_returns_a_base_path(Location $path)
+    {
+        $this->setBasePath($path);
+        $this->getBasePath()->shouldReturn($path);
+    }
 }
