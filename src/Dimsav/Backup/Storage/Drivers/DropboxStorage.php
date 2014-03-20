@@ -7,8 +7,6 @@ use Dimsav\Backup\Project\Location,
 
 class DropboxStorage extends AbstractStorage implements StorageInterface, PasswordProtectedStorage
 {
-    const DRIVER = 'dropbox';
-
     private $username;
     private $password;
 

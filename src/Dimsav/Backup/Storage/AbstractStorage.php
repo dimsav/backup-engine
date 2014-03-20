@@ -16,11 +16,6 @@ abstract class AbstractStorage {
         return $this->destination;
     }
 
-    public function getDriver()
-    {
-        return static::DRIVER;
-    }
-
     public function getAlias()
     {
         return $this->alias;
