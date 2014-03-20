@@ -10,6 +10,7 @@ class StorageManagerSpec extends ObjectBehavior
     {
         $factory->beADoubleOf('Dimsav\Backup\Storage\StorageFactory');
     }
+
     function it_is_initializable($factory)
     {
         $this->beConstructedWith(array(), $factory);
@@ -18,16 +19,29 @@ class StorageManagerSpec extends ObjectBehavior
 
     function it_returns_storages($factory, DropboxStorage $dropboxStorage)
     {
-        $config = array(
-                'name' => array(
-                    'driver' => 'dropbox',
-                )
-        );
+        $config = $this->getSimpleDropboxConfig();
+        $factory->make($config['name'])->shouldBeCalled()->willReturn($dropboxStorage);
 
         $this->beConstructedWith($config, $factory);
-
-        $factory->make($config['name'])->shouldBeCalled()->willReturn($dropboxStorage);
         $this->storage('name')->shouldHaveType('Dimsav\Backup\Storage\Drivers\DropboxStorage');
+    }
+
+    function it_throws_exception_if_project_name_is_not_found($factory)
+    {
+        $this->beConstructedWith(array(), $factory);
+        $this->shouldThrow(new \InvalidArgumentException("Invalid storage 'name'"))->duringStorage('name');
+    }
+
+    /**
+     * @return array
+     */
+    private function getSimpleDropboxConfig()
+    {
+        return array(
+            'name' => array(
+                'driver' => 'dropbox',
+            )
+        );
     }
 
 }

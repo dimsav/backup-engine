@@ -12,6 +12,10 @@ class StorageManager
 
     public function storage($name)
     {
+        if ( ! isset($this->config[$name]))
+        {
+            throw new \InvalidArgumentException("Invalid storage '$name'");
+        }
         return $this->factory->make($this->config[$name]);
     }
 }
