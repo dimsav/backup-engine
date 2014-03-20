@@ -6,7 +6,7 @@ class StorageManager
 
     function __construct($config, StorageFactory $factory)
     {
-        $this->config = $config;
+        $this->config = $config['storages'];
         $this->factory = $factory;
     }
 
