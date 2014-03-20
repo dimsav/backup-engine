@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Dimsav\Backup\Storage;
+namespace spec\Dimsav\Backup\Storage\Drivers;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

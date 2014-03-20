@@ -2,6 +2,8 @@
 
 namespace Dimsav\Backup\Storage;
 
+use Dimsav\Backup\Storage\Drivers\DropboxStorage,
+    Dimsav\Backup\Storage\Drivers\LocalFileStorage;
 use Illuminate\Container\Container;
 
 class StorageFactory
