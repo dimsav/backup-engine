@@ -6,7 +6,7 @@ class StorageManager
 
     function __construct($config, StorageFactory $factory)
     {
-        $this->config = $config['storages'];
+        $this->config = $this->parseConfiguration($config);
         $this->factory = $factory;
     }
 
@@ -17,5 +17,14 @@ class StorageManager
             throw new \InvalidArgumentException("Invalid storage '$name'");
         }
         return $this->factory->make($this->config[$name]);
+    }
+
+    private function parseConfiguration($config)
+    {
+        if ( ! isset($config['storages']) || ! is_array($config['storages']))
+        {
+            throw new \InvalidArgumentException('Storages array is not in configuration');
+        }
+        return $config['storages'];
     }
 }

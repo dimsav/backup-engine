@@ -26,6 +26,18 @@ class StorageManagerSpec extends ObjectBehavior
         $this->storage('name')->shouldHaveType('Dimsav\Backup\Storage\Drivers\DropboxStorage');
     }
 
+    function it_throws_exception_if_storages_is_not_set($factory)
+    {
+        $this->shouldThrow(new \InvalidArgumentException("Storages array is not in configuration"))
+            ->during('__construct', array(array(), $factory));
+    }
+
+    function it_throws_exception_if_storages_is_not_an_array($factory)
+    {
+        $this->shouldThrow(new \InvalidArgumentException("Storages array is not in configuration"))
+            ->during('__construct', array(array('storages' => 1), $factory));
+    }
+
     function it_throws_exception_if_project_name_is_not_found($factory)
     {
         $this->beConstructedWith(array('storages' => array()), $factory);
