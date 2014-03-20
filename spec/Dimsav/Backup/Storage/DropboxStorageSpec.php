@@ -42,9 +42,9 @@ class DropboxStorageSpec extends ObjectBehavior
         $this->getAlias()->shouldReturn('a');
     }
 
-    function it_returns_its_type()
+    function it_returns_its_driver()
     {
-        $this->getType()->shouldReturn('dropbox');
+        $this->getDriver()->shouldReturn('dropbox');
     }
 
 

@@ -25,8 +25,8 @@ class LocalFileStorageSpec extends ObjectBehavior
         $this->shouldHaveType('Dimsav\Backup\Storage\LocalFileStorage');
     }
 
-    function it_returns_type()
+    function it_returns_driver()
     {
-        $this->getType()->shouldReturn('local_file');
+        $this->getDriver()->shouldReturn('local_file');
     }
 }
