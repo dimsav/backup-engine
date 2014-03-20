@@ -1,8 +1,11 @@
 <?php
 
-namespace Dimsav\Backup\Storage;
+namespace Dimsav\Backup\Storage\Drivers;
 
-use Dimsav\Backup\Project\Location;
+use Dimsav\Backup\Project\Location,
+    Dimsav\Backup\Storage\AbstractStorage,
+    Dimsav\Backup\Storage\StorageInterface,
+    Dimsav\Backup\Storage\PasswordProtectedStorage;
 
 class DropboxStorage extends AbstractStorage implements StorageInterface, PasswordProtectedStorage
 {
