@@ -54,4 +54,10 @@ class ProjectSpec extends ObjectBehavior
 
     }
 
+    function it_receives_and_returns_storage_names()
+    {
+        $this->setStorageNames($names = array('a', 'b'));
+        $this->getStorageNames()->shouldReturn($names);
+    }
+
 }

@@ -25,6 +25,8 @@ class Project {
      */
     private $excludes = array();
 
+    private $storageNames = array();
+
     /**
      * Associative array containing the storages used for this project.
      * The keys represent the storage aliases.
@@ -98,6 +100,22 @@ class Project {
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @param array $storageNames
+     */
+    public function setStorageNames($storageNames)
+    {
+        $this->storageNames = $storageNames;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStorageNames()
+    {
+        return $this->storageNames;
     }
 
 }
