@@ -1,6 +1,4 @@
-<?php
-
-namespace Dimsav\Backup\Storage\Drivers;
+<?php namespace Dimsav\Backup\Storage\Drivers;
 
 use Dimsav\Backup\Project\Location,
     Dimsav\Backup\Storage\AbstractStorage,

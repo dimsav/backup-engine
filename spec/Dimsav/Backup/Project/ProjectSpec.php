@@ -1,6 +1,4 @@
-<?php
-
-namespace spec\Dimsav\Backup\Project;
+<?php namespace spec\Dimsav\Backup\Project;
 
 use Dimsav\Backup\Project\Database;
 use Dimsav\Backup\Project\Location;

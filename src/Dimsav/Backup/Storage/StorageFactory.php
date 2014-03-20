@@ -1,6 +1,4 @@
-<?php
-
-namespace Dimsav\Backup\Storage;
+<?php namespace Dimsav\Backup\Storage;
 
 use Dimsav\Backup\Storage\Drivers\DropboxStorage,
     Dimsav\Backup\Storage\Drivers\LocalFileStorage;

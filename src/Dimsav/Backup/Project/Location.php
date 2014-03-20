@@ -1,6 +1,4 @@
-<?php
-
-namespace Dimsav\Backup\Project;
+<?php namespace Dimsav\Backup\Project;
 
 class Location
 {

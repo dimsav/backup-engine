@@ -1,6 +1,4 @@
-<?php
-
-namespace spec\Dimsav\Backup\Storage;
+<?php namespace spec\Dimsav\Backup\Storage;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
