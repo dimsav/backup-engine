@@ -4,15 +4,9 @@ namespace spec\Dimsav\Backup\Storage;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Illuminate\Container\Container;
 
 class StorageFactorySpec extends ObjectBehavior
 {
-    function let(Container $container)
-    {
-        $this->beConstructedWith($container);
-    }
-
     function it_creates_accepts_dropbox_as_driver()
     {
         $config = array('driver' => 'dropbox');
