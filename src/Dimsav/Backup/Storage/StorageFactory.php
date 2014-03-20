@@ -28,7 +28,7 @@ class StorageFactory
         {
             case 'dropbox':
                 return new DropboxStorage($config);
-            case 'file_local':
+            case 'local':
                 return new LocalFileStorage($config);
         }
         throw new \InvalidArgumentException('Invalid storage driver');
