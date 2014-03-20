@@ -19,7 +19,7 @@ class StorageFactory
         $this->container = $container;
     }
 
-    public function make($config, $name = null)
+    public function make($config)
     {
         return $this->createStorage($config['driver'], $config);
     }
