@@ -23,7 +23,7 @@ class StorageManagerSpec extends ObjectBehavior
         $factory->make($config['storages']['name'])->shouldBeCalled()->willReturn($dropboxStorage);
 
         $this->beConstructedWith($config, $factory);
-        $this->storage('name')->shouldHaveType('Dimsav\Backup\Storage\Drivers\DropboxStorage');
+        $this->make('name')->shouldHaveType('Dimsav\Backup\Storage\Drivers\DropboxStorage');
     }
 
     function it_throws_exception_if_storages_is_not_set($factory)
@@ -47,7 +47,7 @@ class StorageManagerSpec extends ObjectBehavior
     function it_throws_exception_if_project_name_is_not_found($factory)
     {
         $this->beConstructedWith(array('storages' => array('a'=>array())), $factory);
-        $this->shouldThrow(new \InvalidArgumentException("Invalid storage 'name'"))->duringStorage('name');
+        $this->shouldThrow(new \InvalidArgumentException("Invalid storage 'name'"))->duringMake('name');
     }
 
     /**

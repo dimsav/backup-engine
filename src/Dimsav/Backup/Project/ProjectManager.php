@@ -139,7 +139,7 @@ class ProjectManager
         $storages = (array) $projectConfig['storages'];
         foreach ($storages as $storageName)
         {
-            $storage = $this->storageManager->storage($storageName);
+            $storage = $this->storageManager->make($storageName);
             $project->addStorage($storage);
         }
     }

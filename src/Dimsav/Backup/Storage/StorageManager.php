@@ -10,7 +10,7 @@ class StorageManager
         $this->factory = $factory;
     }
 
-    public function storage($name)
+    public function make($name)
     {
         if ( ! isset($this->config[$name]))
         {

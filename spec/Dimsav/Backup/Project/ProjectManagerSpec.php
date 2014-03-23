@@ -62,8 +62,8 @@ class ProjectManagerSpec extends ObjectBehavior
         $configB = array('name' => 'b','storages'=>'sb', 'password' => 'bp');
         $factory->make($configA)->shouldBeCalled()->willReturn($projectA);
         $factory->make($configB)->shouldBeCalled()->willReturn($projectB);
-        $storageManager->storage('sa')->shouldBeCalled()->willReturn($storageA);
-        $storageManager->storage('sb')->shouldBeCalled()->willReturn($storageB);
+        $storageManager->make('sa')->shouldBeCalled()->willReturn($storageA);
+        $storageManager->make('sb')->shouldBeCalled()->willReturn($storageB);
         $projectA->addStorage($storageA)->shouldBeCalled();
         $projectB->addStorage($storageB)->shouldBeCalled();
 
