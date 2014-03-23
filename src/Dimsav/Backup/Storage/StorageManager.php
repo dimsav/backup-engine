@@ -25,6 +25,12 @@ class StorageManager
         {
             throw new \InvalidArgumentException('Storages array is not in configuration');
         }
+
+        if (count($config['storages']) == 0)
+        {
+            throw new \InvalidArgumentException("Storages array is empty. Check configuration.");
+        }
+
         return $config['storages'];
     }
 }

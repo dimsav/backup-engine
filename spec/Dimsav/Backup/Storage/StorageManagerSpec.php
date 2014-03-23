@@ -38,9 +38,15 @@ class StorageManagerSpec extends ObjectBehavior
             ->during('__construct', array(array('storages' => 1), $factory));
     }
 
+    function it_throws_exception_if_no_storage_is_defined($factory)
+    {
+        $this->shouldThrow(new \InvalidArgumentException("Storages array is empty. Check configuration."))
+            ->during('__construct', array(array('storages' => array()), $factory));
+    }
+
     function it_throws_exception_if_project_name_is_not_found($factory)
     {
-        $this->beConstructedWith(array('storages' => array()), $factory);
+        $this->beConstructedWith(array('storages' => array('a'=>array())), $factory);
         $this->shouldThrow(new \InvalidArgumentException("Invalid storage 'name'"))->duringStorage('name');
     }
 
