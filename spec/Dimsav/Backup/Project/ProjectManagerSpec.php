@@ -3,16 +3,19 @@
 namespace spec\Dimsav\Backup\Project;
 
 use Dimsav\Backup\Project\Project;
+use Dimsav\Backup\Storage\StorageInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Dimsav\Backup\Project\ProjectFactory;
+use Dimsav\Backup\Storage\StorageManager;
 
 class ProjectManagerSpec extends ObjectBehavior
 {
-    function let($factory)
+    function let($factory, $storageManager)
     {
         $factory->beADoubleOf('Dimsav\Backup\Project\ProjectFactory');
-        $this->beConstructedWith($factory);
+        $storageManager->beADoubleOf('Dimsav\Backup\Storage\StorageManager');
+        $this->beConstructedWith($factory, $storageManager);
     }
 
     function it_is_initializable()
@@ -22,7 +25,7 @@ class ProjectManagerSpec extends ObjectBehavior
 
     function it_returns_the_project_names()
     {
-        $config = array('projects'=> array('a' => array(), 'b' => array()));
+        $config = array('projects'=> array('a' => array('storages'=>'s'), 'b' => array('storages'=>'s')));
         $this->setConfig($config);
         $this->getProjectNames()->shouldReturn(array('a', 'b'));
     }
@@ -41,20 +44,34 @@ class ProjectManagerSpec extends ObjectBehavior
         $this->shouldThrow($wrongFormatException)->duringSetConfig(array('projects'=> 'a'));
     }
 
-    function it_returns_all_project_instances($factory, Project $projectA, Project $projectB)
+    function it_throws_exception_if_project_has_no_storages()
     {
-        $config = array('projects' => array(
-            'a' => array('password' => 'ap'),
-            'b' => array('password' => 'bp'),
+        $noStoragesException = new \InvalidArgumentException(
+            "The project 'a' has no storages assigned. Check your configuration'");
+        $config = array('projects'=>array(
+            'a' => array(),
         ));
+        $this->shouldThrow($noStoragesException)->duringSetConfig($config);
+    }
 
-        $configA = array('name' => 'a', 'password' => 'ap');
-        $configB = array('name' => 'b', 'password' => 'bp');
-
-        $this->setConfig($config);
-
+    function it_returns_all_project_instances($factory, $storageManager,
+        Project $projectA, Project $projectB, StorageInterface $storageA, StorageInterface $storageB
+    )
+    {
+        $configA = array('name' => 'a','storages'=>'sa', 'password' => 'ap');
+        $configB = array('name' => 'b','storages'=>'sb', 'password' => 'bp');
         $factory->make($configA)->shouldBeCalled()->willReturn($projectA);
         $factory->make($configB)->shouldBeCalled()->willReturn($projectB);
+        $storageManager->storage('sa')->shouldBeCalled()->willReturn($storageA);
+        $storageManager->storage('sb')->shouldBeCalled()->willReturn($storageB);
+        $projectA->addStorage($storageA)->shouldBeCalled();
+        $projectB->addStorage($storageB)->shouldBeCalled();
+
+        $config = array('projects' => array(
+            'a' => array('password' => 'ap','storages'=>'sa'),
+            'b' => array('password' => 'bp','storages'=>'sb'),
+        ));
+        $this->setConfig($config);
 
         $this->getAll()->shouldReturn(array($projectA, $projectB));
     }

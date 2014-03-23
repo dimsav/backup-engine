@@ -17,12 +17,11 @@ class ProjectManager
     private $storageManager;
 
     public function __construct(
-        ProjectFactory $projectFactory
-        //, StorageManager $storageManager
+        ProjectFactory $projectFactory, StorageManager $storageManager
     )
     {
         $this->projectFactory = $projectFactory;
-//        $this->storageManager = $storageManager;
+        $this->storageManager = $storageManager;
     }
 
 //    private function make($projectName)
@@ -75,6 +74,7 @@ class ProjectManager
     {
         $projectConfig = $this->getProjectConfig($projectName);
         $project = $this->projectFactory->make($projectConfig);
+        $this->addProjectStorages($project, $projectConfig);
 
         return $project;
     }
@@ -88,7 +88,9 @@ class ProjectManager
 
     public function setConfig($config)
     {
-        $this->validateConfig($config);
+        $this->validateGlobalConfig($config);
+        $this->validateProjectsConfig($config);
+
         $this->globalConfig = $config;
     }
 
@@ -97,7 +99,7 @@ class ProjectManager
         return array_keys($this->globalConfig['projects']);
     }
 
-    private function validateConfig($config)
+    private function validateGlobalConfig($config)
     {
         $exception = new \InvalidArgumentException('At least one project must be defined. Check your configuration.');
         if ( ! isset($config['projects']))
@@ -116,5 +118,29 @@ class ProjectManager
         }
     }
 
+    private function validateProjectsConfig($config)
+    {
+        foreach ($config['projects'] as $projectName => $projectConfig)
+        {
+            $this->validateProjectConfig($projectName, $projectConfig);
+        }
+    }
 
+    private function validateProjectConfig($name, $config)
+    {
+        if ( ! isset($config['storages']))
+        {
+            throw new \InvalidArgumentException("The project '$name' has no storages assigned. Check your configuration'");
+        }
+    }
+
+    private function addProjectStorages(Project $project, $projectConfig)
+    {
+        $storages = (array) $projectConfig['storages'];
+        foreach ($storages as $storageName)
+        {
+            $storage = $this->storageManager->storage($storageName);
+            $project->addStorage($storage);
+        }
+    }
 }
