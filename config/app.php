@@ -15,11 +15,10 @@ return array(
     "time_limit" => 0,
 
     /*
-     * Set here the absolute path of the directory containing
-     * the saved backup files. Even if the directory doesn't
-     * exist, the code will create it for you.
+     * Set here the absolute path of the temp directory used for creating the backup files.
+     * Make sure the user has write access to it.
      */
-    "backups_dir" => __DIR__ .'/../backups',
+    "temp_dir" => __DIR__ .'/../backups',
 
     /*
      * Timestamp prefix added to every generated backup file.
