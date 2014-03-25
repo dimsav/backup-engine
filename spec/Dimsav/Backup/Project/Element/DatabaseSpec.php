@@ -1,4 +1,4 @@
-<?php namespace spec\Dimsav\Backup\Project;
+<?php namespace spec\Dimsav\Backup\Project\Element;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -7,7 +7,7 @@ class DatabaseSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Dimsav\Backup\Project\Database');
+        $this->shouldHaveType('Dimsav\Backup\Project\Element\Database');
     }
 
     function it_should_be_fillable()

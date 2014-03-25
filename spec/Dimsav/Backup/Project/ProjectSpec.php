@@ -1,6 +1,6 @@
 <?php namespace spec\Dimsav\Backup\Project;
 
-use Dimsav\Backup\Project\Database;
+use Dimsav\Backup\Project\Element\Database;
 use Dimsav\Backup\Project\Location;
 use Dimsav\Backup\Storage\StorageInterface;
 use PhpSpec\ObjectBehavior;
