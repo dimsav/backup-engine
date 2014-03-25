@@ -1,6 +1,6 @@
 <?php namespace Dimsav\Backup\Project\Element;
 
-class Database {
+class Database extends AbstractElement implements ElementInterface {
 
     private $name;
     private $host;
