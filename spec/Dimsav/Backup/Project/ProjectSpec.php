@@ -1,7 +1,7 @@
 <?php namespace spec\Dimsav\Backup\Project;
 
 use Dimsav\Backup\Project\Element\Database;
-use Dimsav\Backup\Project\Location;
+use Dimsav\Backup\Project\Element\Directory;
 use Dimsav\Backup\Storage\StorageInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -25,13 +25,13 @@ class ProjectSpec extends ObjectBehavior
         $this->getDatabases()->shouldReturn(array($database));
     }
 
-    function it_receives_and_returns_paths(Location $path)
+    function it_receives_and_returns_paths(Directory $path)
     {
         $this->addPath($path);
         $this->getPaths()->shouldReturn(array($path));
     }
 
-    function it_receives_and_returns_excludes(Location $exclude)
+    function it_receives_and_returns_excludes(Directory $exclude)
     {
         $this->addExclude($exclude);
         $this->getExcludes()->shouldReturn(array($exclude));

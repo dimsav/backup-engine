@@ -2,14 +2,14 @@
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Dimsav\Backup\Project\Location;
+use Dimsav\Backup\Project\Element\Directory;
 
-class LocationSpec extends ObjectBehavior
+class DirectorySpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
         $this->beConstructedWith('/');
-        $this->shouldHaveType('Dimsav\Backup\Project\Location');
+        $this->shouldHaveType('Dimsav\Backup\Project\Element\Directory');
     }
 
     function it_normalizes_paths()
@@ -20,19 +20,19 @@ class LocationSpec extends ObjectBehavior
 
     function it_is_initializable_with_base_path()
     {
-        $this->beConstructedWith('Project', new Location(__DIR__.'/../'));
+        $this->beConstructedWith('Project', new Directory(__DIR__.'/../'));
         $this->get()->shouldReturn(realpath(__DIR__));
 
-        $this->beConstructedWith('/Project', new Location(__DIR__.'/../'));
+        $this->beConstructedWith('/Project', new Directory(__DIR__.'/../'));
         $this->get()->shouldReturn(realpath(__DIR__));
 
-        $this->beConstructedWith('Project/', new Location(__DIR__.'/../'));
+        $this->beConstructedWith('Project/', new Directory(__DIR__.'/../'));
         $this->get()->shouldReturn(realpath(__DIR__));
 
-        $this->beConstructedWith('/Project/', new Location(__DIR__.'/../'));
+        $this->beConstructedWith('/Project/', new Directory(__DIR__.'/../'));
         $this->get()->shouldReturn(realpath(__DIR__));
 
-        $this->beConstructedWith('Project', new Location(__DIR__.'/..'));
+        $this->beConstructedWith('Project', new Directory(__DIR__.'/..'));
         $this->get()->shouldReturn(realpath(__DIR__));
     }
 

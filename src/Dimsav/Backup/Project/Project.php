@@ -3,6 +3,7 @@
 use Dimsav\Backup\Storage\StorageInterface;
 use Illuminate\Support\Collection;
 use Dimsav\Backup\Project\Element\Database;
+use Dimsav\Backup\Project\Element\Directory;
 
 class Project {
 
@@ -17,12 +18,12 @@ class Project {
     private $databases = array();
 
     /**
-     * @var Location[]
+     * @var Directory[]
      */
     private $paths = array();
 
     /**
-     * @var Location[]
+     * @var Directory[]
      */
     private $excludes = array();
 
@@ -58,14 +59,14 @@ class Project {
     }
 
     /**
-     * @return \Dimsav\Backup\Project\Location[]
+     * @return Directory[]
      */
     public function getPaths()
     {
         return $this->paths;
     }
 
-    public function addExclude(Location $exclude)
+    public function addExclude(Directory $exclude)
     {
         $this->excludes[] = $exclude;
     }

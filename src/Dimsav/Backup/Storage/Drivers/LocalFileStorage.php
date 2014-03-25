@@ -1,6 +1,6 @@
 <?php namespace Dimsav\Backup\Storage\Drivers;
 
-use Dimsav\Backup\Project\Location,
+use Dimsav\Backup\Project\Element\Directory,
     Dimsav\Backup\Storage\AbstractStorage,
     Dimsav\Backup\Storage\StorageInterface;
 
@@ -8,7 +8,7 @@ use Dimsav\Backup\Project\Location,
 
 class LocalFileStorage extends AbstractStorage implements StorageInterface {
 
-    public function store(Location $file)
+    public function store(Directory $file)
     {
         // TODO: Implement store() method.
     }

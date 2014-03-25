@@ -1,16 +1,16 @@
-<?php namespace Dimsav\Backup\Project;
+<?php namespace Dimsav\Backup\Project\Element;
 
-class Location
+class Directory
 {
 
     private $path;
 
     /**
-     * @var Location
+     * @var Directory
      */
     private $basePath;
 
-    function __construct($path, Location $basePath = null)
+    function __construct($path, Directory $basePath = null)
     {
         $this->basePath = $basePath;
         $this->path = $path;
@@ -28,7 +28,7 @@ class Location
     }
 
     /**
-     * @return \Dimsav\Backup\Project\Location
+     * @return Directory
      */
     public function getBasePath()
     {
