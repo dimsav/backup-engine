@@ -2,10 +2,10 @@
 
 use Dimsav\Backup\Project\Element\Directory,
     Dimsav\Backup\Storage\AbstractStorage,
-    Dimsav\Backup\Storage\StorageInterface,
+    Dimsav\Backup\Storage\Storage,
     Dimsav\Backup\Storage\PasswordProtectedStorage;
 
-class DropboxStorage extends AbstractStorage implements StorageInterface, PasswordProtectedStorage
+class DropboxStorage extends AbstractStorage implements Storage, PasswordProtectedStorage
 {
     private $username;
     private $password;

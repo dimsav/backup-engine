@@ -2,7 +2,7 @@
 
 use Dimsav\Backup\Project\Element\Directory;
 
-interface StorageInterface {
+interface Storage {
 
     public function getAlias();
     public function getDestination();

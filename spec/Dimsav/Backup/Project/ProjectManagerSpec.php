@@ -3,7 +3,7 @@
 namespace spec\Dimsav\Backup\Project;
 
 use Dimsav\Backup\Project\Project;
-use Dimsav\Backup\Storage\StorageInterface;
+use Dimsav\Backup\Storage\Storage;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Dimsav\Backup\Project\ProjectFactory;
@@ -55,7 +55,7 @@ class ProjectManagerSpec extends ObjectBehavior
     }
 
     function it_returns_all_project_instances($factory, $storageManager,
-        Project $projectA, Project $projectB, StorageInterface $storageA, StorageInterface $storageB
+        Project $projectA, Project $projectB, Storage $storageA, Storage $storageB
     )
     {
         $configA = array('name' => 'a','storages'=>'sa', 'password' => 'ap');

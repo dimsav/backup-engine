@@ -4,7 +4,7 @@ use Dimsav\Backup\Project\Element\Element;
 use Dimsav\Backup\Project\Element\Mysql;
 use Dimsav\Backup\Project\Element\Directory;
 use Dimsav\Backup\Project\Project;
-use Dimsav\Backup\Storage\StorageInterface;
+use Dimsav\Backup\Storage\Storage;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -43,7 +43,7 @@ class ProjectSpec extends ObjectBehavior
         $this->getPassword()->shouldReturn('pass');
     }
 
-    function it_receives_and_returns_storages(StorageInterface $storage1, StorageInterface $storage2)
+    function it_receives_and_returns_storages(Storage $storage1, Storage $storage2)
     {
         $storage1->getAlias()->shouldBeCalled()->willReturn('storage1');
         $storage2->getAlias()->shouldBeCalled()->willReturn('storage2');

@@ -1,7 +1,7 @@
 <?php namespace Dimsav\Backup\Project;
 
 use Dimsav\Backup\Project\Element\Element;
-use Dimsav\Backup\Storage\StorageInterface;
+use Dimsav\Backup\Storage\Storage;
 use Dimsav\Backup\Project\Element\Directory;
 
 class Project {
@@ -22,7 +22,7 @@ class Project {
      * Associative array containing the storages used for this project.
      * The keys represent the storage aliases.
      *
-     * @var StorageInterface[]
+     * @var Storage[]
      */
     private $storages = array();
     private $password;
@@ -55,7 +55,7 @@ class Project {
         return $this->name;
     }
 
-    public function addStorage(StorageInterface $storage)
+    public function addStorage(Storage $storage)
     {
         $this->storages[$storage->getAlias()] = $storage;
     }
