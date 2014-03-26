@@ -1,11 +1,16 @@
 <?php namespace spec\Dimsav\Backup\Project;
 
+use Dimsav\Backup\Project\Element\Element;
 use Dimsav\Backup\Project\Element\Mysql;
 use Dimsav\Backup\Project\Element\Directory;
+use Dimsav\Backup\Project\Project;
 use Dimsav\Backup\Storage\StorageInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+/**
+ * @mixin Project
+ */
 class ProjectSpec extends ObjectBehavior
 {
     function let()
@@ -19,16 +24,11 @@ class ProjectSpec extends ObjectBehavior
         $this->getName()->shouldReturn('projectName');
     }
 
-    function it_receives_and_returns_databases(Mysql $database)
+    function it_receives_and_returns_elements(Element $element)
     {
-        $this->addDatabase($database);
-        $this->getDatabases()->shouldReturn(array($database));
-    }
-
-    function it_receives_and_returns_paths(Directory $path)
-    {
-        $this->addPath($path);
-        $this->getPaths()->shouldReturn(array($path));
+        $this->getElements()->shouldReturn(array());
+        $this->addElement($element);
+        $this->getElements()->shouldReturn(array($element));
     }
 
     function it_receives_and_returns_excludes(Directory $exclude)

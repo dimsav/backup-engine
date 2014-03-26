@@ -1,8 +1,7 @@
 <?php namespace Dimsav\Backup\Project;
 
+use Dimsav\Backup\Project\Element\Element;
 use Dimsav\Backup\Storage\StorageInterface;
-use Illuminate\Support\Collection;
-use Dimsav\Backup\Project\Element\Mysql;
 use Dimsav\Backup\Project\Element\Directory;
 
 class Project {
@@ -11,16 +10,6 @@ class Project {
      * @var string
      */
     private $name;
-
-    /**
-     * @var Mysql[]
-     */
-    private $databases = array();
-
-    /**
-     * @var Directory[]
-     */
-    private $paths = array();
 
     /**
      * @var Directory[]
@@ -38,34 +27,14 @@ class Project {
     private $storages = array();
     private $password;
 
+    /**
+     * @var Element[]
+     */
+    private $elements = array();
+
     public function __construct($name)
     {
         $this->name = $name;
-    }
-
-    // Todo: add elements instead of databases and paths
-
-    public function addDatabase(Mysql $database)
-    {
-        $this->databases[]= $database;
-    }
-
-    public function getDatabases()
-    {
-        return $this->databases;
-    }
-
-    public function addPath($path)
-    {
-        $this->paths[] = $path;
-    }
-
-    /**
-     * @return Directory[]
-     */
-    public function getPaths()
-    {
-        return $this->paths;
     }
 
     public function addExclude(Directory $exclude)
@@ -122,4 +91,13 @@ class Project {
         return $this->storageNames;
     }
 
+    public function addElement(Element $element)
+    {
+        $this->elements[] = $element;
+    }
+
+    public function getElements()
+    {
+        return $this->elements;
+    }
 }
