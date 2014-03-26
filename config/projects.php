@@ -48,29 +48,29 @@ return array(
 
                 /*
                  * If you want to backup a directory but exclude some files or directories
-                 * inside of it, use the directory as key and add the excludes using
-                 * the following syntax. Note that the excluded paths are related
-                 * to the key directory.
+                 * inside of it, use an array with the following syntax. The excludes
+                 * key can contain a string for excluding one path, or an array
+                 * for multiple excludes.
+                 *
+                 * The example below will backup:
+                 *      /var/websites/project1/src/plugins
+                 * and exclude
+                 *      /var/websites/project1/src/plugins/temp
                  */
-                "/src/public/img" => array(
-                    'excludes' => array(
-                        "thumbnails",
-                        "optimized/thumbnails",
-                        "images.log"
-                    )
+                array("/src/plugins", 'excludes' => "temp"),
+
+                array("/src/public/img", 'excludes' => array(
+                        "thumbnails", "optimized/thumbnails", "images.log")
                 ),
+
             ),
 
             /*
              * It is also possible to exclude files/directories related to the project
-             * root directory. To do that, use the excludes array as show below,
-             * but make sure the root_dir is already set.
+             * root directory. To do that, use the excludes key at the same level as
+             * the directories. Make sure the root_dir is already set!
              */
-            "excludes" => array(
-                "vendor",
-                "composer.lock",
-                "logs"
-            ),
+            "excludes" => array("vendor", "composer.lock", "logs"),
 
             /*
              * This password field will be used for compressing the backups to zip files.
