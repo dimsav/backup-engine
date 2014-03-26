@@ -2,7 +2,7 @@
 
 use Dimsav\Backup\Storage\StorageInterface;
 use Illuminate\Support\Collection;
-use Dimsav\Backup\Project\Element\Database;
+use Dimsav\Backup\Project\Element\Mysql;
 use Dimsav\Backup\Project\Element\Directory;
 
 class Project {
@@ -13,7 +13,7 @@ class Project {
     private $name;
 
     /**
-     * @var Database[]
+     * @var Mysql[]
      */
     private $databases = array();
 
@@ -43,7 +43,9 @@ class Project {
         $this->name = $name;
     }
 
-    public function addDatabase(Database $database)
+    // Todo: add elements instead of databases and paths
+
+    public function addDatabase(Mysql $database)
     {
         $this->databases[]= $database;
     }

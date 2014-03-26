@@ -9,7 +9,7 @@ return array(
      */
 
     "defaults" => array(
-        "database" => array(
+        "mysql" => array(
             "host" => "localhost",
             "port" => "3306",
             "username" => "root",
@@ -77,6 +77,14 @@ return array(
              * To overwrite a default password (if set), set this to null.
              */
             "password" => "my_secret",
+
+            "mysql" => array(
+                "name" => "my_database",
+                "host" => "localhost",
+                "port" => "3306",
+                "username" => "root",
+                "password" => "password",
+            ),
 
             /*
              * Storages is an array with the names of the storages we want to use for this

@@ -3,11 +3,11 @@
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class DatabaseSpec extends ObjectBehavior
+class MysqlSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Dimsav\Backup\Project\Element\Database');
+        $this->shouldHaveType('Dimsav\Backup\Project\Element\Mysql');
     }
 
     function it_should_be_fillable()

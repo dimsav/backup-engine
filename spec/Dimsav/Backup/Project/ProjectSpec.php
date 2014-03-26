@@ -1,6 +1,6 @@
 <?php namespace spec\Dimsav\Backup\Project;
 
-use Dimsav\Backup\Project\Element\Database;
+use Dimsav\Backup\Project\Element\Mysql;
 use Dimsav\Backup\Project\Element\Directory;
 use Dimsav\Backup\Storage\StorageInterface;
 use PhpSpec\ObjectBehavior;
@@ -19,7 +19,7 @@ class ProjectSpec extends ObjectBehavior
         $this->getName()->shouldReturn('projectName');
     }
 
-    function it_receives_and_returns_databases(Database $database)
+    function it_receives_and_returns_databases(Mysql $database)
     {
         $this->addDatabase($database);
         $this->getDatabases()->shouldReturn(array($database));
