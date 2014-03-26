@@ -5,9 +5,9 @@ interface ElementInterface {
     /**
      * Sets the directory where the extracted file/dir will be saved in.
      *
-     * @param $absoluteDirPath
+     * @param $dir
      */
-    public function setExtractionDir($absoluteDirPath);
+    public function setExtractionDir($dir);
 
     /**
      * Saves the files into the extraction directory
