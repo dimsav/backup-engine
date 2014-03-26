@@ -3,12 +3,12 @@
 return array(
 
     /*
-     * The "default" array is used to define the default configuration values of the
+     * The "project_defaults" array is used to define the default configuration values of the
      * projects. Only the following keys can be set. Setting one of those keys
      * into a project configuration will overwrite the value.
      */
 
-    "defaults" => array(
+    "project_defaults" => array(
         "mysql" => array(
             "host" => "localhost",
             "port" => "3306",
