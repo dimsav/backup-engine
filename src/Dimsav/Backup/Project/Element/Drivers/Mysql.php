@@ -1,4 +1,7 @@
-<?php namespace Dimsav\Backup\Project\Element;
+<?php namespace Dimsav\Backup\Project\Element\Drivers;
+
+use Dimsav\Backup\Project\Element\AbstractElement;
+use Dimsav\Backup\Project\Element\Element;
 
 class Mysql extends AbstractElement implements Element {
 

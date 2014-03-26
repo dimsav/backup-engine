@@ -1,7 +1,6 @@
 <?php namespace spec\Dimsav\Backup\Project;
 
 use Dimsav\Backup\Project\Element\Element;
-use Dimsav\Backup\Project\Element\Mysql;
 use Dimsav\Backup\Project\Element\Directory;
 use Dimsav\Backup\Project\Project;
 use Dimsav\Backup\Storage\Storage;

@@ -1,4 +1,4 @@
-<?php namespace spec\Dimsav\Backup\Project\Element;
+<?php namespace spec\Dimsav\Backup\Project\Element\Drivers;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -7,7 +7,7 @@ class MysqlSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Dimsav\Backup\Project\Element\Mysql');
+        $this->shouldHaveType('Dimsav\Backup\Project\Element\Drivers\Mysql');
     }
 
     function it_should_be_fillable()
