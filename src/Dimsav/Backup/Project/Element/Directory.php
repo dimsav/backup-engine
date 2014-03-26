@@ -1,6 +1,6 @@
 <?php namespace Dimsav\Backup\Project\Element;
 
-class Directory extends AbstractElement implements ElementInterface {
+class Directory extends AbstractElement implements Element {
 
     private $path;
 

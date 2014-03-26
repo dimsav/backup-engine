@@ -1,6 +1,6 @@
 <?php namespace Dimsav\Backup\Project\Element;
 
-class AbstractElement implements ElementInterface {
+class AbstractElement implements Element {
 
     private $extractionDir;
 

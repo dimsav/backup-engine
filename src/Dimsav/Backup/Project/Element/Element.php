@@ -1,6 +1,6 @@
 <?php namespace Dimsav\Backup\Project\Element;
 
-interface ElementInterface {
+interface Element {
 
     /**
      * Sets the directory where the extracted file/dir will be saved in.

@@ -1,6 +1,6 @@
 <?php namespace Dimsav\Backup\Project\Element;
 
-class Mysql extends AbstractElement implements ElementInterface {
+class Mysql extends AbstractElement implements Element {
 
     private $name;
     private $host;

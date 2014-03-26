@@ -14,7 +14,7 @@ class AbstractElementSpec extends ObjectBehavior
 
     function it_implements_interface()
     {
-        $this->shouldHaveType('\Dimsav\Backup\Project\Element\ElementInterface');
+        $this->shouldHaveType('\Dimsav\Backup\Project\Element\Element');
     }
 
     function it_receives_and_returns_an_extraction_directory()
