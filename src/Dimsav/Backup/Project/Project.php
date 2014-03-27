@@ -37,16 +37,6 @@ class Project {
         $this->name = $name;
     }
 
-    public function addExclude(Directory $exclude)
-    {
-        $this->excludes[] = $exclude;
-    }
-
-    public function getExcludes()
-    {
-        return $this->excludes;
-    }
-
     /**
      * @return string
      */
@@ -99,5 +89,25 @@ class Project {
     public function getElements()
     {
         return $this->elements;
+    }
+
+    // Todo: test
+    public function extract()
+    {
+        foreach ($this->getElements() as $element)
+        {
+            $element->extract();
+            $this->addToExtracted($element->getExtracted());
+        }
+    }
+
+    // Todo: test
+    public function store()
+    {
+        foreach ($this->storages as $storage)
+        {
+            foreach ($this->getExtracted() as $file)
+            $storage->store($file);
+        }
     }
 }
