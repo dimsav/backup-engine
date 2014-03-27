@@ -1,13 +1,15 @@
-<?php
+<?php namespace spec\Dimsav\Backup\Project;
 
-namespace spec\Dimsav\Backup\Project;
-
-use Dimsav\Backup\Project\Database;
-use Dimsav\Backup\Project\Location;
-use Dimsav\Backup\Storage\StorageInterface;
+use Dimsav\Backup\Project\Element\Element;
+use Dimsav\Backup\Project\Element\Directory;
+use Dimsav\Backup\Project\Project;
+use Dimsav\Backup\Storage\Storage;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+/**
+ * @mixin Project
+ */
 class ProjectSpec extends ObjectBehavior
 {
     function let()
@@ -21,19 +23,14 @@ class ProjectSpec extends ObjectBehavior
         $this->getName()->shouldReturn('projectName');
     }
 
-    function it_receives_and_returns_databases(Database $database)
+    function it_receives_and_returns_elements(Element $element)
     {
-        $this->addDatabase($database);
-        $this->getDatabases()->shouldReturn(array($database));
+        $this->getElements()->shouldReturn(array());
+        $this->addElement($element);
+        $this->getElements()->shouldReturn(array($element));
     }
 
-    function it_receives_and_returns_paths(Location $path)
-    {
-        $this->addPath($path);
-        $this->getPaths()->shouldReturn(array($path));
-    }
-
-    function it_receives_and_returns_excludes(Location $exclude)
+    function it_receives_and_returns_excludes(Directory $exclude)
     {
         $this->addExclude($exclude);
         $this->getExcludes()->shouldReturn(array($exclude));
@@ -45,7 +42,7 @@ class ProjectSpec extends ObjectBehavior
         $this->getPassword()->shouldReturn('pass');
     }
 
-    function it_receives_and_returns_storages(StorageInterface $storage1, StorageInterface $storage2)
+    function it_receives_and_returns_storages(Storage $storage1, Storage $storage2)
     {
         $storage1->getAlias()->shouldBeCalled()->willReturn('storage1');
         $storage2->getAlias()->shouldBeCalled()->willReturn('storage2');
@@ -54,6 +51,12 @@ class ProjectSpec extends ObjectBehavior
         $this->addStorage($storage2);
         $this->getStorages()->shouldReturn(array('storage1' => $storage1, 'storage2' => $storage2));
 
+    }
+
+    function it_receives_and_returns_storage_names()
+    {
+        $this->setStorageNames($names = array('a', 'b'));
+        $this->getStorageNames()->shouldReturn($names);
     }
 
 }

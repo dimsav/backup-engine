@@ -1,6 +1,4 @@
-<?php
-
-namespace spec\Dimsav\Backup\Storage\Drivers;
+<?php namespace spec\Dimsav\Backup\Storage\Drivers;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -41,12 +39,5 @@ class DropboxStorageSpec extends ObjectBehavior
     {
         $this->getAlias()->shouldReturn('a');
     }
-
-    function it_returns_its_driver()
-    {
-        $this->getDriver()->shouldReturn('dropbox');
-    }
-
-
 
 }

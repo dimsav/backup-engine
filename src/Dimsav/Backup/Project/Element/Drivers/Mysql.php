@@ -1,6 +1,9 @@
-<?php namespace Dimsav\Backup\Project;
+<?php namespace Dimsav\Backup\Project\Element\Drivers;
 
-class Database {
+use Dimsav\Backup\Project\Element\AbstractElement;
+use Dimsav\Backup\Project\Element\Element;
+
+class Mysql extends AbstractElement implements Element {
 
     private $name;
     private $host;

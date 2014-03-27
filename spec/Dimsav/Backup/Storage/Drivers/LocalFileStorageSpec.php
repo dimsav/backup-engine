@@ -1,6 +1,4 @@
-<?php
-
-namespace spec\Dimsav\Backup\Storage\Drivers;
+<?php namespace spec\Dimsav\Backup\Storage\Drivers;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -25,8 +23,4 @@ class LocalFileStorageSpec extends ObjectBehavior
         $this->shouldHaveType('Dimsav\Backup\Storage\Drivers\LocalFileStorage');
     }
 
-    function it_returns_driver()
-    {
-        $this->getDriver()->shouldReturn('local_file');
-    }
 }
