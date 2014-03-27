@@ -40,8 +40,8 @@ return array(
                 /*
                  * This is the list of directories that will be backed up. All the
                  * directories should be relative to the project_root. To backup
-                 * the whole project_root folder, simply use "/". If "/" is
-                 * set, all other directories will be ignored.
+                 * the whole project_root folder, simply use "/". Each value
+                 * will be saved in a separate file
                  */
                 "src/public/css",
                 "src/public/js",
@@ -57,20 +57,20 @@ return array(
                  * and exclude
                  *      /var/websites/project1/src/plugins/temp
                  */
-                array("/src/plugins", 'excludes' => "temp"),
+                array("src/plugins", 'excludes' => "temp"),
 
-                array("/src/public/img", 'excludes' => array(
+                array("src/public/img", 'excludes' => array(
                         "thumbnails", "optimized/thumbnails", "images.log")
                 ),
 
-            ),
+                /*
+                 * It is also possible to backup the whole project and excluding files/directories
+                 * related to the project root directory. To do that, use the excludes key at
+                 * the same level as the directories.
+                 */
+                array("/", "excludes" => array("vendor", "composer.lock", "logs")),
 
-            /*
-             * It is also possible to exclude files/directories related to the project
-             * root directory. To do that, use the excludes key at the same level as
-             * the directories. Make sure the root_dir is already set!
-             */
-            "excludes" => array("vendor", "composer.lock", "logs"),
+            ),
 
             /*
              * This password field will be used for compressing the backups to zip files.
