@@ -1,4 +1,4 @@
-<?php namespace Dimsav\Backup\Project\Element;
+<?php namespace Dimsav\Backup\Element;
 
 interface Element {
 
@@ -15,8 +15,8 @@ interface Element {
     public function extract();
 
     /**
-     * Returns the absolute path of the dir/file created upon extract()
+     * Returns the absolute path of the files created upon extract()
      */
-    public function getExtracted();
+    public function getExtractedFiles();
 
 }

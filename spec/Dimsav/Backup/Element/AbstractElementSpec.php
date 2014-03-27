@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Dimsav\Backup\Project\Element;
+namespace spec\Dimsav\Backup\Element;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,18 +9,17 @@ class AbstractElementSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beAnInstanceOf('spec\Dimsav\Backup\Project\Element\AbstractElementExtension');
+        $this->beAnInstanceOf('spec\Dimsav\Backup\Element\AbstractElementExtension');
     }
 
     function it_implements_interface()
     {
-        $this->shouldHaveType('\Dimsav\Backup\Project\Element\Element');
+        $this->shouldHaveType('\Dimsav\Backup\Element\Element');
     }
 
-    function it_receives_and_returns_an_extraction_directory()
+    function it_receives_an_extraction_directory()
     {
         $this->setExtractionDir(__DIR__.'/../Element');
-        $this->getExtractionDir()->shouldReturn(__DIR__);
     }
 
     function it_throws_an_exception_if_extraction_dir_not_valid()
@@ -39,4 +38,15 @@ class AbstractElementSpec extends ObjectBehavior
 
 }
 
-class AbstractElementExtension extends \Dimsav\Backup\Project\Element\AbstractElement {}
+class AbstractElementExtension extends \Dimsav\Backup\Element\AbstractElement {
+
+    /**
+     * Saves the files into the extraction directory
+     */
+    public function extract() {}
+
+    /**
+     * Returns the absolute path of the files created upon extract()
+     */
+    public function getExtractedFiles() {}
+}

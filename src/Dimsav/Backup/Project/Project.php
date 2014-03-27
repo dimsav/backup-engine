@@ -1,8 +1,7 @@
 <?php namespace Dimsav\Backup\Project;
 
-use Dimsav\Backup\Project\Element\Element;
+use Dimsav\Backup\Element\Element;
 use Dimsav\Backup\Storage\Storage;
-use Dimsav\Backup\Project\Element\Directory;
 
 class Project {
 
@@ -10,11 +9,6 @@ class Project {
      * @var string
      */
     private $name;
-
-    /**
-     * @var Directory[]
-     */
-    private $excludes = array();
 
     private $storageNames = array();
 
@@ -35,16 +29,6 @@ class Project {
     public function __construct($name)
     {
         $this->name = $name;
-    }
-
-    public function addExclude(Directory $exclude)
-    {
-        $this->excludes[] = $exclude;
-    }
-
-    public function getExcludes()
-    {
-        return $this->excludes;
     }
 
     /**

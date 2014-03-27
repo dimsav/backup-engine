@@ -1,7 +1,6 @@
 <?php namespace spec\Dimsav\Backup\Project;
 
-use Dimsav\Backup\Project\Element\Element;
-use Dimsav\Backup\Project\Element\Directory;
+use Dimsav\Backup\Element\Element;
 use Dimsav\Backup\Project\Project;
 use Dimsav\Backup\Storage\Storage;
 use PhpSpec\ObjectBehavior;
@@ -28,12 +27,6 @@ class ProjectSpec extends ObjectBehavior
         $this->getElements()->shouldReturn(array());
         $this->addElement($element);
         $this->getElements()->shouldReturn(array($element));
-    }
-
-    function it_receives_and_returns_excludes(Directory $exclude)
-    {
-        $this->addExclude($exclude);
-        $this->getExcludes()->shouldReturn(array($exclude));
     }
 
     function it_receives_and_returns_password()
