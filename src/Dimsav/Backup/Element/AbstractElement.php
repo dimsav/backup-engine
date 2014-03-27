@@ -2,7 +2,8 @@
 
 abstract class AbstractElement implements Element
 {
-    private $extractionDir;
+    protected $extractionDir;
+    protected $extractedFiles = array();
 
     public function setExtractionDir($dir)
     {
@@ -23,6 +24,14 @@ abstract class AbstractElement implements Element
         if (substr($dir, 0, 1) !== '/') {
             throw new \InvalidArgumentException("The directory '$dir' is not an absolute path.");
         }
+    }
+
+    /**
+     * Returns the absolute path of the files created after extract()
+     */
+    public function getExtractedFiles()
+    {
+        return $this->extractedFiles;
     }
 
 }

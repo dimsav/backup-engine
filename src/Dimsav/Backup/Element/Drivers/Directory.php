@@ -2,14 +2,20 @@
 
 use Dimsav\Backup\Element\AbstractElement;
 use Dimsav\Backup\Element\Element;
+use Dimsav\UnixZipper;
 
 class Directory extends AbstractElement implements Element {
 
     private $dir;
     private $root;
     private $excludes = array();
+    /**
+     * @var \Dimsav\UnixZipper
+     */
+    private $zipper;
+    private $destinationFile;
 
-    public function __construct($rootDir, $dir)
+    public function __construct($rootDir, $dir, UnixZipper $zipper)
     {
         $this->validateRoot($rootDir);
         $this->parseRoot($rootDir);
@@ -17,6 +23,7 @@ class Directory extends AbstractElement implements Element {
         $this->parseDir($dir);
         $this->validateDir();
         $this->parseExcludes($dir);
+        $this->zipper = $zipper;
     }
 
     public function getDir()
@@ -60,8 +67,17 @@ class Directory extends AbstractElement implements Element {
         {
             $dir = $dirInput;
         }
-
+        $this->parseDestination($dir);
         $this->dir = $dir == '/' ? $this->root : $this->root .'/' . trim($dir, '/');
+    }
+
+    private function parseDestination($dir)
+    {
+        $dir = trim($dir, '/');
+        $dir = str_replace('/', '_', $dir);
+        $dir = strtolower($dir);
+        $dir = $dir ? 'directories_' . $dir : 'directories';
+        $this->destinationFile = $dir . '.zip';
     }
 
     private function validateDir()
@@ -89,14 +105,14 @@ class Directory extends AbstractElement implements Element {
      */
     public function extract()
     {
-
+        $this->zipper->add($this->dir);
+        $this->extractedFiles[] = $dir = $this->extractionDir . '/'. $this->destinationFile;
+        $this->zipper->setDestination($dir);
+        foreach ($this->excludes as $exclude)
+        {
+            $this->zipper->exclude($exclude);
+        }
+        $this->zipper->compress();
     }
 
-    /**
-     * Returns the absolute path of the files created upon extract()
-     */
-    public function getExtractedFiles()
-    {
-
-    }
 }

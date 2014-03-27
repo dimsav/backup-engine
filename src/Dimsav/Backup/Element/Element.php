@@ -15,7 +15,7 @@ interface Element {
     public function extract();
 
     /**
-     * Returns the absolute path of the files created upon extract()
+     * Returns the absolute path of the files created after extract()
      */
     public function getExtractedFiles();
 
