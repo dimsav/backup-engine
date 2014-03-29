@@ -76,7 +76,7 @@ class Directory extends AbstractElement implements Element {
         $dir = trim($dir, '/');
         $dir = str_replace('/', '_', $dir);
         $dir = strtolower($dir);
-        $dir = $dir ? 'directories_' . $dir : 'directories';
+        $dir = $dir ? 'files_' . $dir : 'files';
         $this->destinationFile = $dir . '.zip';
     }
 

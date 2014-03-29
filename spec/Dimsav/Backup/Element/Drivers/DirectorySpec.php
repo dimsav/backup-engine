@@ -120,11 +120,11 @@ class DirectorySpec extends ObjectBehavior
         $this->setExtractionDir(__DIR__);
 
         $zipper->add(__DIR__)->shouldBeCalled();
-        $zipper->setDestination(__DIR__.'/directories_drivers.zip')->shouldBeCalled();
+        $zipper->setDestination(__DIR__.'/files_drivers.zip')->shouldBeCalled();
         $zipper->compress()->shouldBeCalled();
 
         $this->extract();
-        $this->getExtractedFiles()->shouldReturn(array(__DIR__.'/directories_drivers.zip'));
+        $this->getExtractedFiles()->shouldReturn(array(__DIR__.'/files_drivers.zip'));
     }
 
     function it_extracts_with_excludes(UnixZipper $zipper)
@@ -134,14 +134,14 @@ class DirectorySpec extends ObjectBehavior
         $this->setExtractionDir(__DIR__);
 
         $zipper->add(realpath(__DIR__.'/../'))->shouldBeCalled();
-        $zipper->setDestination(__DIR__.'/directories_element.zip')->shouldBeCalled();
+        $zipper->setDestination(__DIR__.'/files_element.zip')->shouldBeCalled();
         $zipper->exclude(realpath(__DIR__.'/../').'/logs')->shouldBeCalled();
         $zipper->exclude(realpath(__DIR__.'/../').'/temp')->shouldBeCalled();
 
         $zipper->compress()->shouldBeCalled();
 
         $this->extract();
-        $this->getExtractedFiles()->shouldReturn(array(__DIR__.'/directories_element.zip'));
+        $this->getExtractedFiles()->shouldReturn(array(__DIR__.'/files_element.zip'));
     }
 
     // Helpers
@@ -159,11 +159,6 @@ class DirectorySpec extends ObjectBehavior
     private function getCurrentDir()
     {
         return 'Drivers';
-    }
-
-    private function extractionDir()
-    {
-        return realpath(__DIR__.'/../../../');
     }
 
     private function validateDir($rootDir, $dir, $result, $zipper)
