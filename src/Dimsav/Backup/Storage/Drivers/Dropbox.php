@@ -4,7 +4,7 @@ use Dimsav\Backup\Storage\AbstractStorage,
     Dimsav\Backup\Storage\Storage,
     Dimsav\Backup\Storage\PasswordProtectedStorage;
 
-class DropboxStorage extends AbstractStorage implements Storage, PasswordProtectedStorage
+class Dropbox extends AbstractStorage implements Storage, PasswordProtectedStorage
 {
     private $username;
     private $password;

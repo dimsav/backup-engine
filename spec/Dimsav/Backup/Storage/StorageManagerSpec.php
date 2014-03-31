@@ -1,6 +1,6 @@
 <?php namespace spec\Dimsav\Backup\Storage;
 
-use Dimsav\Backup\Storage\Drivers\DropboxStorage;
+use Dimsav\Backup\Storage\Drivers\Dropbox;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -17,13 +17,13 @@ class StorageManagerSpec extends ObjectBehavior
         $this->shouldHaveType('Dimsav\Backup\Storage\StorageManager');
     }
 
-    function it_returns_storages($factory, DropboxStorage $dropboxStorage)
+    function it_returns_storages($factory, Dropbox $dropbox)
     {
         $config = $this->getSimpleDropboxConfig();
-        $factory->make($config['storages']['name'])->shouldBeCalled()->willReturn($dropboxStorage);
+        $factory->make($config['storages']['name'])->shouldBeCalled()->willReturn($dropbox);
 
         $this->beConstructedWith($config, $factory);
-        $this->make('name')->shouldHaveType('Dimsav\Backup\Storage\Drivers\DropboxStorage');
+        $this->make('name')->shouldHaveType('Dimsav\Backup\Storage\Drivers\Dropbox');
     }
 
     function it_throws_exception_if_storages_is_not_set($factory)

@@ -5,7 +5,7 @@ use Dimsav\Backup\Storage\AbstractStorage,
 
 
 
-class LocalFileStorage extends AbstractStorage implements Storage {
+class Local extends AbstractStorage implements Storage {
 
     public function store($file)
     {
