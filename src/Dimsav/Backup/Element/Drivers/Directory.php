@@ -57,11 +57,11 @@ class Directory extends AbstractElement implements Element {
     {
         if (is_array($dirInput))
         {
-            if ( ! isset($dirInput[0]))
+            if ( ! isset($dirInput["directory"]))
             {
-                throw new \InvalidArgumentException("The directory is not set.");
+                throw new \InvalidArgumentException("There is no backup directory set for this configuration");
             }
-            $dir = $dirInput[0];
+            $dir = $dirInput["directory"];
         }
         else
         {

@@ -57,9 +57,9 @@ return array(
                  * and exclude
                  *      /var/websites/project1/src/plugins/temp
                  */
-                array("src/plugins", 'excludes' => "temp"),
+                "src/plugins" => array('excludes' => "temp"),
 
-                array("src/public/img", 'excludes' => array(
+                "src/public/img" => array('excludes' => array(
                         "thumbnails", "optimized/thumbnails", "images.log")
                 ),
 
@@ -68,7 +68,7 @@ return array(
                  * related to the project root directory. To do that, use the excludes key at
                  * the same level as the directories.
                  */
-                array("/", "excludes" => array("vendor", "composer.lock", "logs")),
+                "/" => array("excludes" => array("vendor", "composer.lock", "logs")),
 
             ),
 
@@ -79,11 +79,12 @@ return array(
             "password" => "my_secret",
 
             "mysql" => array(
-                "name" => "my_database",
-                "host" => "localhost",
-                "port" => "3306",
-                "username" => "root",
-                "password" => "password",
+                "my_database" => array(
+                    "host" => "localhost",
+                    "port" => "3306",
+                    "username" => "root",
+                    "password" => "password",
+                )
             ),
 
             /*

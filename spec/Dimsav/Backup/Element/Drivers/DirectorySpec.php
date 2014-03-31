@@ -51,12 +51,12 @@ class DirectorySpec extends ObjectBehavior
         $dir = __DIR__.'/bad';
         $message = "The path '$dir' does not exist.";
         $this->shouldThrow(new \InvalidArgumentException($message))
-            ->during('__construct', array(__DIR__, array('bad'), $zipper));
+            ->during('__construct', array(__DIR__, array("directory" => 'bad'), $zipper));
     }
 
     function it_throws_exception_if_the_directory_is_not_given(UnixZipper $zipper)
     {
-        $message = "The directory is not set.";
+        $message = "There is no backup directory set for this configuration";
         $this->shouldThrow(new \InvalidArgumentException($message))
             ->during('__construct', array(__DIR__, array(), $zipper));
     }
@@ -100,14 +100,14 @@ class DirectorySpec extends ObjectBehavior
 
     function it_parses_the_excludes(UnixZipper $zipper)
     {
-        $dir = array('Drivers', 'excludes' => 'logs');
+        $dir = array("directory" => 'Drivers', 'excludes' => 'logs');
         $this->beConstructedWith($this->getParentDir(), $dir, $zipper);
         $this->getExcludes()->shouldReturn(array(__DIR__.'/logs'));
     }
 
     function it_parses_multiple_excludes(UnixZipper $zipper)
     {
-        $dir = array('Drivers', 'excludes' => array('logs', 'temp'));
+        $dir = array("directory" => 'Drivers', 'excludes' => array('logs', 'temp'));
         $this->beConstructedWith($this->getParentDir(), $dir, $zipper);
         $this->getExcludes()->shouldReturn(array(__DIR__.'/logs', __DIR__.'/temp'));
     }
@@ -129,7 +129,7 @@ class DirectorySpec extends ObjectBehavior
 
     function it_extracts_with_excludes(UnixZipper $zipper)
     {
-        $dir = array('Element', 'excludes'=> array('logs','temp'));
+        $dir = array("directory" => 'Element', 'excludes'=> array('logs','temp'));
         $this->beConstructedWith(realpath(__DIR__.'/../../'), $dir, $zipper);
         $this->setExtractionDir(__DIR__);
 
