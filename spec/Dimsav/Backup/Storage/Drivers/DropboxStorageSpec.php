@@ -3,7 +3,7 @@
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class DropboxStorageSpec extends ObjectBehavior
+class DropboxSpec extends ObjectBehavior
 {
     public function let()
     {

@@ -8,7 +8,7 @@ class StorageFactorySpec extends ObjectBehavior
     function it_creates_accepts_dropbox_as_driver()
     {
         $config = array('driver' => 'dropbox');
-        $this->make($config)->shouldReturnAnInstanceOf('Dimsav\Backup\Storage\Drivers\DropboxStorage');
+        $this->make($config)->shouldReturnAnInstanceOf('Dimsav\Backup\Storage\Drivers\Dropbox');
     }
 
     function it_creates_accepts_local_as_driver()
