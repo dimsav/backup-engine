@@ -17,7 +17,7 @@ class ShellSpec extends ObjectBehavior
         $iam = exec('whoami');
         $this->exec('whoami');
         $this->getLastLine()->shouldReturn($iam);
-        $this->getOutput()->shouldBe(array($iam));
+        $this->getOutput()->shouldBe($iam);
         $this->getStatusCode()->shouldBe(0);
     }
 
