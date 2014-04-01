@@ -1,7 +1,7 @@
 <?php namespace Dimsav\Backup\Storage;
 
-use Dimsav\Backup\Storage\Drivers\DropboxStorage,
-    Dimsav\Backup\Storage\Drivers\LocalFileStorage;
+use Dimsav\Backup\Storage\Drivers\Dropbox,
+    Dimsav\Backup\Storage\Drivers\Local;
 
 class StorageFactory
 {
@@ -15,9 +15,9 @@ class StorageFactory
         switch ($driver)
         {
             case 'dropbox':
-                return new DropboxStorage($config);
+                return new Dropbox($config);
             case 'local':
-                return new LocalFileStorage($config);
+                return new Local($config);
         }
         throw new \InvalidArgumentException('Invalid storage driver');
     }

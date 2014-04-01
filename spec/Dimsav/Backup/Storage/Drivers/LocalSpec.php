@@ -3,7 +3,7 @@
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class LocalFileStorageSpec extends ObjectBehavior
+class LocalSpec extends ObjectBehavior
 {
     public function let()
     {
@@ -20,7 +20,7 @@ class LocalFileStorageSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Dimsav\Backup\Storage\Drivers\LocalFileStorage');
+        $this->shouldHaveType('Dimsav\Backup\Storage\Drivers\Local');
     }
 
 }
