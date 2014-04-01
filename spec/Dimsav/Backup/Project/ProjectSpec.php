@@ -35,16 +35,15 @@ class ProjectSpec extends ObjectBehavior
         $this->getPassword()->shouldReturn('pass');
     }
 
-    function it_receives_and_returns_storages(Storage $storage1, Storage $storage2)
-    {
-        $storage1->getAlias()->shouldBeCalled()->willReturn('storage1');
-        $storage2->getAlias()->shouldBeCalled()->willReturn('storage2');
-
-        $this->addStorage($storage1);
-        $this->addStorage($storage2);
-        $this->getStorages()->shouldReturn(array('storage1' => $storage1, 'storage2' => $storage2));
-
-    }
+//    function it_receives_and_returns_storages(Storage $storage1, Storage $storage2)
+//    {
+//        $storage1->getAlias()->shouldBeCalled()->willReturn('storage1');
+//        $storage2->getAlias()->shouldBeCalled()->willReturn('storage2');
+//
+//        $this->addStorage($storage1);
+//        $this->addStorage($storage2);
+//        $this->getStorages()->shouldReturn(array('storage1' => $storage1, 'storage2' => $storage2));
+//    }
 
     function it_receives_and_returns_storage_names()
     {
