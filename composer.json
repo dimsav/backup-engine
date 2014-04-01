@@ -20,11 +20,9 @@
     "require": {
         "php": ">=5.3.0",
         "illuminate/config": "4.1.*",
-        "illuminate/container": "4.1.*",
         "monolog/monolog": "1.*",
         "dimsav/unix-zipper": "1.*",
-        "jakajancar/dropboxuploader": "1.1.12",
-        "mccool/database-backup": "dev-master"
+        "andreafabrizi/dropbox-uploader": "0.13"
     },
     "require-dev": {
         "behat/behat": "2.5.*@stable",
@@ -38,15 +36,12 @@
         {
             "type": "package",
             "package": {
-                "name": "jakajancar/dropboxuploader",
-                "version": "1.1.12",
+                "name": "andreafabrizi/dropbox-uploader",
+                "version": "0.13",
                 "source": {
-                    "url": "https://github.com/jakajancar/DropboxUploader",
+                    "url": "https://github.com/andreafabrizi/Dropbox-Uploader",
                     "type": "git",
-                    "reference": "master"
-                },
-                "autoload": {
-                    "classmap": ["DropboxUploader.php"]
+                    "reference": "3fd40f247e3f6eeeb771e2b8a7dd3cab89ac71b2"
                 }
             }
         }

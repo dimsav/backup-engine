@@ -3,75 +3,17 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "634fc9cb9ffe42f7fbeba856647abb88",
+    "hash": "4480c795539cce38658a4d4d4aff8a02",
     "packages": [
         {
-            "name": "aws/aws-sdk-php",
-            "version": "2.4.12",
+            "name": "andreafabrizi/dropbox-uploader",
+            "version": "0.13",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "61eaf675b7de9ce8b2c6b44317b01e6818ea16c3"
+                "url": "https://github.com/andreafabrizi/Dropbox-Uploader",
+                "reference": "3fd40f247e3f6eeeb771e2b8a7dd3cab89ac71b2"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/61eaf675b7de9ce8b2c6b44317b01e6818ea16c3",
-                "reference": "61eaf675b7de9ce8b2c6b44317b01e6818ea16c3",
-                "shasum": ""
-            },
-            "require": {
-                "guzzle/guzzle": ">=3.7.0,<3.9.0",
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "doctrine/cache": "~1.0",
-                "ext-openssl": "*",
-                "monolog/monolog": "1.4.*",
-                "phpunit/phpunit": "3.7.*",
-                "symfony/class-loader": "2.*",
-                "symfony/yaml": "2.*"
-            },
-            "suggest": {
-                "doctrine/cache": "Adds support for caching of credentials and responses",
-                "ext-apc": "Allows service description opcode caching, request and response caching, and credentials caching",
-                "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
-                "monolog/monolog": "Adds support for logging HTTP requests and responses",
-                "symfony/yaml": "Eases the ability to write manifests for creating jobs in AWS Import/Export"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Aws": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Amazon Web Services",
-                    "homepage": "http://aws.amazon.com"
-                }
-            ],
-            "description": "AWS SDK for PHP - Use Amazon Web Services in your PHP project",
-            "homepage": "http://aws.amazon.com/sdkforphp",
-            "keywords": [
-                "amazon",
-                "aws",
-                "cloud",
-                "dynamodb",
-                "ec2",
-                "glacier",
-                "s3",
-                "sdk"
-            ],
-            "time": "2013-12-12 19:35:51"
+            "type": "library"
         },
         {
             "name": "dimsav/unix-zipper",
@@ -104,6 +46,7 @@
                 {
                     "name": "Dimitrios Savvopoulos",
                     "email": "ds@dimsav.com",
+                    "homepage": "http://dimsav.com",
                     "role": "Developer"
                 }
             ],
@@ -115,98 +58,6 @@
                 "zipper"
             ],
             "time": "2014-01-18 15:39:15"
-        },
-        {
-            "name": "guzzle/guzzle",
-            "version": "v3.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "4de0618a01b34aa1c8c33a3f13f396dcd3882eba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/4de0618a01b34aa1c8c33a3f13f396dcd3882eba",
-                "reference": "4de0618a01b34aa1c8c33a3f13f396dcd3882eba",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.3",
-                "symfony/event-dispatcher": ">=2.1"
-            },
-            "replace": {
-                "guzzle/batch": "self.version",
-                "guzzle/cache": "self.version",
-                "guzzle/common": "self.version",
-                "guzzle/http": "self.version",
-                "guzzle/inflection": "self.version",
-                "guzzle/iterator": "self.version",
-                "guzzle/log": "self.version",
-                "guzzle/parser": "self.version",
-                "guzzle/plugin": "self.version",
-                "guzzle/plugin-async": "self.version",
-                "guzzle/plugin-backoff": "self.version",
-                "guzzle/plugin-cache": "self.version",
-                "guzzle/plugin-cookie": "self.version",
-                "guzzle/plugin-curlauth": "self.version",
-                "guzzle/plugin-error-response": "self.version",
-                "guzzle/plugin-history": "self.version",
-                "guzzle/plugin-log": "self.version",
-                "guzzle/plugin-md5": "self.version",
-                "guzzle/plugin-mock": "self.version",
-                "guzzle/plugin-oauth": "self.version",
-                "guzzle/service": "self.version",
-                "guzzle/stream": "self.version"
-            },
-            "require-dev": {
-                "doctrine/cache": "*",
-                "monolog/monolog": "1.*",
-                "phpunit/phpunit": "3.7.*",
-                "psr/log": "1.0.*",
-                "symfony/class-loader": "*",
-                "zendframework/zend-cache": "<2.3",
-                "zendframework/zend-log": "<2.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.8-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Guzzle": "src/",
-                    "Guzzle\\Tests": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Guzzle Community",
-                    "homepage": "https://github.com/guzzle/guzzle/contributors"
-                }
-            ],
-            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
-            ],
-            "time": "2014-01-28 22:29:15"
         },
         {
             "name": "illuminate/config",
@@ -255,52 +106,6 @@
                 }
             ],
             "time": "2014-03-04 22:56:43"
-        },
-        {
-            "name": "illuminate/container",
-            "version": "v4.1.24",
-            "target-dir": "Illuminate/Container",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/container.git",
-                "reference": "2e2e14d50feb924de7c0a81843fe617dd94aadec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/2e2e14d50feb924de7c0a81843fe617dd94aadec",
-                "reference": "2e2e14d50feb924de7c0a81843fe617dd94aadec",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.0.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Illuminate\\Container": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com",
-                    "homepage": "https://github.com/taylorotwell",
-                    "role": "Developer"
-                }
-            ],
-            "time": "2014-03-07 14:45:01"
         },
         {
             "name": "illuminate/filesystem",
@@ -401,66 +206,6 @@
                 }
             ],
             "time": "2014-03-13 01:02:42"
-        },
-        {
-            "name": "jakajancar/dropboxuploader",
-            "version": "1.1.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jakajancar/DropboxUploader",
-                "reference": "master"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "DropboxUploader.php"
-                ]
-            }
-        },
-        {
-            "name": "mccool/database-backup",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ShawnMcCool/database-backup.git",
-                "reference": "09f458641b232eb0b1edb92fc45c6de8d70ce557"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ShawnMcCool/database-backup/zipball/09f458641b232eb0b1edb92fc45c6de8d70ce557",
-                "reference": "09f458641b232eb0b1edb92fc45c6de8d70ce557",
-                "shasum": ""
-            },
-            "require": {
-                "aws/aws-sdk-php": "2.4.*",
-                "php": ">=5.3.0",
-                "symfony/process": "2.*"
-            },
-            "require-dev": {
-                "illuminate/console": "4.x",
-                "illuminate/container": "4.x",
-                "illuminate/support": "4.x",
-                "mockery/mockery": "dev-master",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "McCool\\DatabaseBackup": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shawn McCool",
-                    "email": "shawn@heybigname.com"
-                }
-            ],
-            "description": "A framework-agnostic driver-based database backup package with a Laravel add-on.",
-            "time": "2014-01-09 16:06:59"
         },
         {
             "name": "monolog/monolog",
@@ -569,62 +314,6 @@
             "time": "2012-12-21 11:40:51"
         },
         {
-            "name": "symfony/event-dispatcher",
-            "version": "v2.4.2",
-            "target-dir": "Symfony/Component/EventDispatcher",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/4708b8cd41984a5ba29fe7dd40716f7f761ac501",
-                "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "symfony/dependency-injection": "~2.0"
-            },
-            "suggest": {
-                "symfony/dependency-injection": "",
-                "symfony/http-kernel": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\EventDispatcher\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony EventDispatcher Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-02-11 13:52:09"
-        },
-        {
             "name": "symfony/finder",
             "version": "v2.4.2",
             "target-dir": "Symfony/Component/Finder",
@@ -672,55 +361,6 @@
             "description": "Symfony Finder Component",
             "homepage": "http://symfony.com",
             "time": "2014-01-07 13:28:54"
-        },
-        {
-            "name": "symfony/process",
-            "version": "v2.4.2",
-            "target-dir": "Symfony/Component/Process",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Process.git",
-                "reference": "c175448bac997556f8ab972908a4e14c7291fb03"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/c175448bac997556f8ab972908a4e14c7291fb03",
-                "reference": "c175448bac997556f8ab972908a4e14c7291fb03",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Process\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Process Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-02-11 13:52:09"
         }
     ],
     "packages-dev": [
@@ -1540,6 +1180,62 @@
             "time": "2014-02-11 13:52:09"
         },
         {
+            "name": "symfony/event-dispatcher",
+            "version": "v2.4.2",
+            "target-dir": "Symfony/Component/EventDispatcher",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/EventDispatcher.git",
+                "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/4708b8cd41984a5ba29fe7dd40716f7f761ac501",
+                "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/dependency-injection": "~2.0"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\EventDispatcher\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-02-11 13:52:09"
+        },
+        {
             "name": "symfony/filesystem",
             "version": "v2.4.2",
             "target-dir": "Symfony/Component/Filesystem",
@@ -1700,7 +1396,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mccool/database-backup": 20,
         "behat/behat": 0,
         "phpspec/phpspec": 20
     },

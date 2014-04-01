@@ -112,18 +112,16 @@ return array(
          * contain the backup files.
          */
 
-        "my_dropbox" => array(
+        "dropbox_backups" => array(
             "driver" => "dropbox",
-            "username" => "email",
-            "password" => "password",
-            "destination" => "Backups"
+            "username" => "dropbox@example.com",
+            "destination" => "/Backups"
         ),
 
         "dropbox_customer" => array(
             "driver" => "dropbox",
-            "username" => "email",
-            "password" => "password",
-            "destination" => "Backups"
+            "username" => "dropbox2@example.com",
+            "destination" => "/Backups"
         ),
 
         /*
