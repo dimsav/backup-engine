@@ -19,23 +19,25 @@ class ElementFactory
     {
         $this->validate($projectName, $driver, $elementName);
         $config = $this->config[$projectName][$driver][$elementName];
-        if ($driver == 'mysql')
-        {
-            if ( ! isset($config['database']))
-            {
-                $config['database'] = $elementName;
-            }
-            return new Mysql($config, new Shell());
-        }
-        elseif ($driver == 'directories')
-        {
-            $root = $this->config[$projectName]['root_dir'];
 
-            if ( is_array($config) && ! isset($config['directory']))
-            {
-                $config['directory'] = $elementName;
-            }
-            return new Directory($root, $config, new UnixZipper);
+        switch ($driver)
+        {
+            case 'mysql':
+
+                if ( ! isset($config['database']))
+                {
+                    $config['database'] = $elementName;
+                }
+                return new Mysql($config, new Shell());
+
+            case 'directories':
+
+                $root = $this->config[$projectName]['root_dir'];
+                if ( is_array($config) && ! isset($config['directory']))
+                {
+                    $config['directory'] = $elementName;
+                }
+                return new Directory($root, $config, new UnixZipper);
         }
     }
 

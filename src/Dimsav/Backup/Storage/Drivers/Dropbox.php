@@ -53,11 +53,7 @@ class Dropbox implements Storage
         {
             throw new \InvalidArgumentException("The local storage '{$config['name']}' has no username set.");
         }
-        elseif ( ! isset($config['password']))
-        {
-            throw new \InvalidArgumentException("The local storage '{$config['name']}' has no password set.");
-        }
-        if ( ! $this->hasTokenFile($config))
+        elseif ( ! $this->hasTokenFile($config))
         {
             throw new \InvalidArgumentException("The dropbox storage '{$config['name']}' has not a token set.");
         }
