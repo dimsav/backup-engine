@@ -86,7 +86,7 @@ class Dropbox implements Storage
 
     private function getScript()
     {
-        return realpath(__DIR__.'/../../../../../vendor/andreafabrizi/dropbox-uploader/dropbox_uploader.sh');
+        return realpath(__DIR__.'/../../../../../bin/dropbox_uploader.sh');
     }
 
     private function getConfigFile()

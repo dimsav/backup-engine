@@ -38,6 +38,7 @@
             "package": {
                 "name": "andreafabrizi/dropbox-uploader",
                 "version": "0.13",
+                "bin": ["dropbox_uploader.sh"],
                 "source": {
                     "url": "https://github.com/andreafabrizi/Dropbox-Uploader",
                     "type": "git",

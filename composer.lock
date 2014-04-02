@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4480c795539cce38658a4d4d4aff8a02",
+    "hash": "b427b9090f307988851cd897d4a313ec",
     "packages": [
         {
             "name": "andreafabrizi/dropbox-uploader",
@@ -13,6 +13,9 @@
                 "url": "https://github.com/andreafabrizi/Dropbox-Uploader",
                 "reference": "3fd40f247e3f6eeeb771e2b8a7dd3cab89ac71b2"
             },
+            "bin": [
+                "dropbox_uploader.sh"
+            ],
             "type": "library"
         },
         {
