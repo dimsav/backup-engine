@@ -11,15 +11,17 @@ use Prophecy\Argument;
  */
 class ProjectSpec extends ObjectBehavior
 {
-    function let()
-    {
-        $this->beConstructedWith('projectName');
-    }
 
     function it_is_initializable()
     {
         $this->shouldHaveType('Dimsav\Backup\Project\Project');
-        $this->getName()->shouldReturn('projectName');
+    }
+
+    function it_receives_and_returns_storages(Storage $storage1, Storage $storage2)
+    {
+        $this->addStorage($storage1);
+        $this->addStorage($storage2);
+        $this->getStorages()->shouldReturn(array($storage1, $storage2));
     }
 
     function it_receives_and_returns_elements(Element $element)
@@ -29,26 +31,10 @@ class ProjectSpec extends ObjectBehavior
         $this->getElements()->shouldReturn(array($element));
     }
 
-    function it_receives_and_returns_password()
+    function it_receives_and_returns_password($password)
     {
-        $this->setPassword('pass');
-        $this->getPassword()->shouldReturn('pass');
-    }
-
-//    function it_receives_and_returns_storages(Storage $storage1, Storage $storage2)
-//    {
-//        $storage1->getAlias()->shouldBeCalled()->willReturn('storage1');
-//        $storage2->getAlias()->shouldBeCalled()->willReturn('storage2');
-//
-//        $this->addStorage($storage1);
-//        $this->addStorage($storage2);
-//        $this->getStorages()->shouldReturn(array('storage1' => $storage1, 'storage2' => $storage2));
-//    }
-
-    function it_receives_and_returns_storage_names()
-    {
-        $this->setStorageNames($names = array('a', 'b'));
-        $this->getStorageNames()->shouldReturn($names);
+        $this->setPassword($password);
+        $this->getPassword()->shouldReturn($password);
     }
 
 }
