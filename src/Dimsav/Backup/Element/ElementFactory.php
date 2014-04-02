@@ -18,27 +18,7 @@ class ElementFactory
     public function make($projectName, $driver, $elementName)
     {
         $this->validate($projectName, $driver, $elementName);
-        $config = $this->config[$projectName][$driver][$elementName];
-
-        switch ($driver)
-        {
-            case 'mysql':
-
-                if ( ! isset($config['database']))
-                {
-                    $config['database'] = $elementName;
-                }
-                return new Mysql($config, new Shell());
-
-            case 'directories':
-
-                $root = $this->config[$projectName]['root_dir'];
-                if ( is_array($config) && ! isset($config['directory']))
-                {
-                    $config['directory'] = $elementName;
-                }
-                return new Directory($root, $config, new UnixZipper);
-        }
+        return $this->createDriver($projectName, $driver, $elementName);
     }
 
     private function validate($projectName, $driver, $elementName)
@@ -78,5 +58,41 @@ class ElementFactory
             throw new \InvalidArgumentException(
                 "The project '$projectName' has no root_dir set. Please set it to backup project files");
         }
+    }
+
+    private function createDriver($projectName, $driver, $elementName)
+    {
+        switch ($driver) {
+            case 'mysql':
+
+                $config = $this->getMysqlConfig($projectName, $elementName);
+                return new Mysql($config, new Shell());
+
+            case 'directories':
+
+                list($root, $config) = $this->getDirectoryConfig($projectName, $elementName);
+                return new Directory($root, $config, new UnixZipper);
+        }
+    }
+
+    private function getMysqlConfig($projectName, $elementName)
+    {
+        $config =  $this->config[$projectName]['mysql'][$elementName];
+
+        if (!isset($config['database'])) {
+            $config['database'] = $elementName;
+        }
+        return $config;
+    }
+
+    private function getDirectoryConfig($projectName, $elementName)
+    {
+        $rootDir = $this->config[$projectName]['root_dir'];
+        $config =  $this->config[$projectName]['directories'][$elementName];
+
+        if (is_array($config) && !isset($config['directory'])) {
+            $config['directory'] = $elementName;
+        }
+        return array($rootDir, $config);
     }
 }
