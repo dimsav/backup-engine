@@ -11,6 +11,7 @@ class StorageFactory
 {
 
     private $config;
+    private $storages = array();
 
     public function __construct(array $config)
     {
@@ -20,7 +21,12 @@ class StorageFactory
     public function make($name)
     {
         $this->validate($name);
-        return $this->createStorage($name);
+
+        if ( ! isset($this->storages[$name]))
+        {
+            $this->storages[$name] = $this->createStorage($name);
+        }
+        return $this->storages[$name];
     }
 
     private function validate($name)

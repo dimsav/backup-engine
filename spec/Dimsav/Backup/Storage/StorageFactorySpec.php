@@ -53,6 +53,12 @@ class StorageFactorySpec extends ObjectBehavior
         $this->make('storage_4')->shouldReturnAnInstanceOf('Dimsav\Backup\Storage\Drivers\Local');
     }
 
+    function it_caches_created_instances()
+    {
+        $this->beConstructedWith($this->getConfig());
+        $storage = $this->make('storage_4');
+        $this->make('storage_4')->shouldReturn($storage);
+    }
 
     private function getConfig()
     {
