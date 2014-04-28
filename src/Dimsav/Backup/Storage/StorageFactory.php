@@ -1,24 +1,67 @@
 <?php namespace Dimsav\Backup\Storage;
 
+use Dimsav\Backup\Shell;
 use Dimsav\Backup\Storage\Drivers\Dropbox,
     Dimsav\Backup\Storage\Drivers\Local;
+use Dimsav\Backup\Storage\Exceptions\StorageDriverNotDefinedException;
+use Dimsav\Backup\Storage\Exceptions\StorageDriverNotSupportedException;
+use Dimsav\Backup\Storage\Exceptions\StorageNotFoundException;
 
 class StorageFactory
 {
-    public function make($config)
+
+    private $config;
+    private $storages = array();
+
+    public function __construct(array $config)
     {
-        return $this->createStorage($config['driver'], $config);
+        $this->config = $config;
     }
 
-    private function createStorage($driver, $config)
+    public function make($name)
     {
-        switch ($driver)
+        $this->validate($name);
+
+        if ( ! isset($this->storages[$name]))
+        {
+            $this->storages[$name] = $this->createStorage($name);
+        }
+        return $this->storages[$name];
+    }
+
+    private function validate($name)
+    {
+        if ( ! isset($this->config[$name]))
+        {
+            throw new StorageNotFoundException;
+        }
+        elseif ( ! isset($this->config[$name]['driver']))
+        {
+            throw new StorageDriverNotDefinedException;
+        }
+    }
+
+    private function createStorage($name)
+    {
+        switch ($this->getDriver($name))
         {
             case 'dropbox':
-                return new Dropbox($config);
+                return new Dropbox($this->getDriverConfig($name), new Shell());
             case 'local':
-                return new Local($config);
+                return new Local($this->getDriverConfig($name));
         }
-        throw new \InvalidArgumentException('Invalid storage driver');
+        throw new StorageDriverNotSupportedException;
+    }
+
+    private function getDriverConfig($name)
+    {
+        $config = $this->config[$name];
+        $config['name'] = $name;
+        return $config;
+    }
+
+    private function getDriver($name)
+    {
+        return $this->config[$name]['driver'];
     }
 }

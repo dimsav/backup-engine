@@ -15,14 +15,14 @@ class Directory extends AbstractElement implements Element {
     private $zipper;
     private $destinationFile;
 
-    public function __construct($rootDir, $dir, UnixZipper $zipper)
+    public function __construct($rootDir, $config, UnixZipper $zipper)
     {
         $this->validateRoot($rootDir);
         $this->parseRoot($rootDir);
 
-        $this->parseDir($dir);
+        $this->parseDir($config);
         $this->validateDir();
-        $this->parseExcludes($dir);
+        $this->parseExcludes($config);
         $this->zipper = $zipper;
     }
 

@@ -53,11 +53,7 @@ class Dropbox implements Storage
         {
             throw new \InvalidArgumentException("The local storage '{$config['name']}' has no username set.");
         }
-        elseif ( ! isset($config['password']))
-        {
-            throw new \InvalidArgumentException("The local storage '{$config['name']}' has no password set.");
-        }
-        if ( ! $this->hasTokenFile($config))
+        elseif ( ! $this->hasTokenFile($config))
         {
             throw new \InvalidArgumentException("The dropbox storage '{$config['name']}' has not a token set.");
         }
@@ -86,7 +82,7 @@ class Dropbox implements Storage
 
     private function getScript()
     {
-        return realpath(__DIR__.'/../../../../../vendor/andreafabrizi/dropbox-uploader/dropbox_uploader.sh');
+        return realpath(__DIR__.'/../../../../../bin/dropbox_uploader.sh');
     }
 
     private function getConfigFile()

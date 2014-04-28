@@ -24,13 +24,10 @@ class DropboxSpec extends ObjectBehavior
         $this->shouldThrow($exception)->during('__construct', array(array(), $shell));
     }
 
-    function it_throws_exception_if_username_or_password_not_set(Shell $shell)
+    function it_throws_exception_if_username_not_set(Shell $shell)
     {
         $exception = new \InvalidArgumentException("The local storage 'storage_name' has no username set.");
         $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name'), $shell));
-
-        $exception = new \InvalidArgumentException("The local storage 'storage_name' has no password set.");
-        $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name', 'username' => 'u'), $shell));
     }
 
     function it_throws_excepetion_if_storing_receives_an_invalid_path(Shell $shell)
@@ -76,7 +73,7 @@ class DropboxSpec extends ObjectBehavior
 
     private function uploaderPath()
     {
-        return realpath(__DIR__.'/../../../../../vendor/andreafabrizi/dropbox-uploader/dropbox_uploader.sh');
+        return realpath(__DIR__.'/../../../../../bin/dropbox_uploader.sh');
     }
 
     private function getScriptConfig()
