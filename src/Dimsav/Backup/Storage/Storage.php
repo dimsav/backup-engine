@@ -2,6 +2,12 @@
 
 interface Storage {
 
-    public function store($file);
+    /**
+     * Copies the selected file to the storage system
+     *
+     * @param $sourceFile
+     * @return mixed
+     */
+    public function store($sourceFile);
 
 } 

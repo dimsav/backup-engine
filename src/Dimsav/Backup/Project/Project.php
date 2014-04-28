@@ -6,7 +6,6 @@ use Dimsav\Backup\Storage\Storage;
 class Project {
 
     private $storages = array();
-    private $password;
 
     /**
      * @var Element[]
@@ -21,16 +20,6 @@ class Project {
     public function getStorages()
     {
         return $this->storages;
-    }
-
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     public function addElement(Element $element)

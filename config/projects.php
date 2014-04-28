@@ -15,7 +15,6 @@ return array(
             "username" => "root",
             "password" => "password",
         ),
-        "password" => "testing-default-secret",
         "storages" => "dropbox1"
     ),
 
@@ -71,12 +70,6 @@ return array(
                 "/" => array("excludes" => array("vendor", "composer.lock", "logs")),
 
             ),
-
-            /*
-             * This password field will be used for compressing the backups to zip files.
-             * To overwrite a default password (if set), set this to null.
-             */
-            "password" => "my_secret",
 
             "mysql" => array(
                 "my_database" => array(

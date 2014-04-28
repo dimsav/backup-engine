@@ -31,10 +31,4 @@ class ProjectSpec extends ObjectBehavior
         $this->getElements()->shouldReturn(array($element));
     }
 
-    function it_receives_and_returns_password($password)
-    {
-        $this->setPassword($password);
-        $this->getPassword()->shouldReturn($password);
-    }
-
 }

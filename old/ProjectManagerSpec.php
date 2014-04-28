@@ -58,8 +58,8 @@ class ProjectManagerSpec extends ObjectBehavior
 //        Project $projectA, Project $projectB, Storage $storageA, Storage $storageB
 //    )
 //    {
-//        $configA = array('name' => 'a','storages'=>'sa', 'password' => 'ap');
-//        $configB = array('name' => 'b','storages'=>'sb', 'password' => 'bp');
+//        $configA = array('name' => 'a','storages'=>'sa');
+//        $configB = array('name' => 'b','storages'=>'sb');
 //        $factory->make($configA)->shouldBeCalled()->willReturn($projectA);
 //        $factory->make($configB)->shouldBeCalled()->willReturn($projectB);
 //        $storageManager->make('sa')->shouldBeCalled()->willReturn($storageA);
@@ -68,8 +68,8 @@ class ProjectManagerSpec extends ObjectBehavior
 //        $projectB->addStorage($storageB)->shouldBeCalled();
 //
 //        $config = array('projects' => array(
-//            'a' => array('password' => 'ap','storages'=>'sa'),
-//            'b' => array('password' => 'bp','storages'=>'sb'),
+//            'a' => array('storages'=>'sa'),
+//            'b' => array('storages'=>'sb'),
 //        ));
 //        $this->setConfig($config);
 //

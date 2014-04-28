@@ -10,7 +10,6 @@ class Application {
     {
         $this->config = $config ?: new Config;
         $this->log = new Logger($this->config);
-        $this->manager = new ProjectManager($this->config, $this->log, new ProjectRepository($this->config));
     }
 
     public function run()
