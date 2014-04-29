@@ -23,16 +23,17 @@ class Dropbox implements Storage
         $this->destination = isset($config['destination']) ? $config['destination'] : '/';
     }
 
-    public function store($file)
+    public function store($file, $projectName = null)
     {
         $this->validateFile($file);
         $this->setup();
-        $this->shell->exec($this->getCommand($file));
+        $this->shell->exec($this->getCommand($file, $projectName));
     }
 
-    public function getCommand($file)
+    public function getCommand($file, $projectName)
     {
-        return $this->getScript().' -f '.$this->getConfigFile()." upload $file " . $this->destination;
+        $destination = $projectName ? $this->destination . "/$projectName" : $this->destination;
+        return $this->getScript().' -f '.$this->getConfigFile()." upload $file " . $destination;
     }
 
     private function setup()

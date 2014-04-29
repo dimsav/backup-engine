@@ -64,11 +64,11 @@ class DropboxSpec extends ObjectBehavior
         $command = $this->uploaderPath() . $this->getScriptConfig() . ' upload ' . __FILE__ . ' /Backups/project_name';
 
         $config = $this->getConfig();
-        $config['destination'] = '/Backups/project_name';
+        $config['destination'] = '/Backups';
 
         $shell->exec($command)->shouldBeCalled();
         $this->beConstructedWith($config, $shell);
-        $this->store(__FILE__);
+        $this->store(__FILE__, 'project_name');
     }
 
     private function uploaderPath()

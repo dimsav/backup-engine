@@ -14,10 +14,17 @@ class Local implements Storage {
         $this->destination = realpath($config['destination']);
     }
 
-    public function store($file)
+    public function store($file, $projectName = null)
     {
         $this->validateFile($file);
-        copy($file, $this->destination . '/' . basename($file));
+
+        $exportDir = $this->destination . '/' . $projectName;
+        if ($projectName && ! is_dir($exportDir))
+        {
+            mkdir($exportDir);
+        }
+
+        copy($file, $exportDir . '/' . basename($file));
     }
 
     private function validate($config)

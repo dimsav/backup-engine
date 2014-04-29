@@ -52,7 +52,7 @@ class LocalSpec extends ObjectBehavior
     function it_stores_the_selected_file_by_copying_the_file_to_the_destination()
     {
         $this->beConstructedWith(array('name'=>'name', 'destination' => $this->tempDir));
-        $this->store(__FILE__)->shouldCreateFile($this->tempDir.'/'. basename(__FILE__));
+        $this->store(__FILE__, 'projectName')->shouldCreateFile($this->tempDir.'/projectName/'. basename(__FILE__));
     }
 
     function letGo()
