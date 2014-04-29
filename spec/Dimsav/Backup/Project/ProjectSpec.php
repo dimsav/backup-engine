@@ -31,4 +31,10 @@ class ProjectSpec extends ObjectBehavior
         $this->getElements()->shouldReturn(array($element));
     }
 
+    function it_receives_and_returns_a_name($name)
+    {
+        $this->setName($name);
+        $this->getName()->shouldReturn($name);
+    }
+
 }

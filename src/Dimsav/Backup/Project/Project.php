@@ -6,6 +6,7 @@ use Dimsav\Backup\Storage\Storage;
 class Project {
 
     private $storages = array();
+    private $name;
 
     /**
      * @var Element[]
@@ -32,14 +33,13 @@ class Project {
         return $this->elements;
     }
 
-//    public function getBackupFile($extension = '')
-//    {
-//        $timestamp = date($this->config->get('app.timestamp_prefix', "Y.m.d.H.i."));
-//
-//        $file = $this->config->get('app.backups_dir');
-//        $file.= "/{$this->name}/{$timestamp}{$this->name}";
-//        $file.= $extension ? ".{$extension}" : '';
-//        return $file;
-//    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
+    public function getName()
+    {
+        return $this->name;
+    }
 }
