@@ -17,9 +17,15 @@ class StorageFactorySpec extends ObjectBehavior
 
     // It validates input
 
+    function it_throws_exception_if_storages_are_not_set()
+    {
+        $this->shouldThrow('Dimsav\Backup\Storage\Exceptions\StoragesNotConfiguredException')
+            ->during('__construct', array(array()));
+    }
+
     function it_throws_exception_if_storage_name_not_set()
     {
-        $this->beConstructedWith(array());
+        $this->beConstructedWith(array('storages' => array()));
         $this->shouldThrow('Dimsav\Backup\Storage\Exceptions\StorageNotFoundException')
             ->duringMake('name');
     }

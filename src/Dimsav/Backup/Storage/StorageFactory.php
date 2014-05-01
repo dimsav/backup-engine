@@ -6,6 +6,7 @@ use Dimsav\Backup\Storage\Drivers\Dropbox,
 use Dimsav\Backup\Storage\Exceptions\StorageDriverNotDefinedException;
 use Dimsav\Backup\Storage\Exceptions\StorageDriverNotSupportedException;
 use Dimsav\Backup\Storage\Exceptions\StorageNotFoundException;
+use Dimsav\Backup\Storage\Exceptions\StoragesNotConfiguredException;
 
 class StorageFactory
 {
@@ -16,11 +17,12 @@ class StorageFactory
     public function __construct(array $fullConfig)
     {
         $this->config = $fullConfig;
+        $this->validate();
     }
 
     public function make($storageName)
     {
-        $this->validate($storageName);
+        $this->validateStorage($storageName);
 
         if ( ! isset($this->storages[$storageName]))
         {
@@ -29,7 +31,15 @@ class StorageFactory
         return $this->storages[$storageName];
     }
 
-    private function validate($storageName)
+    private function validate()
+    {
+        if ( ! isset($this->config['storages']))
+        {
+            throw new StoragesNotConfiguredException;
+        }
+    }
+
+    private function validateStorage($storageName)
     {
         if ( ! isset($this->config['storages'][$storageName]))
         {
