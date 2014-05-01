@@ -2,6 +2,8 @@
 
 use Dimsav\Backup\Element\Drivers\Directory;
 use Dimsav\Backup\Element\Drivers\Mysql;
+use Dimsav\Backup\Element\Exceptions\InvalidProjectDriverException;
+use Dimsav\Backup\Element\Exceptions\InvalidProjectNameException;
 use Dimsav\Backup\Shell;
 use Dimsav\UnixZipper;
 
@@ -9,10 +11,11 @@ class ElementFactory
 {
     private $config;
     private $supportedDrivers = array('mysql', 'directories');
+    private $allElements = array();
 
-    public function __construct($config)
+    public function __construct($projectsConfig)
     {
-        $this->config = $config;
+        $this->config = $projectsConfig;
     }
 
     public function make($projectName, $driver, $elementName)
@@ -21,28 +24,45 @@ class ElementFactory
         return $this->createDriver($projectName, $driver, $elementName);
     }
 
+    public function makeAll($projectName)
+    {
+        $this->validateProject($projectName);
+
+        foreach ($this->supportedDrivers as $driver)
+        {
+            try {
+                $this->validateDriverInProject($projectName, $driver);
+                $elementNames = $this->getElementNames($projectName, $driver);
+                foreach ($elementNames as $elementName)
+                {
+                    $this->allElements[] = $this->make($projectName, $driver, $elementName);
+                }
+            } catch (InvalidProjectDriverException $e) {}
+        }
+        return $this->allElements;
+    }
+
     public function getDrivers()
     {
         return $this->supportedDrivers;
     }
 
+    private function getElementNames($projectName, $driver)
+    {
+        return array_keys($this->config[$projectName][$driver]);
+    }
+
     private function validate($projectName, $driver, $elementName)
     {
 
-        if ( ! isset($this->config[$projectName]))
-        {
-            throw new \InvalidArgumentException("The project '$projectName' was not found.");
-        }
+        $this->validateProject($projectName);
 
         if ( ! in_array($driver, $this->supportedDrivers))
         {
             throw new \InvalidArgumentException("The driver '$driver' is not supported. Check your settings in project '$projectName'.");
         }
 
-        if ( ! isset($this->config[$projectName][$driver]))
-        {
-            throw new \InvalidArgumentException("The project '$projectName' has no driver '$driver' set.");
-        }
+        $this->validateDriverInProject($projectName, $driver);
 
         if ( ! isset($this->config[$projectName][$driver][$elementName]))
         {
@@ -99,5 +119,28 @@ class ElementFactory
             $config['directory'] = $elementName;
         }
         return array($rootDir, $config);
+    }
+
+    /**
+     * @param $projectName
+     * @throws \InvalidArgumentException
+     */
+    private function validateProject($projectName)
+    {
+        if (!isset($this->config[$projectName])) {
+            throw new InvalidProjectNameException("The project '$projectName' was not found.");
+        }
+    }
+
+    /**
+     * @param $projectName
+     * @param $driver
+     * @throws Exceptions\InvalidProjectDriverException
+     */
+    private function validateDriverInProject($projectName, $driver)
+    {
+        if (!isset($this->config[$projectName][$driver])) {
+            throw new InvalidProjectDriverException("The project '$projectName' has no driver '$driver' set.");
+        }
     }
 }

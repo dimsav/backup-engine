@@ -4,6 +4,7 @@ namespace spec\Dimsav\Backup\Element;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Dimsav\Backup\Element\Exceptions\InvalidProjectNameException;
 
 class ElementFactorySpec extends ObjectBehavior
 {
@@ -23,8 +24,8 @@ class ElementFactorySpec extends ObjectBehavior
 
     function it_throws_exception_if_required_project_is_not_defined()
     {
-        $exception = new \InvalidArgumentException("The project 'invalid_project' was not found.");
-        $this->shouldThrow($exception)->duringMake('invalid_project', '', '');
+        $exception = new InvalidProjectNameException("The project 'invalid_project' was not found.");
+        $this->shouldThrow($exception)->duringMakeAll('invalid_project', '', '');
     }
 
     function it_throws_exception_if_required_driver_is_not_defined()
@@ -35,8 +36,8 @@ class ElementFactorySpec extends ObjectBehavior
 
     function it_throws_exception_if_required_element_name_is_not_defined()
     {
-        $exception = new \InvalidArgumentException("The project 'project_1' has no driver 'mysql' named 'wrong_name'.");
-        $this->shouldThrow($exception)->duringMake('project_1', 'mysql', 'wrong_name');
+        $exception = new \InvalidArgumentException("The project 'project_2' has no driver 'mysql' named 'wrong_name'.");
+        $this->shouldThrow($exception)->duringMake('project_2', 'mysql', 'wrong_name');
     }
 
     function it_throws_exception_if_required_driver_is_not_supported()
@@ -47,12 +48,12 @@ class ElementFactorySpec extends ObjectBehavior
 
     function it_makes_mysql_elements()
     {
-        $this->make('project_1', 'mysql', 'db_1')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
+        $this->make('project_2', 'mysql', 'db_1')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
     }
 
     function it_sets_the_database_name_if_missing()
     {
-        $this->make('project_1', 'mysql', 'db_name_2')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
+        $this->make('project_2', 'mysql', 'db_name_2')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
     }
 
 
@@ -91,12 +92,29 @@ class ElementFactorySpec extends ObjectBehavior
         $this->getDrivers()->shouldHaveCount(2);
     }
 
+    function it_returns_all_the_elements_of_a_project()
+    {
+        $elements = $this->makeAll('project_2');
+        $elements->shouldHaveCount(5);
+        $elements->shouldHaveOnlyElementInstances();
+    }
 
     private function getConfig()
     {
         return array(
             'empty_project' => array(),
             'project_1' => array(
+                "directories" => array(
+                    "/"
+                ),
+            ),
+            'project_2' => array(
+                "root_dir" => realpath(__DIR__.'/../'),
+                "directories" => array(
+                    "Element/Drivers",
+                    array("directory" => "Element", 'excludes' => 'Drivers'),
+                    "Element" => array('excludes' => 'Drivers'),
+                ),
                 'mysql' => array(
                     'db_1' => array(
                         'database' => 'db_name_1',
@@ -112,18 +130,21 @@ class ElementFactorySpec extends ObjectBehavior
                         'password' => 'password1'
                     ),
                 ),
-                "directories" => array(
-                    "/"
-                ),
-            ),
-            'project_2' => array(
-                "root_dir" => realpath(__DIR__.'/../'),
-                "directories" => array(
-                    "Element/Drivers",
-                    array("directory" => "Element", 'excludes' => 'Drivers'),
-                    "Element" => array('excludes' => 'Drivers'),
-                ),
             )
+        );
+    }
+
+    function getMatchers()
+    {
+        return array(
+            'haveOnlyElementInstances' => function($results) {
+                $valid = true;
+                foreach ($results as $result)
+                {
+                    $valid = ! is_a($result, 'Dimsav\Backup\Element\Element') ? false : $valid;
+                }
+                return $valid;
+            }
         );
     }
 }
