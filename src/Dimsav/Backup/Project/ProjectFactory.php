@@ -17,6 +17,8 @@ class ProjectFactory
      */
     private $project;
 
+    private $projects = array();
+
     /**
      * @var ProjectFactory
      */
@@ -31,11 +33,15 @@ class ProjectFactory
 
     public function make($projectName)
     {
+        if (isset($this->projects[$projectName]))
+        {
+            return $this->projects[$projectName];
+        }
         $this->project = new Project();
         $this->project->setName($projectName);
         $this->assignElementsTo($projectName);
         $this->assignProjectsTo($projectName);
-        return $this->project;
+        return $this->projects[$projectName] = $this->project;
     }
 
     private function assignElementsTo($projectName)
@@ -50,4 +56,18 @@ class ProjectFactory
         $this->project->setStorages($projects);
     }
 
+
+    public function makeAll()
+    {
+        foreach ($this->getProjectNames() as $projectName)
+        {
+            $this->make($projectName);
+        }
+        return $this->projects;
+    }
+
+    private function getProjectNames()
+    {
+        return array_keys($this->config['projects']);
+    }
 }
