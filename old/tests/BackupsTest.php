@@ -1,7 +1,6 @@
 <?php
 
 use Dimsav\Backup\Project;
-use Dimsav\Backup\ProjectRepository;
 
 class BackupsTest extends PHPUnit_Framework_TestCase {
 
