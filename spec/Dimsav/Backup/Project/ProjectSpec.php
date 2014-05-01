@@ -17,11 +17,10 @@ class ProjectSpec extends ObjectBehavior
         $this->shouldHaveType('Dimsav\Backup\Project\Project');
     }
 
-    function it_receives_and_returns_storages(Storage $storage1, Storage $storage2)
+    function it_receives_and_returns_storages($storages)
     {
-        $this->addStorage($storage1);
-        $this->addStorage($storage2);
-        $this->getStorages()->shouldReturn(array($storage1, $storage2));
+        $this->setStorages($storages);
+        $this->getStorages()->shouldReturn($storages);
     }
 
     function it_receives_and_returns_elements($elements)

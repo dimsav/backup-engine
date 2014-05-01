@@ -4,14 +4,15 @@ namespace spec\Dimsav\Backup\Project;
 
 use Dimsav\Backup\Element\Element;
 use Dimsav\Backup\Element\ElementFactory;
+use Dimsav\Backup\Storage\StorageFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class ProjectFactorySpec extends ObjectBehavior
 {
-    function let(ElementFactory $elementFactory)
+    function let(ElementFactory $elementFactory, StorageFactory $storageFactory)
     {
-        $this->beConstructedWith($this->getConfig(), $elementFactory);
+        $this->beConstructedWith($this->getConfig(), $elementFactory, $storageFactory);
     }
 
     function it_is_initializable()
@@ -33,11 +34,12 @@ class ProjectFactorySpec extends ObjectBehavior
         $project->getElements()->shouldReturn($elements);
     }
 
-    function it_fills_the_storages_of_a_project()
+    function it_fills_the_storages_of_a_project(StorageFactory $storageFactory, $storages)
     {
-//        $project = $this->make('my_project');
-//        $project->getStorages()->shouldReturn($storages);
-//        $project->getStorages()->shouldReturn('...');
+        $storageFactory->makeAll('my_project')->shouldBeCalled()->willReturn($storages);
+
+        $project = $this->make('my_project');
+        $project->getStorages()->shouldReturn($storages);
     }
 
     private function getConfig()

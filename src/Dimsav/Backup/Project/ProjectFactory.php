@@ -1,6 +1,7 @@
 <?php namespace Dimsav\Backup\Project;
 
 use Dimsav\Backup\Element\ElementFactory;
+use Dimsav\Backup\Storage\StorageFactory;
 
 class ProjectFactory
 {
@@ -16,10 +17,16 @@ class ProjectFactory
      */
     private $project;
 
-    public function __construct($fullConfig, ElementFactory $elementFactory)
+    /**
+     * @var ProjectFactory
+     */
+    private $storageFactory;
+
+    public function __construct($fullConfig, ElementFactory $elementFactory, StorageFactory $storageFactory)
     {
         $this->config = $fullConfig;
         $this->elementFactory = $elementFactory;
+        $this->storageFactory = $storageFactory;
     }
 
     public function make($projectName)
@@ -27,6 +34,7 @@ class ProjectFactory
         $this->project = new Project();
         $this->project->setName($projectName);
         $this->assignElementsTo($projectName);
+        $this->assignProjectsTo($projectName);
         return $this->project;
     }
 
@@ -34,6 +42,12 @@ class ProjectFactory
     {
         $elements = $this->elementFactory->makeAll($projectName);
         $this->project->setElements($elements);
+    }
+
+    private function assignProjectsTo($projectName)
+    {
+        $projects = $this->storageFactory->makeAll($projectName);
+        $this->project->setStorages($projects);
     }
 
 }

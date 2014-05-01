@@ -13,9 +13,9 @@ class Project {
      */
     private $elements = array();
 
-    public function addStorage(Storage $storage)
+    public function setStorages($storages)
     {
-        $this->storages[] = $storage;
+        $this->storages = $storages;
     }
 
     public function getStorages()
