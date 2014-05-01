@@ -44,6 +44,11 @@ class StorageFactorySpec extends ObjectBehavior
             ->duringMake('storage_2');
     }
 
+    function it_throws_exception_if_project_has_no_project_defined()
+    {
+        $this->beConstructedWith($this->getConfig());
+        $this->shouldThrow('Dimsav\Backup\Storage\Exceptions\StoragesNotConfiguredException')->duringMakeAll('my_project_1');
+    }
 
     // It creates driver instances
 
@@ -66,9 +71,39 @@ class StorageFactorySpec extends ObjectBehavior
         $this->make('storage_4')->shouldReturn($storage);
     }
 
+    function it_returns_all_the_storages_of_a_project()
+    {
+        $this->beConstructedWith($this->getConfig());
+
+        $storage3 = $this->make('storage_3');
+        $storage4 = $this->make('storage_4');
+
+        $storages = $this->makeAll('my_project_2');
+        $storages->shouldReturn(array($storage3, $storage4));
+        $storages->shouldHaveOnlyStorageInstances();
+    }
+
+    function getMatchers()
+    {
+        return array(
+            'haveOnlyStorageInstances' => function($results) {
+                $valid = true;
+                foreach ($results as $result)
+                {
+                    $valid = ! is_a($result, 'Dimsav\Backup\Storage\Storage') ? false : $valid;
+                }
+                return $valid;
+            }
+        );
+    }
+
     private function getConfig()
     {
         return array(
+            'projects' => array(
+                'my_project_1' => array(),
+                'my_project_2' => array('storages' => array('storage_3', 'storage_4')),
+            ),
             'storages' => array (
                 'storage_1' => array(),
                 'storage_2' => array('driver' => 'false'),

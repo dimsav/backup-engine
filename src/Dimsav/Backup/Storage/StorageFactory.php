@@ -31,6 +31,23 @@ class StorageFactory
         return $this->storages[$storageName];
     }
 
+    public function makeAll($projectName)
+    {
+        $storages = array();
+        $storageNames = $this->getProjectStorageNames($projectName);
+        foreach ($storageNames as $storageName)
+        {
+            $storages[] = $this->make($storageName);
+        }
+        return $storages;
+    }
+
+    private function getProjectStorageNames($projectName)
+    {
+        $this->validateProject($projectName);
+        return $this->config['projects'][$projectName]['storages'];
+    }
+
     private function validate()
     {
         if ( ! isset($this->config['storages']))
@@ -73,5 +90,16 @@ class StorageFactory
     private function getDriver($name)
     {
         return $this->config['storages'][$name]['driver'];
+    }
+
+    /**
+     * @param $projectName
+     * @throws Exceptions\StoragesNotConfiguredException
+     */
+    private function validateProject($projectName)
+    {
+        if ((!isset($this->config['projects'][$projectName]['storages'])) || empty($this->config['projects'][$projectName]['storages'])) {
+            throw new StoragesNotConfiguredException("The project '$projectName' has no storages defined.");
+        }
     }
 }

@@ -11,7 +11,6 @@ class ElementFactory
 {
     private $config;
     private $supportedDrivers = array('mysql', 'directories');
-    private $allElements = array();
 
     public function __construct($projectsConfig)
     {
@@ -26,6 +25,7 @@ class ElementFactory
 
     public function makeAll($projectName)
     {
+        $elements = array();
         $this->validateProject($projectName);
 
         foreach ($this->supportedDrivers as $driver)
@@ -35,11 +35,11 @@ class ElementFactory
                 $elementNames = $this->getElementNames($projectName, $driver);
                 foreach ($elementNames as $elementName)
                 {
-                    $this->allElements[] = $this->make($projectName, $driver, $elementName);
+                    $elements[] = $this->make($projectName, $driver, $elementName);
                 }
             } catch (InvalidProjectDriverException $e) {}
         }
-        return $this->allElements;
+        return $elements;
     }
 
     private function getElementNames($projectName, $driver)
