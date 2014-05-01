@@ -63,10 +63,12 @@ class StorageFactorySpec extends ObjectBehavior
     private function getConfig()
     {
         return array(
-            'storage_1' => array(),
-            'storage_2' => array('driver' => 'false'),
-            'storage_3' => array('driver' => 'dropbox', 'username' => 'dropbox@test.com'),
-            'storage_4' => array('driver' => 'local', 'destination' => __DIR__),
+            'storages' => array (
+                'storage_1' => array(),
+                'storage_2' => array('driver' => 'false'),
+                'storage_3' => array('driver' => 'dropbox', 'username' => 'dropbox@test.com'),
+                'storage_4' => array('driver' => 'local', 'destination' => __DIR__),
+            )
         );
     }
 

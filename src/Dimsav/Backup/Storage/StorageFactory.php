@@ -13,55 +13,55 @@ class StorageFactory
     private $config;
     private $storages = array();
 
-    public function __construct(array $config)
+    public function __construct(array $fullConfig)
     {
-        $this->config = $config;
+        $this->config = $fullConfig;
     }
 
-    public function make($name)
+    public function make($storageName)
     {
-        $this->validate($name);
+        $this->validate($storageName);
 
-        if ( ! isset($this->storages[$name]))
+        if ( ! isset($this->storages[$storageName]))
         {
-            $this->storages[$name] = $this->createStorage($name);
+            $this->storages[$storageName] = $this->createStorage($storageName);
         }
-        return $this->storages[$name];
+        return $this->storages[$storageName];
     }
 
-    private function validate($name)
+    private function validate($storageName)
     {
-        if ( ! isset($this->config[$name]))
+        if ( ! isset($this->config['storages'][$storageName]))
         {
             throw new StorageNotFoundException;
         }
-        elseif ( ! isset($this->config[$name]['driver']))
+        elseif ( ! isset($this->config['storages'][$storageName]['driver']))
         {
             throw new StorageDriverNotDefinedException;
         }
     }
 
-    private function createStorage($name)
+    private function createStorage($storageName)
     {
-        switch ($this->getDriver($name))
+        switch ($this->getDriver($storageName))
         {
             case 'dropbox':
-                return new Dropbox($this->getDriverConfig($name), new Shell());
+                return new Dropbox($this->getDriverConfig($storageName), new Shell());
             case 'local':
-                return new Local($this->getDriverConfig($name));
+                return new Local($this->getDriverConfig($storageName));
         }
         throw new StorageDriverNotSupportedException;
     }
 
     private function getDriverConfig($name)
     {
-        $config = $this->config[$name];
+        $config = $this->config['storages'][$name];
         $config['name'] = $name;
         return $config;
     }
 
     private function getDriver($name)
     {
-        return $this->config[$name]['driver'];
+        return $this->config['storages'][$name]['driver'];
     }
 }
