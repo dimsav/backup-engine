@@ -5,8 +5,12 @@ use Dimsav\Backup\Storage\Storage;
 
 class Project {
 
-    private $storages = array();
     private $name;
+
+    /**
+     * @var Storage[]
+     */
+    private $storages = array();
 
     /**
      * @var Element[]
@@ -41,5 +45,41 @@ class Project {
     public function getName()
     {
         return $this->name;
+    }
+
+    public function backup($tempDir)
+    {
+        $this->validateTempDir($tempDir);
+        foreach ($this->elements as $element)
+        {
+            $element->setExtractionDir($tempDir);
+            $element->extract();
+            $this->storeFiles($element->getExtractedFiles());
+        }
+    }
+
+    private function validateTempDir($tempDir)
+    {
+        if ( ! is_dir($tempDir))
+        {
+            throw new \InvalidArgumentException(
+                "The temp directory '$tempDir' is not valid.".
+                " Make sure this path is writable.");
+        }
+    }
+
+    private function storeFiles($extractedFiles)
+    {
+        foreach ($extractedFiles as $extractedFile) {
+            $this->storeFile($extractedFile);
+        }
+    }
+
+    private function storeFile($file)
+    {
+        foreach($this->storages as $storage)
+        {
+            $storage->store($file, $this->name);
+        }
     }
 }
