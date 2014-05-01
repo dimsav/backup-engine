@@ -34,7 +34,7 @@ class StorageFactory
     public function makeAll($projectName)
     {
         $storages = array();
-        $storageNames = $this->getProjectStorageNames($projectName);
+        $storageNames = (array) $this->getProjectStorageNames($projectName);
         foreach ($storageNames as $storageName)
         {
             $storages[] = $this->make($storageName);
