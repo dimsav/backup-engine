@@ -39,7 +39,7 @@ class Local implements Storage {
         }
         elseif ( ! is_dir($config['destination']))
         {
-            throw new \InvalidArgumentException("The destination of the local storage '{$config["name"]}' is not a valid directory.");
+            throw new \InvalidArgumentException("The path '{$config['destination']}' of the local storage '{$config["name"]}' is not a valid directory.");
         }
     }
 

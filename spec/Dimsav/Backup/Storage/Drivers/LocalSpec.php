@@ -34,8 +34,9 @@ class LocalSpec extends ObjectBehavior
 
     function it_throws_exception_if_destination_is_not_valid_directory()
     {
-        $exception = new \InvalidArgumentException("The destination of the local storage 'storage_name' is not a valid directory.");
-        $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name', 'destination' => __DIR__.'/abc')));
+        $dir =__DIR__.'/abc';
+        $exception = new \InvalidArgumentException("The path '$dir' of the local storage 'storage_name' is not a valid directory.");
+        $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name', 'destination' => $dir)));
     }
 
     function it_throws_excepetion_if_storing_file_does_not_exist()
