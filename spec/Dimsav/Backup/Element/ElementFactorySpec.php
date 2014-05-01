@@ -86,12 +86,6 @@ class ElementFactorySpec extends ObjectBehavior
         $directory->getExcludes()->shouldHaveCount(1);
     }
 
-    function it_returns_the_supported_drivers()
-    {
-        $this->getDrivers()->shouldBeArray();
-        $this->getDrivers()->shouldHaveCount(2);
-    }
-
     function it_returns_all_the_elements_of_a_project()
     {
         $elements = $this->makeAll('project_2');

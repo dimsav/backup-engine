@@ -42,11 +42,6 @@ class ElementFactory
         return $this->allElements;
     }
 
-    public function getDrivers()
-    {
-        return $this->supportedDrivers;
-    }
-
     private function getElementNames($projectName, $driver)
     {
         return array_keys($this->config[$projectName][$driver]);
