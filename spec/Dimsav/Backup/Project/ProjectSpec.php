@@ -24,11 +24,11 @@ class ProjectSpec extends ObjectBehavior
         $this->getStorages()->shouldReturn(array($storage1, $storage2));
     }
 
-    function it_receives_and_returns_elements(Element $element)
+    function it_receives_and_returns_elements($elements)
     {
         $this->getElements()->shouldReturn(array());
-        $this->addElement($element);
-        $this->getElements()->shouldReturn(array($element));
+        $this->setElements($elements);
+        $this->getElements()->shouldReturn($elements);
     }
 
     function it_receives_and_returns_a_name($name)

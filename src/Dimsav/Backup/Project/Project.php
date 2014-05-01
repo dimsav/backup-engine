@@ -23,9 +23,9 @@ class Project {
         return $this->storages;
     }
 
-    public function addElement(Element $element)
+    public function setElements($elements)
     {
-        $this->elements[] = $element;
+        $this->elements = $elements;
     }
 
     public function getElements()
