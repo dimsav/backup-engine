@@ -21,6 +21,11 @@ class ElementFactory
         return $this->createDriver($projectName, $driver, $elementName);
     }
 
+    public function getDrivers()
+    {
+        return $this->supportedDrivers;
+    }
+
     private function validate($projectName, $driver, $elementName)
     {
 
