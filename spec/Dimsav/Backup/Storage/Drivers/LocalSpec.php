@@ -5,16 +5,11 @@ use Prophecy\Argument;
 
 class LocalSpec extends ObjectBehavior
 {
-    private $tempDir;
+    private $destinationDir;
 
     function let()
     {
-        $this->tempDir = __DIR__.'/../../../../../temp';
-        if ( ! is_dir($this->tempDir))
-        {
-            mkdir($this->tempDir);
-        }
-        $this->tempDir = realpath($this->tempDir);
+        $this->destinationDir = __DIR__.'/../../../../../temp';
     }
 
 
@@ -32,18 +27,11 @@ class LocalSpec extends ObjectBehavior
         $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name')));
     }
 
-    function it_throws_exception_if_destination_is_not_valid_directory()
-    {
-        $dir =__DIR__.'/abc';
-        $exception = new \InvalidArgumentException("The path '$dir' of the local storage 'storage_name' is not a valid directory.");
-        $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name', 'destination' => $dir)));
-    }
-
     function it_throws_excepetion_if_storing_file_does_not_exist()
     {
         $file = __DIR__.'/test.php';
         $exception = new \InvalidArgumentException("Local storage 'name' could not find the file '$file'.");
-        $this->beConstructedWith(array('name'=>'name', 'destination' => $this->tempDir));
+        $this->beConstructedWith(array('name'=>'name', 'destination' => $this->destinationDir));
         $this->shouldThrow($exception)->duringStore($file);
     }
 
@@ -52,13 +40,13 @@ class LocalSpec extends ObjectBehavior
 
     function it_stores_the_selected_file_by_copying_the_file_to_the_destination()
     {
-        $this->beConstructedWith(array('name'=>'name', 'destination' => $this->tempDir));
-        $this->store(__FILE__, 'projectName')->shouldCreateFile($this->tempDir.'/projectName/'. basename(__FILE__));
+        $this->beConstructedWith(array('name'=>'name', 'destination' => $this->destinationDir));
+        $this->store(__FILE__, 'projectName')->shouldCreateFile($this->destinationDir.'/projectName/'. basename(__FILE__));
     }
 
     function letGo()
     {
-        exec("rm -rf $this->tempDir");
+        exec("rm -rf $this->destinationDir");
     }
 
     function getMatchers()

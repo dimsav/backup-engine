@@ -9,9 +9,21 @@ class Local implements Storage {
 
     public function __construct(array $config)
     {
+        $this->setupDestination($config);
         $this->validate($config);
         $this->name = $config['name'];
-        $this->destination = realpath($config['destination']);
+    }
+
+    private function setupDestination($config)
+    {
+        if ( isset($config['destination']) )
+        {
+            if( ! is_dir($config['destination']))
+            {
+                mkdir($config['destination'], 0777, true);
+            }
+            $this->destination = realpath($config['destination']);
+        }
     }
 
     public function store($file, $projectName = null)
@@ -21,7 +33,7 @@ class Local implements Storage {
         $exportDir = $this->destination . '/' . $projectName;
         if ($projectName && ! is_dir($exportDir))
         {
-            mkdir($exportDir);
+            mkdir($exportDir, 0777, true);
         }
 
         copy($file, $exportDir . '/' . basename($file));
@@ -37,7 +49,7 @@ class Local implements Storage {
         {
             throw new \InvalidArgumentException("The local storage '{$config["name"]}' has no destination set.");
         }
-        elseif ( ! is_dir($config['destination']))
+        elseif ( ! $this->destination)
         {
             throw new \InvalidArgumentException("The path '{$config['destination']}' of the local storage '{$config["name"]}' is not a valid directory.");
         }
