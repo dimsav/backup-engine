@@ -1,6 +1,7 @@
 <?php namespace spec\Dimsav\Backup\Storage\Drivers;
 
 use Dimsav\Backup\Shell;
+use Dimsav\Backup\Storage\Exceptions\TokenNotSetException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -42,7 +43,7 @@ class DropboxSpec extends ObjectBehavior
     function it_throws_exception_if_dropbox_token_is_not_set(Shell $shell)
     {
         $this->clearToken();
-        $exception = new \InvalidArgumentException("The dropbox storage 'name' has not a token set.");
+        $exception = new TokenNotSetException("The dropbox storage 'name' has not a token set.");
         $this->shouldThrow($exception)->during('__construct', array($this->getConfig(), $shell));
     }
 

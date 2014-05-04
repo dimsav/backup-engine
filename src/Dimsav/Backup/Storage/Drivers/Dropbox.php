@@ -1,6 +1,7 @@
 <?php namespace Dimsav\Backup\Storage\Drivers;
 
 use Dimsav\Backup\Shell;
+use Dimsav\Backup\Storage\Exceptions\TokenNotSetException;
 use Dimsav\Backup\Storage\Storage;
 
 
@@ -56,7 +57,7 @@ class Dropbox implements Storage
         }
         elseif ( ! $this->hasTokenFile($config))
         {
-            throw new \InvalidArgumentException("The dropbox storage '{$config['name']}' has not a token set.");
+            throw new TokenNotSetException("The dropbox storage '{$config['name']}' has not a token set.");
         }
     }
 
