@@ -45,7 +45,7 @@ class Mysql extends AbstractElement
     public function setExtractionDir($dir)
     {
         parent::setExtractionDir($dir);
-        $this->extractedFile = $this->extractionDir. "/{$this->database}.sql";
+        $this->extractedFile = $this->extractionDir. "/".date("Y-m-d_H-i-s")."_{$this->database}.sql";
     }
 
     /**

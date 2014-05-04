@@ -44,7 +44,7 @@ class MysqlSpec extends ObjectBehavior
         $shell->getStatusCode()->shouldBeCalled()->willReturn(0);
         $shell->exec($this->getCommand())->shouldBeCalled();
         $this->extract();
-        $this->getExtractedFiles()->shouldReturn(array(__DIR__.'/dbname.sql'));
+        $this->getExtractedFiles()->shouldReturn(array(__DIR__.'/'.date("Y-m-d_H-i-s").'_dbname.sql'));
     }
 
     // Extract: Validation
@@ -85,7 +85,7 @@ class MysqlSpec extends ObjectBehavior
     private function getCommand()
     {
         return "mysqldump --host='localhost' --port='123' --user='username'".
-               " --password='password' 'dbname' > '" . __DIR__ . "/dbname.sql'";
+               " --password='password' 'dbname' > '" . __DIR__ . "/".date("Y-m-d_H-i-s")."_dbname.sql'";
     }
 
 }

@@ -106,7 +106,7 @@ class Directory extends AbstractElement implements Element {
     public function extract()
     {
         $this->zipper->add($this->dir);
-        $this->extractedFiles[] = $dir = $this->extractionDir . '/'. $this->destinationFile;
+        $this->extractedFiles[] = $dir = $this->extractionDir . '/'. date("Y-m-d_H-i-s") . '_'.$this->destinationFile;
         $this->zipper->setDestination($dir);
         foreach ($this->excludes as $exclude)
         {
