@@ -81,6 +81,9 @@ return array(
         /*
          * Set here the absolute path of the temp directory used for creating the backup files.
          * Make sure the app can create and write to this folder.
+         *
+         * WARNING: This directory is being deleted before and after each backup!
+         *          Don't change it if you don't know what you're doing!
          */
         "temp_dir" => __DIR__ .'/../temp',
 

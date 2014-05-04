@@ -1,7 +1,5 @@
 <?php
 
-use Dimsav\Backup\Application;
-
 require_once(__DIR__.'/vendor/autoload.php');
 
 if ( ! isset($config))
@@ -9,5 +7,5 @@ if ( ! isset($config))
     $config = include(__DIR__.'/config/config.php');
 }
 
-$app = new Application($config);
-$app->backup($tempDir);
+$app = new Dimsav\Backup\Application($config);
+$app->backup();

@@ -3,6 +3,7 @@
 /logs
 /vendor
 /config/production
-/tests/temp
+/tests/test_temp
+/tests/test_backups
 /bin
 /build
