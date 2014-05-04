@@ -1,6 +1,7 @@
 <?php namespace Dimsav\Backup\Element\Drivers;
 
 use Dimsav\Backup\Element\AbstractElement;
+use Dimsav\Backup\Element\Exceptions\ExtractionFailureException;
 use Dimsav\Backup\Shell;
 
 class Mysql extends AbstractElement

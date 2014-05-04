@@ -1,4 +1,4 @@
-<?php namespace Dimsav\Backup\Element\Drivers;
+<?php namespace Dimsav\Backup\Element\Exceptions;
 
 use Dimsav\Backup\Element\Element;
 use Exception;

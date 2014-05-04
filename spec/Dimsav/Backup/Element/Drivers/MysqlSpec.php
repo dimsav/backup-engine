@@ -57,7 +57,7 @@ class MysqlSpec extends ObjectBehavior
 
         $this->beConstructedWith($this->getValidConfig(), $shell);
         $this->setExtractionDir(__DIR__);
-        $this->shouldThrow('Dimsav\Backup\Element\Drivers\ExtractionFailureException')->duringExtract();
+        $this->shouldThrow('Dimsav\Backup\Element\Exceptions\ExtractionFailureException')->duringExtract();
     }
 
 
