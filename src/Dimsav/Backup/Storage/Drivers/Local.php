@@ -36,6 +36,8 @@ class Local implements Storage {
             mkdir($exportDir, 0777, true);
         }
 
+        // we don't want to move the file for the case we have more storages
+
         copy($file, $exportDir . '/' . basename($file));
     }
 
