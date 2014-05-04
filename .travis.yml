@@ -14,4 +14,4 @@ before_script:
   - mysql -u root -ppassword test_db < tests/test_db.sql
 
 script:
-  - bin/phpspec run
+  - bin/phpspec run && bin/phpunit
