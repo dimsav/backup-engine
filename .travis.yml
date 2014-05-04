@@ -9,8 +9,9 @@ php:
 before_script:
   - composer self-update
   - composer install
-  - mysql -e 'create database test_3;'
+  - mysql -e 'create database test_db;'
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('password') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+  - mysql -u root -ppassword test_db < tests/test_db.sql
 
 script:
   - bin/phpspec run
