@@ -1,5 +1,6 @@
 <?php namespace spec\Dimsav\Backup\Storage\Drivers;
 
+use Dimsav\Backup\Storage\Exceptions\InvalidStorageException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -17,14 +18,14 @@ class LocalSpec extends ObjectBehavior
 
     function it_throws_exception_if_name_is_not_set()
     {
-        $exception = new \InvalidArgumentException('The name for the local storage is not set.');
+        $exception = new InvalidStorageException('The name for the local storage is not set.');
         $this->beConstructedWith(array());
         $this->shouldThrow($exception)->duringValidate();
     }
 
     function it_throws_exception_if_destination_is_not_set()
     {
-        $exception = new \InvalidArgumentException("The local storage 'storage_name' has no destination set.");
+        $exception = new InvalidStorageException("The local storage 'storage_name' has no destination set.");
         $this->beConstructedWith(array('name' => 'storage_name'));
         $this->shouldThrow($exception)->duringValidate();
     }

@@ -1,6 +1,7 @@
 <?php namespace Dimsav\Backup\Storage\Drivers;
 
 use Dimsav\Backup\Shell;
+use Dimsav\Backup\Storage\Exceptions\InvalidStorageException;
 use Dimsav\Backup\Storage\Exceptions\TokenNotSetException;
 use Dimsav\Backup\Storage\Storage;
 
@@ -45,15 +46,20 @@ class Dropbox implements Storage
         }
     }
 
+    /**
+     * @return void
+     * @throws \Dimsav\Backup\Storage\Exceptions\TokenNotSetException
+     * @throws \Dimsav\Backup\Storage\Exceptions\InvalidStorageException
+     */
     public function validate()
     {
         if ( ! $this->name)
         {
-            throw new \InvalidArgumentException("The name for the 'dropbox' storage is not set.");
+            throw new InvalidStorageException("The name for the 'dropbox' storage is not set.");
         }
         elseif ( ! $this->username)
         {
-            throw new \InvalidArgumentException("The local storage '{$this->name}' has no username set.");
+            throw new InvalidStorageException("The local storage '{$this->name}' has no username set.");
         }
         elseif ( ! $this->hasTokenFile($this->config))
         {

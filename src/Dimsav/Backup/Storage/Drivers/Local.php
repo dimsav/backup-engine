@@ -1,5 +1,6 @@
 <?php namespace Dimsav\Backup\Storage\Drivers;
 
+use Dimsav\Backup\Storage\Exceptions\InvalidStorageException;
 use Dimsav\Backup\Storage\Storage;
 
 class Local implements Storage {
@@ -29,6 +30,13 @@ class Local implements Storage {
         return $destination !== null ? realpath($destination) : null;
     }
 
+    /**
+     * @param $file
+     * @param null $projectName
+     * @return mixed|void
+     * @throws InvalidStorageException
+     * @throws \InvalidArgumentException
+     */
     public function store($file, $projectName = null)
     {
         $this->validate();
@@ -45,19 +53,23 @@ class Local implements Storage {
         copy($file, $exportDir . '/' . basename($file));
     }
 
+    /**
+     * @return void
+     * @throws InvalidStorageException
+     */
     public function validate()
     {
         if ( ! $this->name)
         {
-            throw new \InvalidArgumentException('The name for the local storage is not set.');
+            throw new InvalidStorageException('The name for the local storage is not set.');
         }
         elseif ( $this->destination === null)
         {
-            throw new \InvalidArgumentException("The local storage '{$this->name}' has no destination set.");
+            throw new InvalidStorageException("The local storage '{$this->name}' has no destination set.");
         }
         elseif ( ! $this->destination)
         {
-            throw new \InvalidArgumentException("The path '{$this->destination}' of the local storage '{$this->name}' is not a valid directory.");
+            throw new InvalidStorageException("The path '{$this->destination}' of the local storage '{$this->name}' is not a valid directory.");
         }
     }
 

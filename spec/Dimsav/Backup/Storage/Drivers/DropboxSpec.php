@@ -1,6 +1,7 @@
 <?php namespace spec\Dimsav\Backup\Storage\Drivers;
 
 use Dimsav\Backup\Shell;
+use Dimsav\Backup\Storage\Exceptions\InvalidStorageException;
 use Dimsav\Backup\Storage\Exceptions\TokenNotSetException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -21,14 +22,14 @@ class DropboxSpec extends ObjectBehavior
 
     function it_throws_exception_if_name_not_set(Shell $shell)
     {
-        $exception = new \InvalidArgumentException("The name for the 'dropbox' storage is not set.");
+        $exception = new InvalidStorageException("The name for the 'dropbox' storage is not set.");
         $this->beConstructedWith(array(), $shell);
         $this->shouldThrow($exception)->duringValidate();
     }
 
     function it_throws_exception_if_username_not_set(Shell $shell)
     {
-        $exception = new \InvalidArgumentException("The local storage 'storage_name' has no username set.");
+        $exception = new InvalidStorageException("The local storage 'storage_name' has no username set.");
         $this->beConstructedWith(array('name' => 'storage_name'), $shell);
         $this->shouldThrow($exception)->duringValidate();
     }
