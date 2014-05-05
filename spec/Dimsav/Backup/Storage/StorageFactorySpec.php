@@ -47,7 +47,7 @@ class StorageFactorySpec extends ObjectBehavior
     function it_throws_exception_if_project_has_no_project_defined()
     {
         $this->beConstructedWith($this->getConfig());
-        $this->shouldThrow('Dimsav\Backup\Storage\Exceptions\StoragesNotConfiguredException')->duringMakeAll('my_project_1');
+        $this->shouldThrow('Dimsav\Backup\Storage\Exceptions\StoragesNotConfiguredException')->duringMakeByProjectName('my_project_1');
     }
 
     // It creates driver instances
@@ -78,7 +78,7 @@ class StorageFactorySpec extends ObjectBehavior
         $storage3 = $this->make('storage_3');
         $storage4 = $this->make('storage_4');
 
-        $storages = $this->makeAll('my_project_2');
+        $storages = $this->makeByProjectName('my_project_2');
         $storages->shouldReturn(array($storage3, $storage4));
         $storages->shouldHaveOnlyStorageInstances();
     }

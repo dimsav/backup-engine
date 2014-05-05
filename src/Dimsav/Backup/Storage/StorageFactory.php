@@ -31,7 +31,7 @@ class StorageFactory
         return $this->storages[$storageName];
     }
 
-    public function makeAll($projectName)
+    public function makeByProjectName($projectName)
     {
         $storages = array();
         $storageNames = (array) $this->getProjectStorageNames($projectName);

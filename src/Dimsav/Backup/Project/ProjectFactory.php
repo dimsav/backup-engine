@@ -52,7 +52,7 @@ class ProjectFactory
 
     private function assignProjectsTo($projectName)
     {
-        $projects = $this->storageFactory->makeAll($projectName);
+        $projects = $this->storageFactory->makeByProjectName($projectName);
         $this->project->setStorages($projects);
     }
 

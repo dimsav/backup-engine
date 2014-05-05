@@ -36,7 +36,7 @@ class ProjectFactorySpec extends ObjectBehavior
 
     function it_fills_the_storages_of_a_project(StorageFactory $storageFactory, $storages)
     {
-        $storageFactory->makeAll('my_project_1')->shouldBeCalled()->willReturn($storages);
+        $storageFactory->makeByProjectName('my_project_1')->shouldBeCalled()->willReturn($storages);
 
         $project = $this->make('my_project_1');
         $project->getStorages()->shouldReturn($storages);
