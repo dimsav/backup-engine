@@ -9,7 +9,7 @@ class Dropbox implements Storage
 {
     private $destination;
     private $name;
-    protected $config;
+    private $username;
 
     /**
      * @var Shell
@@ -18,14 +18,14 @@ class Dropbox implements Storage
 
     public function __construct(array $config, Shell $shell)
     {
-        $this->validate($config);
-        $this->name = $config['name'];
+        $this->config = $config;
         $this->shell = $shell;
-        $this->destination = isset($config['destination']) ? $config['destination'] : '/';
+        $this->setProperties($config);
     }
 
     public function store($file, $projectName = null)
     {
+        $this->validate();
         $this->validateFile($file);
         $this->setup();
         $this->shell->exec($this->getCommand($file, $projectName));
@@ -45,19 +45,19 @@ class Dropbox implements Storage
         }
     }
 
-    private function validate($config)
+    public function validate()
     {
-        if ( ! isset($config['name']))
+        if ( ! $this->name)
         {
             throw new \InvalidArgumentException("The name for the 'dropbox' storage is not set.");
         }
-        elseif ( ! isset($config['username']))
+        elseif ( ! $this->username)
         {
-            throw new \InvalidArgumentException("The local storage '{$config['name']}' has no username set.");
+            throw new \InvalidArgumentException("The local storage '{$this->name}' has no username set.");
         }
-        elseif ( ! $this->hasTokenFile($config))
+        elseif ( ! $this->hasTokenFile($this->config))
         {
-            throw new TokenNotSetException("The dropbox storage '{$config['name']}' has not a token set.");
+            throw new TokenNotSetException("The dropbox storage '{$this->name}' has not a token set.");
         }
     }
 
@@ -72,9 +72,9 @@ class Dropbox implements Storage
         }
     }
 
-    public function hasTokenFile($config)
+    public function hasTokenFile()
     {
-        return is_file($this->getTokenDir().'/.dropbox_'.$config['name']);
+        return is_file($this->getTokenDir()."/.dropbox_{$this->name}");
     }
 
     private function getTokenDir()
@@ -90,5 +90,12 @@ class Dropbox implements Storage
     private function getConfigFile()
     {
         return $this->getTokenDir().'/.dropbox_'.$this->name;
+    }
+
+    private function setProperties(array $config)
+    {
+        $this->name = isset($config['name']) ? $config['name'] : null;
+        $this->username = isset($this->config['username']) ? $this->config['username'] : null;
+        $this->destination = isset($config['destination']) ? $config['destination'] : '/';
     }
 }

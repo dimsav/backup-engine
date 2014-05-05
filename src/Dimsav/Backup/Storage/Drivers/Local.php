@@ -9,25 +9,29 @@ class Local implements Storage {
 
     public function __construct(array $config)
     {
-        $this->setupDestination($config);
-        $this->validate($config);
-        $this->name = $config['name'];
+        $this->setProperties($config);
     }
 
-    private function setupDestination($config)
+    private function setProperties(array $config)
     {
-        if ( isset($config['destination']) )
+        $this->name = isset($config['name']) ? $config['name'] : null;
+        $this->destination = $this->getDestination($config);
+    }
+
+    private function getDestination($config)
+    {
+        $destination = isset($config['destination']) ? $config['destination'] : null;
+
+        if ($destination !== null && ! is_dir($destination))
         {
-            if( ! is_dir($config['destination']))
-            {
-                mkdir($config['destination'], 0777, true);
-            }
-            $this->destination = realpath($config['destination']);
+            mkdir($destination, 0777, true);
         }
+        return $destination !== null ? realpath($destination) : null;
     }
 
     public function store($file, $projectName = null)
     {
+        $this->validate();
         $this->validateFile($file);
 
         $exportDir = $this->destination . '/' . $projectName;
@@ -41,19 +45,19 @@ class Local implements Storage {
         copy($file, $exportDir . '/' . basename($file));
     }
 
-    private function validate($config)
+    public function validate()
     {
-        if ( ! isset($config['name']))
+        if ( ! $this->name)
         {
             throw new \InvalidArgumentException('The name for the local storage is not set.');
         }
-        elseif ( ! isset($config['destination']))
+        elseif ( $this->destination === null)
         {
-            throw new \InvalidArgumentException("The local storage '{$config["name"]}' has no destination set.");
+            throw new \InvalidArgumentException("The local storage '{$this->name}' has no destination set.");
         }
         elseif ( ! $this->destination)
         {
-            throw new \InvalidArgumentException("The path '{$config['destination']}' of the local storage '{$config["name"]}' is not a valid directory.");
+            throw new \InvalidArgumentException("The path '{$this->destination}' of the local storage '{$this->name}' is not a valid directory.");
         }
     }
 

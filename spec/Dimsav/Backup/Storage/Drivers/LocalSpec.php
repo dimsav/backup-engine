@@ -18,13 +18,15 @@ class LocalSpec extends ObjectBehavior
     function it_throws_exception_if_name_is_not_set()
     {
         $exception = new \InvalidArgumentException('The name for the local storage is not set.');
-        $this->shouldThrow($exception)->during('__construct', array(array()));
+        $this->beConstructedWith(array());
+        $this->shouldThrow($exception)->duringValidate();
     }
 
     function it_throws_exception_if_destination_is_not_set()
     {
         $exception = new \InvalidArgumentException("The local storage 'storage_name' has no destination set.");
-        $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name')));
+        $this->beConstructedWith(array('name' => 'storage_name'));
+        $this->shouldThrow($exception)->duringValidate();
     }
 
     function it_throws_excepetion_if_storing_file_does_not_exist()

@@ -3,6 +3,13 @@
 interface Storage {
 
     /**
+     * Validates its properties.
+     *
+     * @return mixed
+     */
+    public function validate();
+
+    /**
      * Copies the selected file to the storage system
      *
      * @param $sourceFile

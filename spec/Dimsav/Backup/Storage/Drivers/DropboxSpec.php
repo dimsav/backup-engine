@@ -22,13 +22,15 @@ class DropboxSpec extends ObjectBehavior
     function it_throws_exception_if_name_not_set(Shell $shell)
     {
         $exception = new \InvalidArgumentException("The name for the 'dropbox' storage is not set.");
-        $this->shouldThrow($exception)->during('__construct', array(array(), $shell));
+        $this->beConstructedWith(array(), $shell);
+        $this->shouldThrow($exception)->duringValidate();
     }
 
     function it_throws_exception_if_username_not_set(Shell $shell)
     {
         $exception = new \InvalidArgumentException("The local storage 'storage_name' has no username set.");
-        $this->shouldThrow($exception)->during('__construct', array(array('name' => 'storage_name'), $shell));
+        $this->beConstructedWith(array('name' => 'storage_name'), $shell);
+        $this->shouldThrow($exception)->duringValidate();
     }
 
     function it_throws_excepetion_if_storing_receives_an_invalid_path(Shell $shell)
@@ -44,7 +46,8 @@ class DropboxSpec extends ObjectBehavior
     {
         $this->clearToken();
         $exception = new TokenNotSetException("The dropbox storage 'name' has not a token set.");
-        $this->shouldThrow($exception)->during('__construct', array($this->getConfig(), $shell));
+        $this->beConstructedWith($this->getConfig(), $shell);
+        $this->shouldThrow($exception)->duringValidate();
     }
 
     // Storage
