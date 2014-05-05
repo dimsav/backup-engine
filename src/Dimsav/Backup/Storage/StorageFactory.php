@@ -80,16 +80,16 @@ class StorageFactory
         throw new StorageDriverNotSupportedException;
     }
 
-    private function getDriverConfig($name)
+    private function getDriverConfig($storageName)
     {
-        $config = $this->config['storages'][$name];
-        $config['name'] = $name;
+        $config = $this->config['storages'][$storageName];
+        $config['name'] = $storageName;
         return $config;
     }
 
-    private function getDriver($name)
+    private function getDriver($storageName)
     {
-        return $this->config['storages'][$name]['driver'];
+        return $this->config['storages'][$storageName]['driver'];
     }
 
     /**
