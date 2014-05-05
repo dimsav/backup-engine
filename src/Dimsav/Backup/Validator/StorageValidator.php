@@ -46,7 +46,7 @@ class StorageValidator
         foreach ($this->errors as $key => $error)
         {
             $count = $key+1;
-            $this->errors[$key] = "Error $count: " . $error;
+            $this->errors[$key] = "\n\n\nError $count: " . $error;
         }
         if ($this->errors)
         {

@@ -21,7 +21,7 @@ class StorageValidatorSpec extends ObjectBehavior
 
         $this->beConstructedWith($storageFactory);
         $this->validate();
-        $this->getValidationErrorsString()->shouldBe("Error 1: Omg, what have you done??\nError 2: Forget about it. Go play some left 4 dead 2.");
+        $this->getValidationErrorsString()->shouldBe("\n\n\nError 1: Omg, what have you done??\n\n\n\nError 2: Forget about it. Go play some left 4 dead 2.");
     }
 
     function it_returns_false_if_storages_are_valid(StorageFactory $storageFactory, Storage $storage_1, Storage $storage_2)

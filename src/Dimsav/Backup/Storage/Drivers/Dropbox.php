@@ -63,7 +63,10 @@ class Dropbox implements Storage
         }
         elseif ( ! $this->hasTokenFile($this->config))
         {
-            throw new TokenNotSetException("The dropbox storage '{$this->name}' has not a token set.");
+            throw new TokenNotSetException("The authentication token for the dropbox user '{$this->username}' must be setup.".
+            " \n To fix this, execute the following command and follow the instructions: \n\n".
+            "    cd ". realpath(__DIR__."/../../../../../")." && ./bin/dropbox_uploader.sh -f ". $this->getConfigFile()."\n\n"
+            );
         }
     }
 
@@ -90,7 +93,7 @@ class Dropbox implements Storage
 
     private function getScript()
     {
-        return realpath(__DIR__.'/../../../../../bin/dropbox_uploader.sh');
+        return "cd ". realpath(__DIR__."/../../../../../")." && ./bin/dropbox_uploader.sh";
     }
 
     private function getConfigFile()
