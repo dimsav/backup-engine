@@ -46,9 +46,8 @@ class DropboxSpec extends ObjectBehavior
     function it_throws_exception_if_dropbox_token_is_not_set(Shell $shell)
     {
         $this->clearToken();
-        $exception = new TokenNotSetException("The dropbox storage 'name' has not a token set.");
         $this->beConstructedWith($this->getConfig(), $shell);
-        $this->shouldThrow($exception)->duringValidate();
+        $this->shouldThrow('Dimsav\Backup\Storage\Exceptions\TokenNotSetException')->duringValidate();
     }
 
     // Storage
