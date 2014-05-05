@@ -1,30 +1,39 @@
 <?php namespace Dimsav\Backup;
 
 use Dimsav\Backup\Element\ElementFactory;
-use Dimsav\Backup\Project\Project;
 use Dimsav\Backup\Project\ProjectFactory;
 use Dimsav\Backup\Storage\StorageFactory;
 use Dimsav\Backup\Utilities\DefaultsParser;
+use Dimsav\Backup\Validator\StorageValidator;
 
 class Application
 {
 
+    /**
+     * @var ProjectFactory
+     */
     private $projectFactory;
+
+    /**
+     * @var StorageFactory
+     */
+    private $storageFactory;
+    /**
+     * @var StorageValidator
+     */
+    private $storageValidator;
+
     private $config;
     private $tempDir;
+    private $timezone;
+    private $timeLimit;
+    private $errors;
+
 
     public function __construct($config)
     {
-        $this->config = $config;
-        $this->loadConfig();
-
-        $configParser = new DefaultsParser($config);
-        $this->config = $configParser->parse();
-
-        $this->projectFactory = new ProjectFactory(
-            $this->config,
-            new ElementFactory($this->config['projects']),
-            new StorageFactory($this->config));
+        $this->setProperties($config);
+        $this->setup();
     }
 
     public function backup()
@@ -38,13 +47,41 @@ class Application
         }
     }
 
-    private function loadConfig()
+    private function setProperties($config)
     {
-        date_default_timezone_set($this->config['app']['timezone']);
-        set_time_limit($this->config['app']['time_limit']);
+        $this->tempDir = isset($config['app']['temp_dir']) ? $config['app']['temp_dir'] : null;
+        $this->timezone = isset($config['app']['timezone']) ? $config['app']['timezone'] : null;
+        $this->timeLimit = isset($config['app']['time_limit']) ? $config['app']['time_limit'] : null;
 
-        $this->tempDir = $this->config['app']['temp_dir'];
+        $configParser = new DefaultsParser($config);
+        $this->config = $configParser->parse();
+
+        $this->storageFactory = new StorageFactory($this->config);
+        $this->projectFactory = new ProjectFactory(
+            $this->config,
+            new ElementFactory($this->config['projects']),
+            $this->storageFactory
+        );
+        $this->storageValidator = new StorageValidator($this->storageFactory);
+    }
+
+    private function setup()
+    {
+        date_default_timezone_set($this->timezone);
+        set_time_limit($this->timeLimit);
         register_shutdown_function(array($this, 'shutdown'));
+    }
+
+    public function hasErrors()
+    {
+        $this->storageValidator->validate();
+        $this->errors = $this->storageValidator->getValidationErrorsString();
+        return $this->errors ? true : false;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     private function resetTempDir()

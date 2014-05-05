@@ -8,4 +8,12 @@ if ( ! isset($config))
 }
 
 $app = new Dimsav\Backup\Application($config);
-$app->backup();
+
+if ($app->hasErrors())
+{
+    throw new \Dimsav\Exception\RuntimeException($app->getErrors());
+}
+else
+{
+    $app->backup();
+}

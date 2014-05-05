@@ -52,6 +52,17 @@ class BackupTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_file($file));
     }
 
+    /**
+     * @test
+     * @expectedException \Dimsav\Exception\RuntimeException
+     */
+    public function it_displays_an_error_if_configuration_is_wrong()
+    {
+        $config = $this->getBaseConfig();
+        $config['storages']['dropbox'] = array('driver' => 'dropbox', 'username' => 'test@example.com');
+        include(__DIR__.'/../backup.php');
+    }
+
     private function getBaseConfig()
     {
         return array(
