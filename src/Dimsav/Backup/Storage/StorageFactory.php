@@ -20,6 +20,16 @@ class StorageFactory
         $this->validate();
     }
 
+    public function makeAll()
+    {
+        $storages = array();
+        foreach ($this->config['storages'] as $storageName => $storageConfig)
+        {
+            $storages[$storageName] = $this->make($storageName);
+        }
+        return $storages;
+    }
+
     public function make($storageName)
     {
         $this->validateStorage($storageName);

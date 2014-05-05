@@ -83,6 +83,14 @@ class StorageFactorySpec extends ObjectBehavior
         $storages->shouldHaveOnlyStorageInstances();
     }
 
+    function it_returns_all_storages()
+    {
+        $this->beConstructedWith($this->getConfig(array('storage_1', 'storage_2')));
+        $storage3 = $this->make('storage_3');
+        $storage4 = $this->make('storage_4');
+        $this->makeAll()->shouldReturn(array('storage_3' => $storage3, 'storage_4' => $storage4));
+    }
+
     function getMatchers()
     {
         return array(
@@ -97,9 +105,9 @@ class StorageFactorySpec extends ObjectBehavior
         );
     }
 
-    private function getConfig()
+    private function getConfig($exceptedStorages = null)
     {
-        return array(
+        $config = array(
             'projects' => array(
                 'my_project_1' => array(),
                 'my_project_2' => array('storages' => array('storage_3', 'storage_4')),
@@ -111,6 +119,16 @@ class StorageFactorySpec extends ObjectBehavior
                 'storage_4' => array('driver' => 'local', 'destination' => __DIR__),
             )
         );
+
+        if ($exceptedStorages)
+        {
+            foreach ($exceptedStorages as $exception)
+            {
+                unset($config['storages'][$exception]);
+            }
+        }
+
+        return $config;
     }
 
     function letGo()
