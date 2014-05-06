@@ -7,6 +7,7 @@ php:
   - 5.3
 
 before_script:
+  - mkdir build && mkdir build/cov-files
   - composer self-update
   - composer install
   - mysql -e 'create database test_db;'
@@ -14,4 +15,9 @@ before_script:
   - mysql -u root -ppassword test_db < tests/test_db.sql
 
 script:
-  - bin/phpspec run && bin/phpunit
+  - bin/phpspec run --config=spec/phpspec-cov-php.yml && bin/phpunit && bin/phpunit --coverage-php build/cov-files/phpunit.cov
+
+after_script:
+  - bin/phpcov merge --clover="build/coverage.clover" build/cov-files
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover build/coverage.clover
