@@ -67,10 +67,6 @@ class Local implements Storage {
         {
             throw new InvalidStorageException("The local storage '{$this->name}' has no destination set.");
         }
-        elseif ( ! $this->destination)
-        {
-            throw new InvalidStorageException("The path '{$this->destination}' of the local storage '{$this->name}' is not a valid directory.");
-        }
     }
 
     /**

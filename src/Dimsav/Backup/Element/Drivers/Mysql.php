@@ -56,7 +56,7 @@ class Mysql extends AbstractElement
         $this->shell->exec($this->getCommand());
         if ($this->shell->getStatusCode() != 0)
         {
-            throw new ExtractionFailureException($this,
+            throw new ExtractionFailureException(
                 "The backup of database '{$this->database}' could not be created. " .
                 $this->shell->getOutput());
         }

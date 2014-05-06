@@ -28,7 +28,6 @@ class Dropbox implements Storage
     {
         $this->validate();
         $this->validateFile($file);
-        $this->setup();
         $this->shell->exec($this->getCommand($file, $projectName));
     }
 
@@ -36,14 +35,6 @@ class Dropbox implements Storage
     {
         $destination = $projectName ? $this->destination . "/$projectName" : $this->destination;
         return $this->getScript().' -f '.$this->getConfigFile()." upload $file " . $destination;
-    }
-
-    private function setup()
-    {
-        if ( ! is_dir($this->getTokenDir()))
-        {
-            mkdir($this->getTokenDir());
-        }
     }
 
     /**

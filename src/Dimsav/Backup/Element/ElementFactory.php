@@ -82,16 +82,15 @@ class ElementFactory
 
     private function createDriver($projectName, $driver, $elementName)
     {
-        switch ($driver) {
-            case 'mysql':
-
-                $config = $this->getMysqlConfig($projectName, $elementName);
-                return new Mysql($config, new Shell());
-
-            case 'directories':
-
-                list($root, $config) = $this->getDirectoryConfig($projectName, $elementName);
-                return new Directory($root, $config, new UnixZipper);
+        if ($driver == 'mysql')
+        {
+            $config = $this->getMysqlConfig($projectName, $elementName);
+            return new Mysql($config, new Shell());
+        }
+        else // directories
+        {
+            list($root, $config) = $this->getDirectoryConfig($projectName, $elementName);
+            return new Directory($root, $config, new UnixZipper);
         }
     }
 
