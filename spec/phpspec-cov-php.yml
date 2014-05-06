@@ -2,5 +2,5 @@ extensions:
     - PhpSpec\Extension\CodeCoverageExtension
 
 code_coverage:
-    output: build/phpspec-coverage
-    format: html
+    output: build/cov-files/phpspec.cov
+    format: php
