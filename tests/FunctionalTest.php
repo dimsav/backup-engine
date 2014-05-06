@@ -63,6 +63,26 @@ class BackupTest extends PHPUnit_Framework_TestCase {
         include(__DIR__.'/../backup.php');
     }
 
+    /**
+     * @test
+     */
+    public function it_includes_the_config()
+    {
+        $path = __DIR__.'/../config/config.php';
+
+        if ( is_file($path)) {
+            $this->assertTrue(false);
+        }
+
+        $file = fopen($path, 'w');
+        fwrite($file, $this->configFileContents());
+        fclose($file);
+
+        include(__DIR__.'/../backup.php');
+        $this->assertTrue(isset($config));
+        $this->assertTrue(unlink(realpath($path)));
+    }
+
     private function getBaseConfig()
     {
         return array(
@@ -84,6 +104,16 @@ class BackupTest extends PHPUnit_Framework_TestCase {
                 "temp_dir" => __DIR__ .'/test_temp',
             ),
         );
+    }
+
+    private function configFileContents()
+    {
+        return "<?php return array('projects' => array(), 'storages' => array(), 'app' => array(
+                        'timezone' => 'Europe/Berlin',
+                        'time_limit' => 0,
+                        'temp_dir' => '".__DIR__ ."/test_temp',
+                    ),
+                );";
     }
 
     protected function tearDown()
