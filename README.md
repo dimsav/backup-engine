@@ -4,10 +4,19 @@
 
 # (Beta1 Release) Website backup library (PHP, MySQL, Dropbox)
 
-This is a library, written in php, used to backup your project's files and mysql databases. It is written to run from a
-web server as well as from the command line (cronjobs).
+This is a library, written in php, used to backup your project's files and databases.
 
-The backups are saved as zip files in the server and sent to your dropbox account (optional).
+* [Installation](#installation)
+ 
+## Installation
+
+1. Clone the repository
+2. Install the composer dependencies: `composer install --no-dev`
+3. Create a file config/config.php according config/config.ini.php
+
+## Execution
+
+Run `php backup.php`
 
 ## Features
 
