@@ -1,4 +1,4 @@
-# Website backup library (PHP, MySQL, Dropbox)
+# (Beta1 Release) Website backup library (PHP, MySQL, Dropbox)
 
 This is a library, written in php, used to backup your project's files and mysql databases. It is written to run from a
 web server as well as from the command line (cronjobs).
