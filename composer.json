@@ -1,5 +1,5 @@
 {
-    "name": "dimsav/php-mysql-backup",
+    "name": "dimsav/backup-engine",
     "type": "library",
     "description": "",
     "keywords": ["backup","dropbox","php","mysql"],
@@ -8,8 +8,7 @@
     "authors": [
         {
             "name": "Dimitrios Savvopoulos",
-            "email": "ds@dimsav.com",
-            "role": "Developer"
+            "email": "ds@dimsav.com"
         }
     ],
     "autoload": {
