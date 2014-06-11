@@ -1,7 +1,7 @@
 {
     "name": "dimsav/backup-engine",
     "type": "library",
-    "description": "",
+    "description": "A library used to backup project files and databases, and upload backups to dropbox.",
     "keywords": ["backup","dropbox","php","mysql"],
     "homepage": "http://github.com/dimsav/php-mysql-backup",
     "license": "MIT",
