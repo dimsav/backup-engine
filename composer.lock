@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a9ad352ddff50b5f36f447e66a0dea42",
+    "hash": "80060b0fb363481ab788c842334b90a9",
     "packages": [
         {
             "name": "andreafabrizi/dropbox-uploader",
@@ -171,44 +171,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "henrikbjorn/phpspec-code-coverage",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/henrikbjorn/PhpSpecCodeCoverageExtension.git",
-                "reference": "b84f5bc73df80f0066b4a1068c2d492d0eed29a7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/henrikbjorn/PhpSpecCodeCoverageExtension/zipball/b84f5bc73df80f0066b4a1068c2d492d0eed29a7",
-                "reference": "b84f5bc73df80f0066b4a1068c2d492d0eed29a7",
-                "shasum": ""
-            },
-            "require": {
-                "ext-xdebug": ">=2.1.4",
-                "php": ">=5.3.3",
-                "phpspec/phpspec": "~2.0",
-                "phpunit/php-code-coverage": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "PhpSpec\\Extension\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Integrates CodeCoverage with PhpSpec",
-            "time": "2014-05-30 07:01:56"
-        },
         {
             "name": "phpspec/php-diff",
             "version": "v1.0.2",
@@ -746,16 +708,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "42f29d650744fd7ce785e7a4dd3598a09b0bfd2b"
+                "reference": "a01285d0b705af5963367451088508b6d4e417f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/42f29d650744fd7ce785e7a4dd3598a09b0bfd2b",
-                "reference": "42f29d650744fd7ce785e7a4dd3598a09b0bfd2b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/a01285d0b705af5963367451088508b6d4e417f2",
+                "reference": "a01285d0b705af5963367451088508b6d4e417f2",
                 "shasum": ""
             },
             "require": {
@@ -799,7 +761,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-06-07 12:56:49"
+            "time": "2014-06-07 16:22:54"
         },
         {
             "name": "sebastian/diff",
@@ -1303,8 +1265,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phpspec/phpspec": 20,
-        "henrikbjorn/phpspec-code-coverage": 20
+        "phpspec/phpspec": 20
     },
     "platform": {
         "php": ">=5.3.0"
