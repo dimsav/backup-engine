@@ -1,6 +1,6 @@
 [![Latest Stable Version](http://img.shields.io/packagist/v/dimsav/backup-engine.svg)](https://packagist.org/packages/dimsav/backup-engine)
 [![Build Status](https://travis-ci.org/dimsav/backup-engine.svg?branch=master)](https://travis-ci.org/dimsav/backup-engine)
-[![License](http://img.shields.io/packagist/l/dimsav/backup-engine.svg)](https://packagist.org/packages/dimsav/backup-engine)
+[![License](https://poser.pugx.org/dimsav/backup-engine/license.svg)](https://packagist.org/packages/dimsav/backup-engine)
 
 # (Beta1 Release) Website backup library (PHP, MySQL, Dropbox)
 
