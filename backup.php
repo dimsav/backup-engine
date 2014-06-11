@@ -11,7 +11,7 @@ $app = new Dimsav\Backup\Application($config);
 
 if ($app->hasErrors())
 {
-    throw new \Dimsav\Exception\RuntimeException($app->getErrors());
+    echo $app->getErrors()."\n";
 }
 else
 {

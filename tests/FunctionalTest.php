@@ -44,13 +44,13 @@ class BackupTest extends TestBase {
 
     /**
      * @test
-     * @expectedException \Dimsav\Exception\RuntimeException
      */
-    public function it_displays_an_error_if_configuration_is_wrong()
+    public function it_doesnt_backup_if_configuration_is_wrong()
     {
         $config = $this->getBaseConfig();
         $config['storages']['dropbox'] = array('driver' => 'dropbox', 'username' => 'test@example.com');
         $this->runApp($config);
+        $this->assertFalse(is_dir($this->backupsDir . '/my_project_1/'));
     }
 
     /**

@@ -54,7 +54,7 @@ class Dropbox implements Storage
         }
         elseif ( ! $this->hasTokenFile($this->config))
         {
-            throw new TokenNotSetException("\n    The dropbox storage '{$this->name}' has not a token set.\n".
+            throw new TokenNotSetException("\n    The dropbox storage '{$this->name}' for '{$this->username}' has not a token set.\n".
             "    Please run the command below and follow the instructions to enable dropbox access:\n".
             "    \"bin/dropbox_uploader.sh -f ". $this->getTokenFile() . '"');
         }
