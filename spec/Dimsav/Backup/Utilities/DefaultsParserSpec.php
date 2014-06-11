@@ -35,11 +35,16 @@ class DefaultsParserSpec extends ObjectBehavior
             'projects' => array(
                 'my_project_1' => array(
                     'mysql' => array(
-                        'username' => 'user1', 'password' => 'pass1'
+                        "database_name_1" => array(
+                            'username' => 'user1',
+                            'password' => 'pass1',
+                        )
                     )
                 ),
                 'my_project_2' => array(
-                    'mysql' => array(),
+                    'mysql' => array(
+                        "database_name_2" => array()
+                    ),
                     'storages' => array('dropbox_2')
                 )
             )
@@ -52,19 +57,23 @@ class DefaultsParserSpec extends ObjectBehavior
             'projects' => array(
                 'my_project_1' => array(
                     'mysql' => array(
-                        "username" => 'user1',
-                        'password' => 'pass1',
-                        "host" => "localhost",
-                        "port" => "3306"
+                        "database_name_1" => array(
+                            "username" => 'user1',
+                            'password' => 'pass1',
+                            "host" => "localhost",
+                            "port" => "3306"
+                        )
                     ),
                     'storages' => "dropbox_1",
                 ),
                 'my_project_2' => array(
                     'mysql' => array(
-                        "username" => 'user',
-                        'password' => 'pass',
-                        "host" => "localhost",
-                        "port" => "3306"
+                        "database_name_2" => array(
+                            "username" => 'user',
+                            'password' => 'pass',
+                            "host" => "localhost",
+                            "port" => "3306"
+                        ),
                     ),
                     'storages' => array('dropbox_2'),
                 ),

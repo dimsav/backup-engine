@@ -52,23 +52,26 @@ class DefaultsParser
         {
             if ( isset($projectConfig['mysql']))
             {
-                if ( ! isset($projectConfig['mysql']['username']) && isset($mysqlDefaults['username']))
+                foreach ($projectConfig['mysql'] as $databaseName => $databaseConfig)
                 {
-                    $projectConfig['mysql']['username'] = $mysqlDefaults['username'];
+                    if ( ! isset($databaseConfig['username']) && isset($mysqlDefaults['username']))
+                    {
+                        $databaseConfig['username'] = $mysqlDefaults['username'];
+                    }
+                    if ( ! isset($databaseConfig['password']) && isset($mysqlDefaults['password']))
+                    {
+                        $databaseConfig['password'] = $mysqlDefaults['password'];
+                    }
+                    if ( ! isset($databaseConfig['host']) && isset($mysqlDefaults['host']))
+                    {
+                        $databaseConfig['host'] = $mysqlDefaults['host'];
+                    }
+                    if ( ! isset($databaseConfig['port']) && isset($mysqlDefaults['port']))
+                    {
+                        $databaseConfig['port'] = $mysqlDefaults['port'];
+                    }
+                    $this->config['projects'][$projectName]['mysql'][$databaseName] = $databaseConfig;
                 }
-                if ( ! isset($projectConfig['mysql']['password']) && isset($mysqlDefaults['password']))
-                {
-                    $projectConfig['mysql']['password'] = $mysqlDefaults['password'];
-                }
-                if ( ! isset($projectConfig['mysql']['host']) && isset($mysqlDefaults['host']))
-                {
-                    $projectConfig['mysql']['host'] = $mysqlDefaults['host'];
-                }
-                if ( ! isset($projectConfig['mysql']['port']) && isset($mysqlDefaults['port']))
-                {
-                    $projectConfig['mysql']['port'] = $mysqlDefaults['port'];
-                }
-                $this->config['projects'][$projectName] = $projectConfig;
             }
         }
 
