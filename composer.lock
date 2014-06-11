@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "80060b0fb363481ab788c842334b90a9",
+    "hash": "26934765f4055412359164c74a1e46bb",
     "packages": [
         {
             "name": "andreafabrizi/dropbox-uploader",
