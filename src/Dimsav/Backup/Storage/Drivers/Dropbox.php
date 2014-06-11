@@ -34,6 +34,7 @@ class Dropbox implements Storage
     public function getCommand($file, $projectName)
     {
         $destination = $projectName ? $this->destination . "/$projectName" : $this->destination;
+        $destination .= substr($destination, -1, 1) == '/' ? basename($file) : '/' . basename($file);
         return $this->getScript().' -f '.$this->getConfigFile()." upload $file " . $destination;
     }
 

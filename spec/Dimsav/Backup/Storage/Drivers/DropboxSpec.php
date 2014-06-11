@@ -55,7 +55,7 @@ class DropboxSpec extends ObjectBehavior
     function it_uploads_the_file_to_dropbox(Shell $shell)
     {
         $this->makeToken();
-        $command = $this->uploaderPath() . $this->getScriptConfig() . ' upload ' . __FILE__ . ' /';
+        $command = $this->uploaderPath() . $this->getScriptConfig() . ' upload ' . __FILE__ . ' /'  . basename(__FILE__);
 
         $shell->exec($command)->shouldBeCalled();
         $this->beConstructedWith($this->getConfig(), $shell);
@@ -65,7 +65,7 @@ class DropboxSpec extends ObjectBehavior
     function it_uploads_the_file_to_dropbox_to_the_selected_destination(Shell $shell)
     {
         $this->makeToken();
-        $command = $this->uploaderPath() . $this->getScriptConfig() . ' upload ' . __FILE__ . ' /Backups/project_name';
+        $command = $this->uploaderPath() . $this->getScriptConfig() . ' upload ' . __FILE__ . ' /Backups/project_name/' . basename(__FILE__);
 
         $config = $this->getConfig();
         $config['destination'] = '/Backups';
