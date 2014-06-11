@@ -31,10 +31,10 @@ class BackupTest extends TestBase {
                 "host" => "localhost",
                 "port" => "3306",
                 "username" => "root",
-                "password" => "password",
+                "password" => "secret",
             )
         );
-        exec('cd ' . __DIR__ . " && mysql -u root -ppassword test_db < test_db.sql");
+        exec('cd ' . __DIR__ . " && mysql -u root -psecret test_db < test_db.sql");
 
         $this->runApp($config);
         $fileRegex = '/\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}_test_db\.sql/';

@@ -11,8 +11,8 @@ before_script:
   - composer self-update
   - composer install
   - mysql -e 'create database test_db;'
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('password') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
-  - mysql -u root -ppassword test_db < tests/test_db.sql
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('secret') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+  - mysql -u root -psecret test_db < tests/test_db.sql
 
 script:
   - bin/phpspec run --config=spec/phpspec-cov-php.yml && bin/phpunit && bin/phpunit --coverage-php build/cov-files/phpunit.cov
