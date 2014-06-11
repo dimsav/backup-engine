@@ -41,40 +41,42 @@ class DefaultsParser
 
     private function parseMysql()
     {
-        $mysqlDefaults = isset($this->defaults['mysql']) ? $this->defaults['mysql'] : null;
+        foreach ($this->config['projects'] as $projectName => $projectConfig)
+        {
+            $this->parseProjectConfig($projectName);
+        }
+    }
 
-        if ( ! $mysqlDefaults)
+    private function parseProjectConfig($projectName)
+    {
+        if ( ! isset($this->config['projects'][$projectName]['mysql']))
         {
             return;
         }
-
-        foreach ($this->config['projects'] as $projectName => $projectConfig)
+        $projectConfig = $this->config['projects'][$projectName]['mysql'];
+        foreach ($projectConfig as $databaseName => $projectDatabaseConfig)
         {
-            if ( isset($projectConfig['mysql']))
-            {
-                foreach ($projectConfig['mysql'] as $databaseName => $databaseConfig)
-                {
-                    if ( ! isset($databaseConfig['username']) && isset($mysqlDefaults['username']))
-                    {
-                        $databaseConfig['username'] = $mysqlDefaults['username'];
-                    }
-                    if ( ! isset($databaseConfig['password']) && isset($mysqlDefaults['password']))
-                    {
-                        $databaseConfig['password'] = $mysqlDefaults['password'];
-                    }
-                    if ( ! isset($databaseConfig['host']) && isset($mysqlDefaults['host']))
-                    {
-                        $databaseConfig['host'] = $mysqlDefaults['host'];
-                    }
-                    if ( ! isset($databaseConfig['port']) && isset($mysqlDefaults['port']))
-                    {
-                        $databaseConfig['port'] = $mysqlDefaults['port'];
-                    }
-                    $this->config['projects'][$projectName]['mysql'][$databaseName] = $databaseConfig;
-                }
-            }
+            $this->parseProperty('username', $projectDatabaseConfig);
+            $this->parseProperty('password', $projectDatabaseConfig);
+            $this->parseProperty('host', $projectDatabaseConfig);
+            $this->parseProperty('port', $projectDatabaseConfig);
+            $this->config['projects'][$projectName]['mysql'][$databaseName] = $projectDatabaseConfig;
         }
+    }
 
+    private function parseProperty($property, &$projectDatabaseConfig)
+    {
+        $mysqlDefaults = $this->getMysqlDefaults();
+
+        if ( ! isset($projectDatabaseConfig[$property]) && isset($mysqlDefaults[$property]))
+        {
+            $projectDatabaseConfig[$property] = $mysqlDefaults[$property];
+        }
+    }
+
+    private function getMysqlDefaults()
+    {
+        return isset($this->defaults['mysql']) ? $this->defaults['mysql'] : array();
     }
 
     private function unsetDefaults()
