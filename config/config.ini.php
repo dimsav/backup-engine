@@ -9,7 +9,7 @@ return array(
             "username" => "root",
             "password" => "secret",
         ),
-        "storages" => "dropbox1"
+        "storages" => "my_dropbox"
     ),
 
     "projects" => array(
@@ -37,14 +37,14 @@ return array(
                 )
             ),
 
-            "storages" => array('my_dropbox', 'dropbox_customer')
+            "storages" => array('my_dropbox', 'my_system')
         ),
 
     ),
 
     "storages" => array(
 
-        "dropbox_backups" => array(
+        "my_dropbox" => array(
             "driver" => "dropbox",
             "username" => "dropbox@example.com",
             "destination" => "/Backups"
