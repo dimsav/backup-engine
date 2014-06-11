@@ -7,7 +7,7 @@ return array(
             "host" => "localhost",
             "port" => "3306",
             "username" => "root",
-            "password" => "password",
+            "password" => "secret",
         ),
         "storages" => "dropbox1"
     ),
@@ -33,7 +33,7 @@ return array(
                     "host" => "localhost",
                     "port" => "3306",
                     "username" => "root",
-                    "password" => "password",
+                    "password" => "secret",
                 )
             ),
 
