@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/dimsav/backup-engine.svg?branch=master)](https://travis-ci.org/dimsav/backup-engine)
 [![Code Coverage](https://scrutinizer-ci.com/g/dimsav/backup-engine/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dimsav/backup-engine/)
 [![License](https://poser.pugx.org/dimsav/backup-engine/license.svg)](https://packagist.org/packages/dimsav/backup-engine)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4886bcc4-19d8-4939-8f14-51688321df89/mini.png)](https://insight.sensiolabs.com/projects/4886bcc4-19d8-4939-8f14-51688321df89)
 
 # (Beta1 Release) Website backup library (PHP, MySQL, Dropbox)
 
@@ -12,7 +13,7 @@ This is a library, written in php, used to backup your project's files and datab
 ## Installation
 
 1. Clone the repository
-2. Install the composer dependencies: `composer install --no-dev`
+2. Install the composer dependencies: `composer install`
 3. Create a file config/config.php according config/config.ini.php
 
 ## Execution
