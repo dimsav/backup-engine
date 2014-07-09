@@ -3,7 +3,8 @@
 return array(
 
     "project_defaults" => array(
-        "mysql" => array(
+        "database" => array(
+            "driver" => "mysql",
             "host" => "localhost",
             "port" => "3306",
             "username" => "root",
@@ -28,8 +29,9 @@ return array(
                 "/" => array("excludes" => array("vendor", "composer.lock", "logs")),
             ),
 
-            "mysql" => array(
+            "database" => array(
                 "my_database" => array(
+                    "driver" => "mysql",
                     "host" => "localhost",
                     "port" => "3306",
                     "username" => "root",
@@ -61,7 +63,7 @@ return array(
             'username' => 'username',
             'password' => 'password',
             'privateKey' => 'path/to/or/contents/of/privatekey',
-            'root' => '/path/to/backup',
+            'root' => '/path/to/backup/{project}/',
             'timeout' => 10,
         ),
         "ftp" => array(

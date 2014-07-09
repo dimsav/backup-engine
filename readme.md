@@ -37,9 +37,9 @@ Run `php backup.php`
 
 ## Instructions
 
-1. Copy config.ini.php to config.php.
+1. Copy config/config.ini.php to config/config.php.
 2. Edit config.php to define your projects to be backed up.
-3. Run cron.php using the command line or a web server.
+3. Run backup.php using the command line or a web server.
 4. See the magic happen!
 
 Defining your projects is a piece of cake:
