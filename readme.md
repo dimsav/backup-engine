@@ -9,16 +9,20 @@
 This is a library, written in php, used to backup your project's files and databases.
 
 * [Installation](#installation)
- 
-## Installation
 
-1. Clone the repository
-2. Install the composer dependencies: `composer install`
-3. Create a file config/config.php according config/config.ini.php
+**Composer**
 
-## Execution
+**1)** Add the package to "require" in composer.json
 
-Run `php backup.php`
+```JSON
+"require": {
+    "dimsav/backup-engine": "dev-master"
+}
+```
+
+**2)** Update your composer packages.
+
+`composer update`
 
 ## Features
 
@@ -30,10 +34,12 @@ Run `php backup.php`
 
 ## Requirements
 
-1. This script can only be used in Unix systems (Linux/Mac), as we are using the zip command of the system.
-2. The function exec() should be available as we use it to zip our backups.
-3. The user executing the script must be able to write in the backups folder.
-4. The cURL extension is required if you want to use the dropbox uploader.
+- PHP 5.4
+- MySQL support requires `mysqldump` and `mysql` command-line binaries
+- PostgreSQL support requires `pg_dump` and `psql` command-line binaries
+- zip support requires `zip` command-line binaries
+- The function exec() should be available.
+
 
 ## Instructions
 
@@ -124,17 +130,11 @@ Defining your projects is a piece of cake:
         )
 
     ),
-        "storages" => array(
-
-        "my_dropbox" => array(
-            "driver" => "dropbox",
-            "username" => "dropbox@example.com",
-            "root" => "/Backups" // backup location
-        ),
-
+    "storages" => array(
+        
         "my_system" => array(
             "driver" => "local",
-            "root" => "/backups",
+            "root" => "/path/to/backup",
         ),
         "sftp" => array(
             'driver' => 'sftp',
@@ -161,3 +161,7 @@ Defining your projects is a piece of cake:
         )
     ),
 ```
+
+### License
+
+This package is licensed under the MIT license. Read LICENCE file for more information

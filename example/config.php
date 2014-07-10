@@ -57,7 +57,7 @@ return array(
             'username' => 'username',
             'password' => 'password',
             'privateKey' => 'path/to/or/contents/of/privatekey',
-            'root' => '/path/to/backup/{project}/',
+            'root' => '/path/to/backup/',
             'timeout' => 10,
         ),
         "ftp" => array(
@@ -68,7 +68,7 @@ return array(
 
             /** optional config settings */
             'port' => 21,
-            'root' => '/path/to/root',
+            'root' => '/path/to/backup',
             'passive' => true,
             'ssl' => true,
             'timeout' => 30,
