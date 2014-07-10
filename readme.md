@@ -67,9 +67,10 @@ Defining your projects is a piece of cake:
         "project-1" => array(
 
             "database" => array(
-                "name"    =>"db-name",
-                "username"=>"db-user",
-                "password"=>"db-pass",
+                "db-name" => array(
+                    "username"=>"db-user",
+                    "password"=>"db-pass"
+                )
             ),
 
             "password" => "another-secret",
@@ -94,7 +95,9 @@ Defining your projects is a piece of cake:
         "project-2" => array(
 
             "database" => array(
-                "name"=>"db-name",
+                "db-name" => array(
+                    "database"    =>"db-name",
+                )
             ),
 
             "paths" => array(

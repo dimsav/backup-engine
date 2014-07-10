@@ -1,7 +1,7 @@
 <?php namespace Dimsav\Backup\Element;
 
 use Dimsav\Backup\Element\Drivers\Directory;
-use Dimsav\Backup\Element\Drivers\Mysql;
+use Dimsav\Backup\Element\Drivers as Drivers;
 use Dimsav\Backup\Element\Exceptions\InvalidProjectDriverException;
 use Dimsav\Backup\Element\Exceptions\InvalidProjectNameException;
 use Dimsav\Backup\Shell;
@@ -10,7 +10,7 @@ use Dimsav\UnixZipper;
 class ElementFactory
 {
     private $config;
-    private $supportedDrivers = array('mysql', 'directories');
+    private $supportedDrivers = array('database', 'directories');
 
     public function __construct($projectsConfig)
     {
@@ -49,7 +49,6 @@ class ElementFactory
 
     private function validate($projectName, $driver, $elementName)
     {
-
         $this->validateProject($projectName);
 
         if ( ! in_array($driver, $this->supportedDrivers))
@@ -82,10 +81,11 @@ class ElementFactory
 
     private function createDriver($projectName, $driver, $elementName)
     {
-        if ($driver == 'mysql')
+        if ($driver == 'database')
         {
-            $config = $this->getMysqlConfig($projectName, $elementName);
-            return new Mysql($config, new Shell());
+            $config = $this->getDatabaseConfig($projectName, $elementName);
+            $class = "Dimsav\\Backup\\Element\\Drivers\\".ucfirst($config['driver']);
+            return new $class($config, new Shell());
         }
         else // directories
         {
@@ -94,8 +94,8 @@ class ElementFactory
         }
     }
 
-    private function getMysqlConfig($projectName, $elementName)
-    {
+    private function getDatabaseConfig($projectName, $elementName)
+    {        
         $config =  $this->config[$projectName]['database'][$elementName];
 
         if (!isset($config['database'])) {
