@@ -18,8 +18,8 @@
     },
     "require": {
         "php": ">=5.3.0",
-        "monolog/monolog": "dev-master",
-        "dimsav/unix-zipper": "dev-master",
+        "monolog/monolog": "1.*",
+        "dimsav/unix-zipper": "1.*",
         "league/flysystem": "dev-master"
     },
     "require-dev": {
