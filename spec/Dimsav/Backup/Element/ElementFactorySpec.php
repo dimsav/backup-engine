@@ -30,14 +30,14 @@ class ElementFactorySpec extends ObjectBehavior
 
     function it_throws_exception_if_required_driver_is_not_defined()
     {
-        $exception = new \InvalidArgumentException("The project 'empty_project' has no driver 'mysql' set.");
-        $this->shouldThrow($exception)->duringMake('empty_project', 'mysql', '');
+        $exception = new \InvalidArgumentException("The project 'empty_project' has no driver 'database' set.");
+        $this->shouldThrow($exception)->duringMake('empty_project', 'database', '');
     }
 
     function it_throws_exception_if_required_element_name_is_not_defined()
     {
-        $exception = new \InvalidArgumentException("The project 'project_2' has no driver 'mysql' named 'wrong_name'.");
-        $this->shouldThrow($exception)->duringMake('project_2', 'mysql', 'wrong_name');
+        $exception = new \InvalidArgumentException("The project 'project_2' has no driver 'database' named 'wrong_name'.");
+        $this->shouldThrow($exception)->duringMake('project_2', 'database', 'wrong_name');
     }
 
     function it_throws_exception_if_required_driver_is_not_supported()
@@ -48,12 +48,12 @@ class ElementFactorySpec extends ObjectBehavior
 
     function it_makes_mysql_elements()
     {
-        $this->make('project_2', 'mysql', 'db_1')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
+        $this->make('project_2', 'database', 'db_1')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
     }
 
     function it_sets_the_database_name_if_missing()
     {
-        $this->make('project_2', 'mysql', 'db_name_2')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
+        $this->make('project_2', 'database', 'db_name_2')->shouldHaveType('Dimsav\Backup\Element\Drivers\Mysql');
     }
 
 
@@ -109,8 +109,9 @@ class ElementFactorySpec extends ObjectBehavior
                     array("directory" => "Element", 'excludes' => 'Drivers'),
                     "Element" => array('excludes' => 'Drivers'),
                 ),
-                'mysql' => array(
+                'database' => array(
                     'db_1' => array(
+                        'driver' => 'mysql',
                         'database' => 'db_name_1',
                         'port' => '1',
                         'host' => 'localhost1',
@@ -119,6 +120,7 @@ class ElementFactorySpec extends ObjectBehavior
                     ),
                     'db_name_2' => array(
                         'port' => '1',
+                        'driver' => 'mysql',
                         'host' => 'localhost1',
                         'username' => 'username1',
                         'password' => 'password1'

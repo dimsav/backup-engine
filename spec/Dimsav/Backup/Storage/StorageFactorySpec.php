@@ -6,15 +6,6 @@ use Prophecy\Argument;
 class StorageFactorySpec extends ObjectBehavior
 {
 
-    private $tokenFile;
-
-    function let()
-    {
-        $tokenDir = __DIR__.'/../../../../config/tokens';
-        $this->tokenFile = $tokenDir.'/.dropbox_storage_3';
-        touch($this->tokenFile);
-    }
-
     // It validates input
 
     function it_throws_exception_if_storages_are_not_set()
@@ -55,13 +46,13 @@ class StorageFactorySpec extends ObjectBehavior
     function it_makes_a_dropbox_instance()
     {
         $this->beConstructedWith($this->getConfig());
-        $this->make('storage_3')->shouldReturnAnInstanceOf('Dimsav\Backup\Storage\Drivers\Dropbox');
+        $this->make('storage_3')->shouldReturnAnInstanceOf('League\Flysystem\Filesystem');
     }
 
     function it_makes_a_local_instance()
     {
         $this->beConstructedWith($this->getConfig());
-        $this->make('storage_4')->shouldReturnAnInstanceOf('Dimsav\Backup\Storage\Drivers\Local');
+        $this->make('storage_4')->shouldReturnAnInstanceOf('League\Flysystem\Filesystem');
     }
 
     function it_caches_created_instances()
@@ -80,7 +71,6 @@ class StorageFactorySpec extends ObjectBehavior
 
         $storages = $this->makeByProjectName('my_project_2');
         $storages->shouldReturn(array($storage3, $storage4));
-        $storages->shouldHaveOnlyStorageInstances();
     }
 
     function it_returns_all_storages()
@@ -115,8 +105,8 @@ class StorageFactorySpec extends ObjectBehavior
             'storages' => array (
                 'storage_1' => array(),
                 'storage_2' => array('driver' => 'false'),
-                'storage_3' => array('driver' => 'dropbox', 'username' => 'dropbox@test.com'),
-                'storage_4' => array('driver' => 'local', 'destination' => __DIR__),
+                'storage_3' => array('driver' => 'dropbox', 'token'=>'12345','app' => 'dropbox'),
+                'storage_4' => array('driver' => 'local', 'root' => __DIR__),
             )
         );
 
@@ -129,13 +119,5 @@ class StorageFactorySpec extends ObjectBehavior
         }
 
         return $config;
-    }
-
-    function letGo()
-    {
-        if (is_file($this->tokenFile))
-        {
-            unlink($this->tokenFile);
-        }
     }
 }

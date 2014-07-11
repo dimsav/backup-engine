@@ -50,6 +50,12 @@ return array(
             "driver" => "local",
             "root" => "/backups",
         ),
+        "dropbox" => array(
+            "driver" => "dropbox",
+            "root" => "/path/to/backup",
+            "app" => "mydropapp",
+            "token" => "token"
+        ),
         "sftp" => array(
             'driver' => 'sftp',
             'host' => 'example.com',

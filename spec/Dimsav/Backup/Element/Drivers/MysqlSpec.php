@@ -43,8 +43,8 @@ class MysqlSpec extends ObjectBehavior
         $this->setExtractionDir(__DIR__);
         $shell->getStatusCode()->shouldBeCalled()->willReturn(0);
         $shell->exec($this->getCommand())->shouldBeCalled();
-        $this->extract();
-        $this->getExtractedFiles()->shouldReturn(array(__DIR__.'/'.date("Y-m-d_H-i-s").'_dbname.sql'));
+        $this->backup();
+        $this->getExtractedFiles()->shouldReturn(array(date("Y-m-d_H-i-s").'_dbname.sql'));
     }
 
     // Extract: Validation
@@ -57,7 +57,7 @@ class MysqlSpec extends ObjectBehavior
 
         $this->beConstructedWith($this->getValidConfig(), $shell);
         $this->setExtractionDir(__DIR__);
-        $this->shouldThrow('Dimsav\Backup\Element\Exceptions\ExtractionFailureException')->duringExtract();
+        $this->shouldThrow('Dimsav\Backup\Element\Exceptions\ExtractionFailureException')->duringBackup();
     }
 
 
@@ -84,7 +84,7 @@ class MysqlSpec extends ObjectBehavior
      */
     private function getCommand()
     {
-        return "mysqldump --host='localhost' --port='123' --user='username'".
+        return "mysqldump --create-options --insert-ignore --quick --single-transaction --force -c --skip-comments --skip-add-drop-table --host='localhost' --port='123' --user='username'".
                " --password='password' 'dbname' > '" . __DIR__ . "/".date("Y-m-d_H-i-s")."_dbname.sql'";
     }
 

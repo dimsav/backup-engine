@@ -24,7 +24,8 @@ class DropboxStorage implements Storage
      */
     public function get(array $config)
     {
+        $root = (isset($config['root'])) ? $config['root'] : null;
         $client = new Client($config['token'], $config['app']);
-        return new Flysystem(new Dropbox($client, $config['root']));
+        return new Flysystem(new Dropbox($client, $root));
     }
 }

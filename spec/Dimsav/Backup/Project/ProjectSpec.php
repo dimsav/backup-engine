@@ -41,20 +41,4 @@ class ProjectSpec extends ObjectBehavior
         $exception = new \InvalidArgumentException("The temp directory '/fake/dir' is not valid. Make sure this path is writable.");
         $this->shouldThrow($exception)->duringBackup('/fake/dir');
     }
-
-    function it_makes_the_backup(Element $element, Storage $storage)
-    {
-        $this->setName('my_project');
-        $this->setStorages(array($storage));
-        $this->setElements(array($element));
-
-        $element->setExtractionDir(__DIR__)->shouldBeCalled();
-        $element->extract()->shouldBeCalled();
-        $element->getExtractedFiles()->shouldBeCalled()->willReturn(array('a', 'b'));
-
-        $storage->store('a', 'my_project')->shouldBeCalled();
-        $storage->store('b', 'my_project')->shouldBeCalled();
-        $this->backup(__DIR__);
-    }
-
 }

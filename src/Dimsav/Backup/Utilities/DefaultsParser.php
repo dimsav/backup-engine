@@ -57,6 +57,7 @@ class DefaultsParser
 
         foreach ($projectConfig as $databaseName => $projectDatabaseConfig)
         {
+            $this->parseProperty('driver', $projectDatabaseConfig);
             $this->parseProperty('username', $projectDatabaseConfig);
             $this->parseProperty('password', $projectDatabaseConfig);
             $this->parseProperty('host', $projectDatabaseConfig);
