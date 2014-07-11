@@ -9,16 +9,20 @@
 This is a library, written in php, used to backup your project's files and databases.
 
 * [Installation](#installation)
- 
-## Installation
 
-1. Clone the repository
-2. Install the composer dependencies: `composer install`
-3. Create a file config/config.php according config/config.ini.php
+**Composer**
 
-## Execution
+**1)** Add the package to "require" in composer.json
 
-Run `php backup.php`
+```JSON
+"require": {
+    "dimsav/backup-engine": "dev-master"
+}
+```
+
+**2)** Update your composer packages.
+
+`composer update`
 
 ## Features
 
@@ -30,16 +34,18 @@ Run `php backup.php`
 
 ## Requirements
 
-1. This script can only be used in Unix systems (Linux/Mac), as we are using the zip command of the system.
-2. The function exec() should be available as we use it to zip our backups.
-3. The user executing the script must be able to write in the backups folder.
-4. The cURL extension is required if you want to use the dropbox uploader.
+- PHP 5.4
+- MySQL support requires `mysqldump` and `mysql` command-line binaries
+- PostgreSQL support requires `pg_dump` and `psql` command-line binaries
+- zip support requires `zip` command-line binaries
+- The function exec() should be available.
+
 
 ## Instructions
 
-1. Copy config.ini.php to config.php.
+1. Copy config/config.ini.php to config/config.php.
 2. Edit config.php to define your projects to be backed up.
-3. Run cron.php using the command line or a web server.
+3. Run backup.php using the command line or a web server.
 4. See the magic happen!
 
 Defining your projects is a piece of cake:
@@ -67,9 +73,10 @@ Defining your projects is a piece of cake:
         "project-1" => array(
 
             "database" => array(
-                "name"    =>"db-name",
-                "username"=>"db-user",
-                "password"=>"db-pass",
+                "db-name" => array(
+                    "username"=>"db-user",
+                    "password"=>"db-pass"
+                )
             ),
 
             "password" => "another-secret",
@@ -94,7 +101,9 @@ Defining your projects is a piece of cake:
         "project-2" => array(
 
             "database" => array(
-                "name"=>"db-name",
+                "db-name" => array(
+                    "database"    =>"db-name",
+                )
             ),
 
             "paths" => array(
@@ -121,4 +130,38 @@ Defining your projects is a piece of cake:
         )
 
     ),
+    "storages" => array(
+        
+        "my_system" => array(
+            "driver" => "local",
+            "root" => "/path/to/backup",
+        ),
+        "sftp" => array(
+            'driver' => 'sftp',
+            'host' => 'example.com',
+            'port' => 22,
+            'username' => 'username',
+            'password' => 'password',
+            'privateKey' => 'path/to/or/contents/of/privatekey',
+            'root' => '/path/to/backup',
+            'timeout' => 10,
+        ),
+        "ftp" => array(
+            'driver' => 'ftp',
+            'host' => 'ftp.example.com',
+            'username' => 'username',
+            'password' => 'password',
+
+            /** optional config settings */
+            'port' => 21,
+            'root' => '/path/to/root',
+            'passive' => true,
+            'ssl' => true,
+            'timeout' => 30,
+        )
+    ),
 ```
+
+### License
+
+This package is licensed under the MIT license. Read LICENCE file for more information

@@ -24,7 +24,8 @@ class DefaultsParserSpec extends ObjectBehavior
     {
         return array(
             'project_defaults' => array(
-                "mysql" => array(
+                "database" => array(
+                    "driver" => "mysql",
                     "host" => "localhost",
                     "port" => "3306",
                     "username" => "user",
@@ -34,15 +35,16 @@ class DefaultsParserSpec extends ObjectBehavior
             ),
             'projects' => array(
                 'my_project_1' => array(
-                    'mysql' => array(
+                    'database' => array(
                         "database_name_1" => array(
+                            'driver' => 'mysql',
                             'username' => 'user1',
                             'password' => 'pass1',
                         )
                     )
                 ),
                 'my_project_2' => array(
-                    'mysql' => array(
+                    'database' => array(
                         "database_name_2" => array()
                     ),
                     'storages' => array('dropbox_2')
@@ -56,8 +58,9 @@ class DefaultsParserSpec extends ObjectBehavior
         return array(
             'projects' => array(
                 'my_project_1' => array(
-                    'mysql' => array(
+                    'database' => array(
                         "database_name_1" => array(
+                            "driver" => 'mysql',
                             "username" => 'user1',
                             'password' => 'pass1',
                             "host" => "localhost",
@@ -67,8 +70,9 @@ class DefaultsParserSpec extends ObjectBehavior
                     'storages' => "dropbox_1",
                 ),
                 'my_project_2' => array(
-                    'mysql' => array(
+                    'database' => array(
                         "database_name_2" => array(
+                            "driver" => 'mysql',
                             "username" => 'user',
                             'password' => 'pass',
                             "host" => "localhost",

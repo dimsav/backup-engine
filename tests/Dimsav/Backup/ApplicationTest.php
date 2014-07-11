@@ -9,7 +9,7 @@ class ApplicationTest extends \TestBase {
     {
         $config = $this->getBaseConfig();
 
-        include(__DIR__.'/../../../backup.php');
+        include(__DIR__.'/../../../example/backup.php');
 
         $this->assertFileExists($config['app']['temp_dir']);
         $app->shutDown();

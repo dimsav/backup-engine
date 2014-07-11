@@ -6,3 +6,14 @@
 /tests/test_backups
 /bin
 /build
+
+*.bak
+*.log
+*.tpl.php
+Thumbs.db
+desktop.ini
+.DS_Store
+.buildpath
+.project
+.settings
+composer.lock

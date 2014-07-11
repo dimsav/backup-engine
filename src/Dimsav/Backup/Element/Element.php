@@ -12,7 +12,7 @@ interface Element {
     /**
      * Saves the files into the extraction directory
      */
-    public function extract();
+    public function backup();
 
     /**
      * Returns the absolute path of the files created after extract()

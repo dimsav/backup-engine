@@ -18,7 +18,7 @@ class DefaultsParser
     public function parse()
     {
         $this->parseStorages();
-        $this->parseMysql();
+        $this->parseDatabase();
         $this->unsetDefaults();
         return $this->config;
     }
@@ -39,7 +39,7 @@ class DefaultsParser
         }
     }
 
-    private function parseMysql()
+    private function parseDatabase()
     {
         foreach ($this->config['projects'] as $projectName => $projectConfig)
         {
@@ -49,34 +49,37 @@ class DefaultsParser
 
     private function parseProjectConfig($projectName)
     {
-        if ( ! isset($this->config['projects'][$projectName]['mysql']))
+        if ( ! isset($this->config['projects'][$projectName]['database']))
         {
             return;
         }
-        $projectConfig = $this->config['projects'][$projectName]['mysql'];
+        $projectConfig = $this->config['projects'][$projectName]['database'];
+
         foreach ($projectConfig as $databaseName => $projectDatabaseConfig)
         {
+            $this->parseProperty('driver', $projectDatabaseConfig);
             $this->parseProperty('username', $projectDatabaseConfig);
             $this->parseProperty('password', $projectDatabaseConfig);
             $this->parseProperty('host', $projectDatabaseConfig);
             $this->parseProperty('port', $projectDatabaseConfig);
-            $this->config['projects'][$projectName]['mysql'][$databaseName] = $projectDatabaseConfig;
+
+            $this->config['projects'][$projectName]['database'][$databaseName] = $projectDatabaseConfig;
         }
     }
 
     private function parseProperty($property, &$projectDatabaseConfig)
     {
-        $mysqlDefaults = $this->getMysqlDefaults();
+        $databaseDefaults = $this->getDatabaseDefaults();
 
-        if ( ! isset($projectDatabaseConfig[$property]) && isset($mysqlDefaults[$property]))
+        if ( ! isset($projectDatabaseConfig[$property]) && isset($databaseDefaults[$property]))
         {
-            $projectDatabaseConfig[$property] = $mysqlDefaults[$property];
+            $projectDatabaseConfig[$property] = $databaseDefaults[$property];
         }
     }
 
-    private function getMysqlDefaults()
+    private function getDatabaseDefaults()
     {
-        return isset($this->defaults['mysql']) ? $this->defaults['mysql'] : array();
+        return isset($this->defaults['database']) ? $this->defaults['database'] : array();
     }
 
     private function unsetDefaults()

@@ -120,11 +120,12 @@ class DirectorySpec extends ObjectBehavior
         $this->setExtractionDir(__DIR__);
 
         $zipper->add(__DIR__)->shouldBeCalled();
-        $destination = __DIR__.'/'.date("Y-m-d_H-i-s").'_files_drivers.zip';
-        $zipper->setDestination($destination)->shouldBeCalled();
+        $dir = __DIR__.'/';
+        $destination = date("Y-m-d_H-i-s").'_files_drivers.zip';
+        $zipper->setDestination($dir.$destination)->shouldBeCalled();
         $zipper->compress()->shouldBeCalled();
 
-        $this->extract();
+        $this->backup();
         $this->getExtractedFiles()->shouldReturn(array($destination));
     }
 
@@ -135,14 +136,15 @@ class DirectorySpec extends ObjectBehavior
         $this->setExtractionDir(__DIR__);
 
         $zipper->add(realpath(__DIR__.'/../'))->shouldBeCalled();
-        $destination = __DIR__.'/'.date("Y-m-d_H-i-s").'_files_element.zip';
-        $zipper->setDestination($destination)->shouldBeCalled();
+        $dir = __DIR__.'/';
+        $destination = date("Y-m-d_H-i-s").'_files_element.zip';
+        $zipper->setDestination($dir.$destination)->shouldBeCalled();
         $zipper->exclude(realpath(__DIR__.'/../').'/logs')->shouldBeCalled();
         $zipper->exclude(realpath(__DIR__.'/../').'/temp')->shouldBeCalled();
 
         $zipper->compress()->shouldBeCalled();
 
-        $this->extract();
+        $this->backup();
         $this->getExtractedFiles()->shouldReturn(array($destination));
     }
 

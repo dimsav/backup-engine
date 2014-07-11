@@ -4,7 +4,7 @@ use Dimsav\Backup\Element\AbstractElement;
 use Dimsav\Backup\Element\Exceptions\ExtractionFailureException;
 use Dimsav\Backup\Shell;
 
-class Mysql extends AbstractElement
+class Pgsql extends AbstractElement
 {
 
     private $database;
@@ -65,11 +65,12 @@ class Mysql extends AbstractElement
 
     private function getCommand()
     {
-        $command = sprintf('mysqldump --create-options --insert-ignore --quick --single-transaction --force -c --skip-comments --skip-add-drop-table --host=%s --port=%s --user=%s --password=%s %s > %s',
+
+        $command = sprintf('PGPASSWORD=%s pg_dump --host=%s --port=%s --username=%s %s -f %s',
+            escapeshellarg($this->password),
             escapeshellarg($this->host),
             escapeshellarg($this->port),
             escapeshellarg($this->username),
-            escapeshellarg($this->password),
             escapeshellarg($this->database),
             escapeshellarg($this->extractionDir. "/".$this->extractedFile)
         );
