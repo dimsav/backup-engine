@@ -1,5 +1,6 @@
 <?php namespace Dimsav\Backup\Storage\Drivers;
 
+use Dimsav\Backup\Shell;
 use Dimsav\Backup\Storage\Exceptions\InvalidStorageException;
 use Dimsav\Backup\Storage\Storage;
 
@@ -7,9 +8,16 @@ class Local implements Storage {
 
     private $name;
     private $destination;
+    private $clean;
 
-    public function __construct(array $config)
+    /**
+     * @var Shell
+     */
+    private $shell;
+
+    public function __construct(array $config, Shell $shell)
     {
+        $this->shell = $shell;
         $this->setProperties($config);
     }
 
@@ -17,6 +25,7 @@ class Local implements Storage {
     {
         $this->name = isset($config['name']) ? $config['name'] : null;
         $this->destination = $this->getDestination($config);
+        $this->clean = isset($config['clean']) ? $config['clean'] : '365 days';
     }
 
     private function getDestination($config)
@@ -42,7 +51,11 @@ class Local implements Storage {
         $this->validate();
         $this->validateFile($file);
 
-        $exportDir = $this->destination . '/' . $projectName;
+        $file = new \SplFileInfo($file);
+
+        $prefix = ($file->getExtension() == "sql") ? "sql" : "files";
+
+        $exportDir = $this->destination . '/' . $projectName. "/". $prefix;
         if ($projectName && ! is_dir($exportDir))
         {
             mkdir($exportDir, 0777, true);
@@ -51,6 +64,33 @@ class Local implements Storage {
         // we don't want to move the file for the case we have more storages
 
         copy($file, $exportDir . '/' . basename($file));
+
+        $this->cleanOldBackups($projectName, $prefix);
+    }
+
+    private function cleanOldBackups($projectName, $prefix)
+    {
+        //clean shell output
+        $this->shell->cleanOutput();
+
+        //clean old backups
+        $this->shell->exec($this->getFileListCommand($projectName, $prefix));
+
+        $deleteList = $this->parseFiles($this->shell->getOutput());
+
+        foreach ($deleteList as $file) {
+            $this->shell->exec($this->removeCommand($projectName, $file, $prefix));
+        }
+    }
+
+    public function getFileListCommand($projectName, $prefix)
+    {
+        return "ls ". $this->destination . "/$projectName"."/".$prefix." | tr '\n' '\n' | sed 's/$/|||/g'";
+    }
+
+    private function removeCommand($projectName, $file, $prefix)
+    {
+        return " rm ". $this->destination . "/$projectName"."/".$prefix."/".$file;
     }
 
     /**
@@ -78,5 +118,32 @@ class Local implements Storage {
         if ( ! is_file($file)) {
             throw new \InvalidArgumentException("Local storage '{$this->name}' could not find the file '$file'.");
         }
+    }
+
+    private function parseFiles($data)
+    {
+        $deleteList = array();
+        $data = explode("|||", $data);
+        array_pop($data);
+
+        foreach ($data as $file) {
+
+            $filename = $file;
+
+            preg_match('(\S{1,16})', ltrim($file), $result);
+            $date = explode("_", $result[0]);
+            $time = str_replace("-",":",$date[1]);
+            $date = $date[0];
+
+            $datetime = new \DateTime($date.$time);
+            $today = new \DateTime();
+
+            $today->modify($this->clean);
+            if ($datetime < $today) {
+                $deleteList[] = $filename;
+            }
+        }
+
+        return $deleteList;
     }
 }

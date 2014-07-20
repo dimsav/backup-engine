@@ -48,4 +48,9 @@ class Shell
     {
         return $this->statusCode;
     }
+
+    public function cleanOutput()
+    {
+        $this->output = null;
+    }
 }

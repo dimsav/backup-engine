@@ -47,12 +47,14 @@ return array(
         "my_dropbox" => array(
             "driver" => "dropbox",
             "username" => "dropbox@example.com",
-            "destination" => "/Backups"
+            "destination" => "/Backups",
+            "clean" => "-7 days", //All relative formats. Ex "last monday" :: http://php.net/manual/en/datetime.formats.relative.php
         ),
 
         "my_system" => array(
             "driver" => "local",
             "destination" => "/backups",
+            "clean" => "-7 days", //All relative formats. Ex "last monday" :: http://php.net/manual/en/datetime.formats.relative.php
         ),
     ),
 
