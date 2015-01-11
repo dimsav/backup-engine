@@ -11,6 +11,7 @@ class Dropbox implements Storage
     private $destination;
     private $name;
     private $username;
+    private $clean;
 
     /**
      * @var Shell
@@ -26,16 +27,46 @@ class Dropbox implements Storage
 
     public function store($file, $projectName = null)
     {
+        $file = new \SplFileInfo($file);
+        $prefix = ($file->getExtension() == "sql") ? "sql" : "files";
+
         $this->validate();
         $this->validateFile($file);
-        $this->shell->exec($this->getCommand($file, $projectName));
+        $this->shell->exec($this->getCommand($file, $projectName, $prefix));
+
+        $this->cleanOldBackups($projectName, $prefix);
     }
 
-    public function getCommand($file, $projectName)
+    private function cleanOldBackups($projectName, $prefix)
     {
-        $destination = $projectName ? $this->destination . "/$projectName" : $this->destination;
+        //clean shell output
+        $this->shell->cleanOutput();
+
+        //clean old backups
+        $this->shell->exec($this->getFileListCommand($projectName, $prefix));
+        $deleteList = $this->parseFiles($this->shell->getOutput());
+
+        foreach ($deleteList as $file) {
+            $this->shell->exec($this->removeCommand($projectName, $file, $prefix));
+        }
+    }
+
+    public function getCommand($file, $projectName, $prefix)
+    {
+
+        $destination = $projectName ? $this->destination . "/$projectName". "/". $prefix : $this->destination ."/". $prefix;
         $destination .= substr($destination, -1, 1) == '/' ? basename($file) : '/' . basename($file);
         return $this->getScript().' -f '.$this->getConfigFile()." upload $file " . $destination;
+    }
+
+    public function getFileListCommand($projectName, $prefix)
+    {
+        return $this->getScript().' -f '.$this->getConfigFile()." list ". $this->destination . "/$projectName"."/".$prefix;
+    }
+
+    private function removeCommand($projectName, $file, $prefix)
+    {
+        return $this->getScript().' -f '.$this->getConfigFile()." delete ". $this->destination . "/$projectName"."/".$prefix."/".$file;
     }
 
     /**
@@ -102,5 +133,34 @@ class Dropbox implements Storage
         $this->name = isset($config['name']) ? $config['name'] : null;
         $this->username = isset($this->config['username']) ? $this->config['username'] : null;
         $this->destination = isset($config['destination']) ? $config['destination'] : '/';
+        $this->clean = isset($config['clean']) ? $config['clean'] : '365 days';
     }
+
+    private function parseFiles($data)
+    {
+        $deleteList = array();
+        $data = explode("[F]", $data);
+        $data = array_slice($data, 1);
+
+        foreach ($data as $file) {
+
+            preg_match('([\s-]\S{1,})', ltrim($file), $filename);
+            $filename = ltrim($filename[0]);
+
+            preg_match('([\s-]\S{1,16})', ltrim($file), $result);
+            $date = explode("_", $result[0]);
+            $time = str_replace("-",":",$date[1]);
+            $date = $date[0];
+            $datetime = new \DateTime($date.$time);
+            $today = new \DateTime();
+
+            $today->modify($this->clean);
+            if ($datetime < $today) {
+                $deleteList[] = $filename;
+            }
+        }
+
+        return $deleteList;
+    }
+
 }

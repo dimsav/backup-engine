@@ -85,7 +85,7 @@ class StorageFactory
             case 'dropbox':
                 return new Dropbox($this->getDriverConfig($storageName), new Shell());
             case 'local':
-                return new Local($this->getDriverConfig($storageName));
+                return new Local($this->getDriverConfig($storageName), new Shell());
         }
         throw new StorageDriverNotSupportedException;
     }
