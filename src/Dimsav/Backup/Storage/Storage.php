@@ -5,24 +5,16 @@ use Dimsav\Backup\Storage\Exceptions\InvalidStorageException;
 interface Storage {
 
     /**
-     * Validates its properties.
-     *
-     * @return void
-     * @throws InvalidStorageException
+     * return name of the storage
+     * @param $type
+     * @return bool
      */
-    public function validate();
+    public function handles($type);
 
     /**
-     * Copies the selected file to the storage system.
-     *
-     * If the project name is supplied, the file is stored under a
-     * directory having the name of the project. Else, the file
-     * is stored under the defined destination.
-     *
-     * @param $sourceFile
-     * @param null $projectName
-     * @return void
+     * @param array $config
+     * @return \League\Flysystem\Filesystem
      */
-    public function store($sourceFile, $projectName = null);
+    public function get(array $config);
 
 } 

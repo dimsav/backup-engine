@@ -13,6 +13,11 @@ class Project {
     private $storages = array();
 
     /**
+     * @var [type]
+     */
+    private $source;
+
+    /**
      * @var Element[]
      */
     private $elements = array();
@@ -37,6 +42,16 @@ class Project {
         return $this->elements;
     }
 
+    public function setSource($source)
+    {
+        $this->source = $source;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
+    }
+
     public function setName($name)
     {
         $this->name = $name;
@@ -53,7 +68,7 @@ class Project {
         foreach ($this->elements as $element)
         {
             $element->setExtractionDir($tempDir);
-            $element->extract();
+            $element->backup();
             $this->storeFiles($element->getExtractedFiles());
         }
     }
@@ -79,7 +94,10 @@ class Project {
     {
         foreach($this->storages as $storage)
         {
-            $storage->store($file, $this->name);
+            $storage->writeStream(
+                $file,
+                $this->getSource()->readStream($file)
+            );
         }
     }
 }

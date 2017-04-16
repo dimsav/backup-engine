@@ -3,7 +3,7 @@
     "type": "library",
     "description": "A library used to backup project files and databases, and upload backups to dropbox.",
     "keywords": ["backup","dropbox","php","mysql"],
-    "homepage": "http://github.com/dimsav/php-mysql-backup",
+    "homepage": "http://github.com/dimsav/backup-engine",
     "license": "MIT",
     "authors": [
         {
@@ -20,29 +20,21 @@
         "php": ">=5.3.0",
         "monolog/monolog": "1.*",
         "dimsav/unix-zipper": "1.*",
-        "andreafabrizi/dropbox-uploader": "0.13"
+        "league/flysystem": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
         "phpunit/phpcov": "*",
         "phpspec/phpspec": "2.0.*@dev"
     },
+    "suggest": {
+        "aws/aws-sdk-php": "Enables AWS S3 storage",
+        "dropbox/dropbox-sdk": "Enables Dropbox storage",
+        "phpseclib/phpseclib": "Enables SFTP storage",
+        "sabre/dav": "Enables WebDav storage",
+        "rackspace/php-opencloud": "Enables Rackspace Cloud storage"
+    },
     "config": {
         "bin-dir": "bin/"
-    },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "andreafabrizi/dropbox-uploader",
-                "version": "0.13",
-                "bin": ["dropbox_uploader.sh"],
-                "source": {
-                    "url": "https://github.com/andreafabrizi/Dropbox-Uploader",
-                    "type": "git",
-                    "reference": "3fd40f247e3f6eeeb771e2b8a7dd3cab89ac71b2"
-                }
-            }
-        }
-    ]
+    }
 }

@@ -45,13 +45,13 @@ class Mysql extends AbstractElement
     public function setExtractionDir($dir)
     {
         parent::setExtractionDir($dir);
-        $this->extractedFile = $this->extractionDir. "/".date("Y-m-d_H-i-s")."_{$this->database}.sql";
+        $this->extractedFile = date("Y-m-d_H-i-s")."_{$this->database}.sql";
     }
 
     /**
      * Saves the files into the extraction directory
      */
-    public function extract()
+    public function backup()
     {
         $this->shell->exec($this->getCommand());
         if ($this->shell->getStatusCode() != 0)
@@ -65,13 +65,13 @@ class Mysql extends AbstractElement
 
     private function getCommand()
     {
-        $command = sprintf('mysqldump --host=%s --port=%s --user=%s --password=%s %s > %s',
+        $command = sprintf('mysqldump --create-options --insert-ignore --quick --single-transaction --force -c --skip-comments --skip-add-drop-table --host=%s --port=%s --user=%s --password=%s %s > %s',
             escapeshellarg($this->host),
             escapeshellarg($this->port),
             escapeshellarg($this->username),
             escapeshellarg($this->password),
             escapeshellarg($this->database),
-            escapeshellarg($this->extractedFile)
+            escapeshellarg($this->extractionDir. "/".$this->extractedFile)
         );
         return $command;
     }

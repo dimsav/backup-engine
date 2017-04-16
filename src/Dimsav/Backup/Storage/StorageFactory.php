@@ -1,8 +1,6 @@
 <?php namespace Dimsav\Backup\Storage;
 
 use Dimsav\Backup\Shell;
-use Dimsav\Backup\Storage\Drivers\Dropbox,
-    Dimsav\Backup\Storage\Drivers\Local;
 use Dimsav\Backup\Storage\Exceptions\StorageDriverNotDefinedException;
 use Dimsav\Backup\Storage\Exceptions\StorageDriverNotSupportedException;
 use Dimsav\Backup\Storage\Exceptions\StorageNotFoundException;
@@ -80,14 +78,14 @@ class StorageFactory
 
     private function createStorage($storageName)
     {
-        switch ($this->getDriver($storageName))
-        {
-            case 'dropbox':
-                return new Dropbox($this->getDriverConfig($storageName), new Shell());
-            case 'local':
-                return new Local($this->getDriverConfig($storageName));
+        $driver = $this->getDriver($storageName);
+        $class  = "Dimsav\\Backup\\Storage\\Drivers\\".ucfirst($driver).'Storage';
+        if(!class_exists($class)) {
+             throw new StorageDriverNotSupportedException;
         }
-        throw new StorageDriverNotSupportedException;
+
+        $object = new $class();
+        return $object->get($this->getDriverConfig($storageName));
     }
 
     private function getDriverConfig($storageName)

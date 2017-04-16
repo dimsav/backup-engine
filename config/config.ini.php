@@ -3,7 +3,8 @@
 return array(
 
     "project_defaults" => array(
-        "mysql" => array(
+        "database" => array(
+            "driver" => "mysql",
             "host" => "localhost",
             "port" => "3306",
             "username" => "root",
@@ -28,8 +29,9 @@ return array(
                 "/" => array("excludes" => array("vendor", "composer.lock", "logs")),
             ),
 
-            "mysql" => array(
+            "database" => array(
                 "my_database" => array(
+                    "driver" => "mysql",
                     "host" => "localhost",
                     "port" => "3306",
                     "username" => "root",
@@ -47,13 +49,36 @@ return array(
         "my_dropbox" => array(
             "driver" => "dropbox",
             "username" => "dropbox@example.com",
-            "destination" => "/Backups"
+            "root" => "/Backups" // backup location
         ),
 
         "my_system" => array(
             "driver" => "local",
-            "destination" => "/backups",
+            "root" => "/backups",
         ),
+        "sftp" => array(
+            'driver' => 'sftp',
+            'host' => 'example.com',
+            'port' => 22,
+            'username' => 'username',
+            'password' => 'password',
+            'privateKey' => 'path/to/or/contents/of/privatekey',
+            'root' => '/path/to/backup/{project}/',
+            'timeout' => 10,
+        ),
+        "ftp" => array(
+            'driver' => 'ftp',
+            'host' => 'ftp.example.com',
+            'username' => 'username',
+            'password' => 'password',
+
+            /** optional config settings */
+            'port' => 21,
+            'root' => '/path/to/root',
+            'passive' => true,
+            'ssl' => true,
+            'timeout' => 30,
+        )
     ),
 
     "app" => array(

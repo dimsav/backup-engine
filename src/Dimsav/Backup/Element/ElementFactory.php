@@ -96,7 +96,7 @@ class ElementFactory
 
     private function getMysqlConfig($projectName, $elementName)
     {
-        $config =  $this->config[$projectName]['mysql'][$elementName];
+        $config =  $this->config[$projectName]['database'][$elementName];
 
         if (!isset($config['database'])) {
             $config['database'] = $elementName;
